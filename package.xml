@@ -15,7 +15,7 @@
   <active>yes</active>
  </lead>
  <date>2008-02-29</date>
- <time>22:28:20</time>
+ <time>23:09:14</time>
  <version>
   <release>0.0.1</release>
   <api>0.0.1</api>
@@ -29,10 +29,11 @@
  <contents>
   <dir baseinstalldir="PEAR" name="/">
    <file baseinstalldir="" md5sum="2ab10084f42e0d46503a517ef64cc0d3" name="docs/44225.php" role="doc" />
-   <file baseinstalldir="" md5sum="f1f8ca55e3f987b20835d96c1e635fbb" name="docs/example.php" role="doc" />
+   <file baseinstalldir="PEAR" md5sum="343b2ecaa3127e3dea1f2f85457dcef9" name="docs/danc-hcal.php" role="doc" />
+   <file baseinstalldir="" md5sum="8859ff43a012f7f6a46518196c86e5b1" name="docs/example.php" role="doc" />
    <file baseinstalldir="" md5sum="2ee56942822095b60a93dd57f8273b02" name="XML/GRDDL.php" role="php" />
-   <file baseinstalldir="" md5sum="7c1a5dd0d2ebfdcc915ea14f1bc7f21d" name="XML/GRDDL/Driver.php" role="php" />
-   <file baseinstalldir="" md5sum="10d08cf6f5b311512141e0380b73ce58" name="XML/GRDDL/Driver/xsl.php" role="php" />
+   <file baseinstalldir="" md5sum="56db54619ab11c5d662378412df10861" name="XML/GRDDL/Driver.php" role="php" />
+   <file baseinstalldir="" md5sum="96500ef117723634607c184f46597d9f" name="XML/GRDDL/Driver/xsl.php" role="php" />
   </dir>
  </contents>
  <dependencies>
