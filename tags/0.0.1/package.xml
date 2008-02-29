@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.7.1" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0     http://pear.php.net/dtd/tasks-1.0.xsd     http://pear.php.net/dtd/package-2.0     http://pear.php.net/dtd/package-2.0.xsd">
+ <name>XML_GRDDL</name>
+ <uri>http://code.google.com/p/xmlgrddl/</uri>
+ <summary>A PHP library for dealing with GRDDL.</summary>
+ <description>Features
+
+    * Different XSLT engines can be used
+    * Merging of RDF results, as per spec
+    * Pretty close to passing GRDDL test suite tests</description>
+ <lead>
+  <name>Daniel O&apos;Connor</name>
+  <user>doconnor</user>
+  <email>daniel.oconnor@gmail.com</email>
+  <active>yes</active>
+ </lead>
+ <date>2008-02-29</date>
+ <time>23:09:14</time>
+ <version>
+  <release>0.0.1</release>
+  <api>0.0.1</api>
+ </version>
+ <stability>
+  <release>alpha</release>
+  <api>alpha</api>
+ </stability>
+ <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
+ <notes>Initial pear package</notes>
+ <contents>
+  <dir baseinstalldir="PEAR" name="/">
+   <file baseinstalldir="" md5sum="2ab10084f42e0d46503a517ef64cc0d3" name="docs/44225.php" role="doc" />
+   <file baseinstalldir="PEAR" md5sum="343b2ecaa3127e3dea1f2f85457dcef9" name="docs/danc-hcal.php" role="doc" />
+   <file baseinstalldir="" md5sum="8859ff43a012f7f6a46518196c86e5b1" name="docs/example.php" role="doc" />
+   <file baseinstalldir="" md5sum="2ee56942822095b60a93dd57f8273b02" name="XML/GRDDL.php" role="php" />
+   <file baseinstalldir="" md5sum="56db54619ab11c5d662378412df10861" name="XML/GRDDL/Driver.php" role="php" />
+   <file baseinstalldir="" md5sum="96500ef117723634607c184f46597d9f" name="XML/GRDDL/Driver/xsl.php" role="php" />
+  </dir>
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>5</min>
+   </php>
+   <pearinstaller>
+    <min>1.4.0</min>
+   </pearinstaller>
+   <extension>
+    <name>xsl</name>
+   </extension>
+  </required>
+ </dependencies>
+ <phprelease />
+ <changelog>
+  <release>
+   <version>
+    <release>0.0.1</release>
+    <api>0.0.1</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2008-02-29</date>
+   <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
+   <notes>Initial pear package</notes>
+  </release>
+ </changelog>
+</package>
