@@ -19,7 +19,7 @@ class XML_GRDDL_Driver_xsl extends XML_GRDDL_Driver {
 
         $proc = new XSLTProcessor();
         $proc->importStyleSheet($xsl);
-var_dump($stylesheet);
+
         return $proc->transformToXML($dom);
 	}
 }

@@ -172,7 +172,7 @@ abstract class XML_GRDDL_Driver {
 	 * @return	bool
 	 */
     public function isURI($string) {
-        $url_pattern = "([A-Za-z][A-Za-z0-9+.-]{1,120}:[A-Za-z0-9/](([A-Za-z0-9$_.+!*,;/?:@&~=-])|%[A-Fa-f0-9]{2}){1,333}(#([a-zA-Z0-9][a-zA-Z0-9$_.+!*,;/?:@&~=%-]{0,1000}))?)";
+        $url_pattern = '/([A-Za-z][A-Za-z0-9+.-]{1,120}:[A-Za-z0-9/](([A-Za-z0-9$_.+!*,;/?:@&~=-])|%[A-Fa-f0-9]{2}){1,333}(#([a-zA-Z0-9][a-zA-Z0-9$_.+!*,;/?:@&~=%-]{0,1000}))?)/';
         return (bool)preg_match($url_pattern, $string);
     }
 
@@ -239,5 +239,26 @@ abstract class XML_GRDDL_Driver {
 		}
 
 		return $dom1->saveXML();
+	}
+
+	/**
+	 * Fetch, inspect, parse and merge a URL.
+	 *
+	 * If you just want to get RDF, and you want to get it now...
+	 *
+	 * @param	$url	Address of document to crawl.
+	 */
+	public function crawl($url) {
+		$data		 = $this->fetch($url);
+		$stylesheets = $this->inspect($data, $url);
+
+		$rdf_xml = array();
+		foreach ($stylesheets as $stylesheet) {
+			$rdf_xml[] = $this->transform($stylesheet, $data);
+		}
+
+		$result = array_reduce($rdf_xml, array($this, 'merge'));
+
+		return $result;
 	}
 }
