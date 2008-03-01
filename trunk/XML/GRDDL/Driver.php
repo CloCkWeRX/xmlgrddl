@@ -148,7 +148,8 @@ abstract class XML_GRDDL_Driver
     /**
      * Look for transformations hidden in A, LINK tag.
      *
-     * @param SimpleXMLElement $sxe          Prepopulated document to inspect for transformations, found by $xpath
+     * @param SimpleXMLElement $sxe          Prepopulated document to inspect for
+     *                                       transformations, found by $xpath
      * @param string           $original_url Original url this document lived at
      *
      * @return  string[]    An array of XSL transformation urls.
@@ -226,6 +227,12 @@ abstract class XML_GRDDL_Driver
 
             $transformation_urls = $this->discoverTransformations($namespace, $ns_url, "//*[@grddl:namespaceTransformation]",
                                                                         'namespaceTransformation', XML_GRDDL::NS);
+
+            //Todo: make this stricter to select rdf:Description about:($ns_url)?
+            $rdf_transformation_urls = $this->discoverTransformations($namespace, $ns_url, "//grddl:namespaceTransformation",
+                                                                        'resource', XML_GRDDL::RDF_NS);
+
+            $transformation_urls = array_merge($transformation_urls, $rdf_transformation_urls);
         }
         return $transformation_urls;
     }
@@ -387,7 +394,8 @@ abstract class XML_GRDDL_Driver
                 //further ewww
                 $url = new Net_URL($path);
 
-                if ($path == 'http://www.w3.org/2001/sw/grddl-wg/td/sq1ns#') {
+                if ($path == 'http://www.w3.org/2001/sw/grddl-wg/td/sq1ns#'
+                        || $path == 'http://www.w3.org/2001/sw/grddl-wg/td/sq1ns') {
                     $url->path .= '.xml';
                 } else {
                     $url->path .= '.html';
