@@ -189,88 +189,62 @@ $tests[] = array('name' => 'Document linking to its transformer through a GRDDL-
                  'realistic' => dirname(__FILE__) . '/data/xhtmlWithGrddlEnabledProfile-output.rdf');
 
 // Library tests
-/*
-    *  Embedded RDF1
-      input output
-      xml
+$tests[] = array('name' => 'Embedded RDF1',
+                 'in' => 'http://www.w3.org/2001/sw/grddl-wg/td/inline-rdf1.xml',
+                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/embedded-rdf1-output.rdf',
+                 'realistic' => dirname(__FILE__) . '/data/embedded-rdf1-output.rdf');
 
-      a simple test for embedded RDF.
+$tests[] = array('name' => 'Embedded RDF2',
+                 'in' => 'http://www.w3.org/2001/sw/grddl-wg/td/inline-rdf2.xml',
+                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/embedded-rdf2-output.rdf',
+                 'realistic' => dirname(__FILE__) . '/data/embedded-rdf2-output.rdf');
 
-      Approval: 2007-06-27
-    * Embedded RDF2
-      input output
-      xml
+$tests[] = array('name' => 'Embedded RDF3',
+                 'in' => 'http://www.w3.org/2001/sw/grddl-wg/td/inline-rdf3.xml',
+                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/embedded-rdf3-output.rdf',
+                 'realistic' => dirname(__FILE__) . '/data/embedded-rdf3-output.rdf');
 
-      a test for embedded RDF, with two blocks of RDF
+$tests[] = array('name' => 'Glean Profile',
+                 'in' => 'http://www.w3.org/2001/sw/grddl-wg/td/profile-with-spaces-in-rel.html',
+                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/profile-with-spaces-in-rel-output.rdf',
+                 'realistic' => dirname(__FILE__) . '/data/profile-with-spaces-in-rel-output.rdf');
 
-      Approval: 2007-06-27
-    * Embedded RDF3
-      input output
-      xml,rdfx-base
+$tests[] = array('name' => 'Embedded RDF using a relative xml:base',
+                 'in' => 'http://www.w3.org/2001/sw/grddl-wg/td/inline-rdf4.xml',
+                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/embedded-rdf4-output.rdf',
+                 'realistic' => dirname(__FILE__) . '/data/embedded-rdf4-output.rdf');
 
-      a test for embedded RDF. A corner case: an RDF document.
+$tests[] = array('name' => 'Embedded RDF using an absolute xml:base',
+                 'in' => 'http://www.w3.org/2001/sw/grddl-wg/td/inline-rdf5.xml',
+                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/embedded-rdf5-output.rdf',
+                 'realistic' => dirname(__FILE__) . '/data/embedded-rdf5-output.rdf');
 
-      Approval: 2007-06-27
-    * Glean Profile
-      input output
-      grddl-profile
+$tests[] = array('name' => 'Embedded RDF using two nested absolute xml:base',
+                 'in' => 'http://www.w3.org/2001/sw/grddl-wg/td/inline-rdf6.xml',
+                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/embedded-rdf6-output.rdf',
+                 'realistic' => dirname(__FILE__) . '/data/embedded-rdf6-output.rdf');
 
-      a test for glean profile, checking the treatment of spaces in the rel attribute.
+$tests[] = array('name' => 'Embedded RDF using two different xml:base on two different blocks of RDF',
+                 'in' => 'http://www.w3.org/2001/sw/grddl-wg/td/inline-rdf8.xml',
+                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/embedded-rdf8-output.rdf',
+                 'realistic' => dirname(__FILE__) . '/data/embedded-rdf8-output.rdf');
 
-      Approval: 2007-04-25
-    * Embedded RDF using a relative xml:base:
-      input output
-      xml
 
-      Approval: 2007-06-27
-    * Embedded RDF using an absolute xml:base:
-      input output
-      xml
+$tests[] = array('name' => 'Embedded RDF using two different xml:lang on two different blocks of RDF',
+                 'in' => 'http://www.w3.org/2001/sw/grddl-wg/td/inline-rdf9.xml',
+                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/embedded-rdf9-output.rdf',
+                 'realistic' => dirname(__FILE__) . '/data/embedded-rdf9-output.rdf');
 
-      Approval: 2007-06-27
-    * Embedded RDF using two nested absolute xml:base:
-      input output
-      xml
+$tests[] = array('name' => 'An XHTML profile using a base element',
+                 'in' => 'http://www.w3.org/2001/sw/grddl-wg/td/base/grddlProfileWithBaseElement.html',
+                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/grddlProfileWithBaseElement-output.rdf',
+                 'realistic' => dirname(__FILE__) . '/data/embedded-rdf9-output.rdf');
 
-      Approval: 2007-06-27
-    * Embedded RDF using two different xml:base on two different blocks of RDF:
-      input output
-      xml
+$tests[] = array('name' => 'XHTML with an XHTML profile using a base element',
+                 'in' => 'http://www.w3.org/2001/sw/grddl-wg/td/xhtmlProfileBase1.html',
+                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/xhtmlProfileBase1-output.rdf',
+                 'realistic' => dirname(__FILE__) . '/data/embedded-rdf9-output.rdf');
 
-      Approval: 2007-04-25
-    * Embedded RDF using two different xml:lang on two different blocks of RDF:
-      input output
-      xml
-
-      Approval: 2007-06-27
-    * Embedded RDF using two different inherited xml:lang on two different blocks of RDF:
-      input output
-      xml
-
-      Approval: 2007-06-27
-    * An XHTML profile using a base element
-      input output
-      grddl-profile
-
-      This is from the final URI.
-
-      Approval: 2007-04-25
-    * An XHTML profile using a base element
-      input output
-      grddl-profile
-
-      This is from a redirected URI.
-
-      Approval: 2007-04-25
-    * XHTML with an XHTML profile using a base element
-      input output
-      grddl-profile,other-profile
-
-      This shows intended use of the profile.
-
-      Approval: 2007-04-25
-
-*/
 
 /*
 
