@@ -394,8 +394,15 @@ abstract class XML_GRDDL_Driver
                 //further ewww
                 $url = new Net_URL($path);
 
-                if ($path == 'http://www.w3.org/2001/sw/grddl-wg/td/sq1ns#'
-                        || $path == 'http://www.w3.org/2001/sw/grddl-wg/td/sq1ns') {
+                $rdf_documents = array('http://www.w3.org/2001/sw/grddl-wg/td/sq2ns#',
+                                        'http://www.w3.org/2001/sw/grddl-wg/td/sq2ns');
+
+                $xml_documents = array('http://www.w3.org/2001/sw/grddl-wg/td/sq1ns#',
+                                        'http://www.w3.org/2001/sw/grddl-wg/td/sq1ns');
+
+                if (in_array($path, $rdf_documents)) {
+                    $url->path .= '.rdf';
+                } elseif (in_array($path, $xml_documents)) {
                     $url->path .= '.xml';
                 } else {
                     $url->path .= '.html';
