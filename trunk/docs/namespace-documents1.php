@@ -39,7 +39,7 @@
  * @author    Daniel O'Connor <daniel.oconnor@gmail.com>
  * @copyright 2008 Daniel O'Connor
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   SVN: $Id: AssertionFailedError.php 1985 2007-12-26 18:11:55Z sb $
+ * @version   SVN: $Id$
  * @link      http://code.google.com/p/xmlgrddl/
  */
 
