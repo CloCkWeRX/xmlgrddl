@@ -1,5 +1,6 @@
 <?php
 require_once 'HTTP/Request.php';
+require_once 'Net/URL.php';
 
 abstract class XML_GRDDL_Driver {
 
@@ -219,6 +220,7 @@ abstract class XML_GRDDL_Driver {
      *
      * @bug     Deal with error response codes to exceptions
      * @bug     Deal with ambigious reponse codes (300)
+     * @bug     Deal with race conditions & url redirection
      */
     public function fetch($path) {
 
@@ -233,16 +235,42 @@ abstract class XML_GRDDL_Driver {
                 return $req->getResponseBody();
             }
 
+
+            // Things which are being Ignored until Later
+            //  but Split Out for easy debugging
+            // @todo    Does HTTP_Client fix this?
             //HTTP 301 - UH...
             if ($req->getResponseCode() == 301) {
                 //For now, return response body, otherwise, consider following redirect?
                 return $req->getResponseBody();
             }
 
+            //HTTP 302 - UH...
+            if ($req->getResponseCode() == 302) {
+                //Obey the Location:
+                // ... but consider race conditions
+                $headers = $req->getResponseHeader();
+
+                return $this->fetch($headers['location']);
+            }
+
+
             //w3c.org website hacky workarounds
             //ewwwww
             if ($req->getResponseCode() == 300) {
-                return $this->fetch($path . '.html');
+                //further ewww
+                $url = new Net_URL($path);
+
+                switch ($path) {
+                    case 'http://www.w3.org/2001/sw/grddl-wg/td/sq1ns#':
+                        $url->path .= '.xml';
+                        break;
+                    default:
+                        $url->path .= '.html';
+                        break;
+                }
+
+                return $this->fetch($url->getURL());
             }
 
 
