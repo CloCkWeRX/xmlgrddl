@@ -21,6 +21,11 @@ abstract class XML_GRDDL_Driver {
         if ($this->options['htmlTransformations']) {
             $transformations = array_merge($transformations, $this->_discoverHTMLTransformations($sxe, $original_url));
         }
+
+        if ($this->options['htmlProfileTransformations']) {
+            $transformations = array_merge($transformations, $this->_discoverHTMLProfileTransformations($sxe, $original_url));
+        }
+
         if ($this->options['documentTransformations']) {
             $transformations = array_merge($transformations, $this->_discoverDocumentTransformations($sxe, $original_url));
         }
@@ -31,12 +36,8 @@ abstract class XML_GRDDL_Driver {
         return $transformations;
     }
 
-    protected function _discoverHTMLTransformations(SimpleXMLElement $sxe, $original_url = null) {
-
-        $sxe->registerXPathNamespace('xhtml', XML_GRDDL::XHTML_NS);
-
-        $query = "//xhtml:*[contains(@rel, 'transformation')]";
-        $nodes = $sxe->xpath($query);
+    protected function _discoverTransformations(SimpleXMLElement $sxe, $original_url = null, $xpath, $attribute_name, $namespace = null) {
+        $nodes = $sxe->xpath($xpath);
 
         $dom = new DOMDocument('1.0');
         $dom_sxe = dom_import_simplexml($sxe);
@@ -45,8 +46,8 @@ abstract class XML_GRDDL_Driver {
 
         $transformation_urls = array();
         foreach ($nodes as $node) {
-            $attributes = $node->attributes();
-            $value      = (string)$attributes['href'];
+            $attributes = $node->attributes($namespace);
+            $value      = (string)$attributes[$attribute_name];
             $urls       = explode(" ", $value);
 
             foreach ($urls as $n => $url) {
@@ -59,45 +60,88 @@ abstract class XML_GRDDL_Driver {
         }
 
         return $transformation_urls;
-
     }
 
     /**
+     * Look for transformations hidden in A, LINK tag.
+     *
+     * @return  string[]    An array of XSL transformation urls.
+     */
+    protected function _discoverHTMLTransformations(SimpleXMLElement $sxe, $original_url = null) {
+
+        $sxe->registerXPathNamespace('xhtml', XML_GRDDL::XHTML_NS);
+
+        $transformation_urls = $this->_discoverTransformations($sxe, $original_url, "//xhtml:*[contains(@rel, 'transformation')]", 'href');
+
+        return $transformation_urls;
+    }
+
+    /**
+     * Look for profileTransformations (via PROFILE tags).
+     *
+     * @todo    Determine if I need to make //xhtml:head[@profile] softer for HTML 4
+     * @todo    Determine if I need to make //xhtml:head[@profile] behave like a namespace transformation (I think I might?)
+     */
+    protected function _discoverHTMLProfileTransformations(SimpleXMLElement $sxe, $original_url = null) {
+
+        $sxe->registerXPathNamespace('xhtml', XML_GRDDL::XHTML_NS);
+
+        //Todo: Ensure this actually works as expected
+        $profile_urls = $this->_discoverTransformations($sxe, $original_url, "//xhtml:head[@profile]", 'profile');
+
+        //Todo: extract to _knownHTMLProfileTransformations()?
+        $profile_transformation_urls = array();
+        foreach ($profile_urls as $profile_url) {
+
+            try {
+                $xhtml = $this->fetch($profile_url);
+            } catch (Exception $e) {
+                //Emit log warning?
+                continue;
+            }
+
+            $profile = @simplexml_load_string($xhtml);
+
+            if ($profile instanceOf SimpleXMLElement) {
+                $profile->registerXPathNamespace('xhtml', XML_GRDDL::XHTML_NS);
+                $profile_transformations = $this->_discoverTransformations($profile, $profile_url, "//xhtml:*[contains(@rel, 'profileTransformation')]", 'href');
+                $profile_transformation_urls = array_merge($profile_transformation_urls, $profile_transformations);
+            }
+
+        }
+
+        return $profile_transformation_urls;
+    }
+
+    /**
+     * Fetch a URL, which should be a namespace document of some description.
+     * Look for namespaceTransformations
+     *
+     * @param   string  $ns_url Namespace URL
      * @todo    Check a cache of some description
      */
-    protected function _knownNamespaceTransformations($original_url) {
+    protected function _knownNamespaceTransformations($ns_url) {
         $transformation_urls = array();
 
-        $xml = $this->fetch($original_url);
+        $xml = $this->fetch($ns_url);
         $namespace = @simplexml_load_string($xml);
 
         if ($namespace instanceOf SimpleXMLElement) {
-            $dom = new DOMDocument('1.0');
-            $dom_sxe = dom_import_simplexml($namespace);
-            $dom_sxe = $dom->importNode($dom_sxe, true);
-            $dom_sxe = $dom->appendChild($dom_sxe);
-
             $namespace->registerXPathNamespace('grddl', XML_GRDDL::NS);
-            $nodes = $namespace->xpath("//*[@grddl:namespaceTransformation]");
 
-            foreach ($nodes as $node) {
-                $attributes = $node->attributes(XML_GRDDL::NS);
-                $value      = (string)$attributes['namespaceTransformation'];
-                $urls       = explode(" ", $value);
-
-                //Todo: see if this is ever executed in test cases
-                foreach ($urls as $n => $url) {
-                    if (!$this->isURI($url)) {
-                        $urls[$n] = $this->_determineBaseURI($dom, $orginal_url) . $url;
-                    }
-                }
-
-                $transformation_urls = array_merge($transformation_urls, $urls);
-            }
+            $transformation_urls = $this->_discoverTransformations($namespace, $ns_url, "//*[@grddl:namespaceTransformation]",
+                                                                        'namespaceTransformation', XML_GRDDL::NS);
         }
         return $transformation_urls;
     }
 
+    /**
+     * Inspect a DOMDocument and kludge together a base URI.
+     *
+     * Otherwise, try to use the existing original document location.
+     *
+     * @return  string
+     */
     protected function _determineBaseURI(DOMDocument $dom, $original_url) {
         if (!empty($dom->baseURI)) {
             return $dom->baseURI . '/';
@@ -122,44 +166,26 @@ abstract class XML_GRDDL_Driver {
     protected function _discoverDocumentTransformations(SimpleXMLElement $sxe, $original_url = null) {
         $nodes = $sxe->xpath("//*[@grddl:transformation]");
 
-        $dom = new DOMDocument('1.0');
-        $dom_sxe = dom_import_simplexml($sxe);
-        $dom_sxe = $dom->importNode($dom_sxe, true);
-        $dom_sxe = $dom->appendChild($dom_sxe);
-
-        $transformation_urls = array();
-        foreach ($nodes as $node) {
-            $attributes = $node->attributes(XML_GRDDL::NS);
-            $value      = (string)$attributes['transformation'];
-            $urls       = explode(" ", $value);
-
-
-            foreach ($urls as $n => $url) {
-                if (!$this->isURI($url)) {
-                    $urls[$n] = $this->_determineBaseURI($dom, $original_url) . $url;
-                }
-            }
-
-            $transformation_urls = array_merge($transformation_urls, $urls);
-        }
-
-        return $transformation_urls;
+        return $this->_discoverTransformations($sxe, $original_url, "//*[@grddl:transformation]", 'transformation', XML_GRDDL::NS);
     }
 
     /**
-     * Transformations can be associated not only with individual documents but also with whole dialects that share an XML namespace. Any resource available for retrieval from a namespace URI is a namespace document (cf. section 4.5.4. Namespace documents in [WEBARCH]). For example, a namespace document may have an XML Schema representation or an RDF Schema representation, or perhaps both, using content negotiation.
+     * Transformations can be associated not only with individual documents but also with whole dialects that share an XML namespace.
+     * Any resource available for retrieval from a namespace URI is a namespace document (cf. section 4.5.4. Namespace documents in [WEBARCH]).
+     * For example, a namespace document may have an XML Schema representation or an RDF Schema representation, or perhaps both, using content negotiation.
      *
      * To associate a GRDDL transformation with a whole dialect, include a grddl:namespaceTransformation property in a GRDDL result of the namespace document.
      */
-    protected function _discoverNamespaceTransformations($sxe) {
-        //List all namespaces
+    protected function _discoverNamespaceTransformations(SimpleXMLElement $sxe) {
+        //List all namespace urls
         $namespaces = $sxe->getNamespaces(true);
 
         $transformation_urls = array();
 
-        //Retrieve or check a local cache
-        foreach ($namespaces as $prefix => $ns) {
-            $urls = $this->_knownNamespaceTransformations($ns);
+
+        foreach ($namespaces as $ns_url) {
+            //Retrieve or check a local cache for $ns_url
+            $urls = $this->_knownNamespaceTransformations($ns_url);
             $transformation_urls = array_merge($transformation_urls, $urls);
         }
 
@@ -172,27 +198,57 @@ abstract class XML_GRDDL_Driver {
      * @return  bool
      */
     public function isURI($string) {
-        $url_pattern = '/([A-Za-z][A-Za-z0-9+.-]{1,120}:[A-Za-z0-9/](([A-Za-z0-9$_.+!*,;/?:@&~=-])|%[A-Fa-f0-9]{2}){1,333}(#([a-zA-Z0-9][a-zA-Z0-9$_.+!*,;/?:@&~=%-]{0,1000}))?)/';
+        $url_pattern = '([A-Za-z][A-Za-z0-9+.-]{1,120}:[A-Za-z0-9/](([A-Za-z0-9$_.+!*,;/?:@&~=-])|%[A-Fa-f0-9]{2}){1,333}(#([a-zA-Z0-9][a-zA-Z0-9$_.+!*,;/?:@&~=%-]{0,1000}))?)';
         return (bool)preg_match($url_pattern, $string);
     }
 
     /**
-     * Transform the given XML with the provided XSLT
+     * Transform the given XML with the provided XSLT.
+     *
+     * Driver implementations should override this method.
      *
      * @param   string  $stylesheet URL or file location of an XSLT transformation
      * @param   string  $xml        String of XML
      */
     abstract public function transform($stylesheet, $xml);
 
-
+    /**
+     * Fetch a URL, specifically asking for XML or RDF where available.
+     *
+     * @throws  Exception   Unable to fetch url or file
+     *
+     * @bug     Deal with error response codes to exceptions
+     * @bug     Deal with ambigious reponse codes (300)
+     */
     public function fetch($path) {
 
         if ($this->isURI($path)) {
             $req = &new HTTP_Request($path);
             $req->setMethod(HTTP_REQUEST_METHOD_GET);
-            $req->addHeader("Accept", 'text/xml, application/xml, application/rdf+xml; q=0.9, */*; q=0.1');
+            $req->addHeader("Accept", 'text/xml, application/xml, application/rdf+xml; q=0.9, */*; text/html q=0.1');
             $req->sendRequest();
-            return $req->getResponseBody();
+
+            //HTTP 200 OK
+            if ($req->getResponseCode() == 200) {
+                return $req->getResponseBody();
+            }
+
+            //HTTP 301 - UH...
+            if ($req->getResponseCode() == 301) {
+                //For now, return response body, otherwise, consider following redirect?
+                return $req->getResponseBody();
+            }
+
+            //w3c.org website hacky workarounds
+            //ewwwww
+            if ($req->getResponseCode() == 300) {
+                return $this->fetch($path . '.html');
+            }
+
+
+
+
+            throw new Exception('HTTP ' . $req->getResponseCode() . ' while retrieving ' . $path);
         }
 
         if (file_exists($path)) {
@@ -216,6 +272,11 @@ abstract class XML_GRDDL_Driver {
      *
      * @see http://www.w3.org/2004/01/rdxh/spec
      * @see http://www.w3.org/TR/2004/REC-rdf-mt-20040210/#defmerge
+     *
+     * @param   string  $graph_xml1 An RDF/XML graph
+     * @param   string  $graph_xml2 A second RDF/XML graph, to be merged into the first.
+     *
+     * @return  string  Merged graph containing triples from both original graphs
      */
     public function merge($graph_xml1, $graph_xml2) {
         if (empty($graph_xml1)) {
@@ -247,6 +308,7 @@ abstract class XML_GRDDL_Driver {
      * If you just want to get RDF, and you want to get it now...
      *
      * @param   $url    Address of document to crawl.
+     * @return  string  Resulting RDF document
      */
     public function crawl($url) {
         $data        = $this->fetch($url);
