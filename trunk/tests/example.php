@@ -53,108 +53,132 @@ $tests = array();
 //
 $tests[] = array('name' => 'P3P work-alike',
                  'in' => 'http://www.w3.org/2001/sw/grddl-wg/td/xmlWithGrddlAttribute.xml',
-                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/xmlWithGrddlAttribute-output.rdf');
+                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/xmlWithGrddlAttribute-output.rdf',
+                 'realistic' => dirname(__FILE__) . '/data/xmlWithGrddlAttribute-output.rdf');
 
 $tests[] = array('name' => 'Get RDF from a spreadsheet',
                  'in' => 'http://www.w3.org/2001/sw/grddl-wg/td/projects.xml',
-                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/projects.rdf');
+                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/projects.rdf',
+                 'realistic' => dirname(__FILE__) . '/data/projects.rdf');
 
 $tests[] = array('name' => 'RDFa example',
                  'in' => 'http://www.w3.org/2001/sw/grddl-wg/td/rdf_sem.html',
-                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/rdf_sem-output.rdf');
+                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/rdf_sem-output.rdf',
+                 'realistic' => dirname(__FILE__) . '/data/rdf_sem-output.rdf');
 
 $tests[] = array('name' => 'Inline transformation reference',
                  'in' => 'http://www.w3.org/2001/sw/grddl-wg/td/inline.html',
-                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/inline.rdf');
+                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/inline.rdf',
+                 'realistic' => dirname(__FILE__) . '/data/inline.rdf');
 
 $tests[] = array('name' => 'Base URI: Same document reference',
                  'in' => 'http://www.w3.org/2001/sw/grddl-wg/td/baseURI.html',
-                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/baseURI.rdf');
+                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/baseURI.rdf',
+                 'realistic' => dirname(__FILE__) . '/data/baseURI.rdf');
 
 $tests[] = array('name' => 'Title / Author (from specification)',
                  'in' => 'http://www.w3.org/2001/sw/grddl-wg/td/titleauthor.html',
-                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/titleauthor-output.rdf');
+                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/titleauthor-output.rdf',
+                 'realistic' => dirname(__FILE__) . '/data/titleauthor-output.rdf');
 
 /* //Skipping test: We'll never try to transform a document with no transformations
 $tests[] = array('name' => 'RDF/XML document',
                  'in' => 'http://www.w3.org/2001/sw/grddl-wg/td/projects.rdf',
-                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/projects.rdf');
+                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/projects.rdf',
+                 'realistic' => dirname(__FILE__) . '/data/projects.rdf');
 */
 
 $tests[] = array('name' => 'One transform linked from the head of a document with only the GRDDL profile',
                  'in' => 'http://www.w3.org/2001/sw/grddl-wg/td/xhtmlWithGrddlProfile.html',
-                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/xhtmlWithGrddlProfile-output.rdf');
+                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/xhtmlWithGrddlProfile-output.rdf',
+                 'realistic' => dirname(__FILE__) . '/data/xhtmlWithGrddlProfile-output.rdf');
 
 
 $tests[] = array('name' => 'One transform linked from the body of a document with only the GRDDL profile',
                  'in' => 'http://www.w3.org/2001/sw/grddl-wg/td/xhtmlWithGrddlTransformationInBody.html',
-                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/xhtmlWithGrddlTransformationInBody-output.rdf');
+                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/xhtmlWithGrddlTransformationInBody-output.rdf',
+                 'realistic' => dirname(__FILE__) . '/data/xhtmlWithGrddlTransformationInBody-output.rdf');
 
 
 $tests[] = array('name' => 'One transform linked from the head of a document with several profiles, including the GRDDL profile',
                  'in' => 'http://www.w3.org/2001/sw/grddl-wg/td/xhtmlWithMoreThanOneProfile.html',
-                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/xhtmlWithTwoTransformations-output.rdf');
+                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/xhtmlWithTwoTransformations-output.rdf',
+                 'realistic' => dirname(__FILE__) . '/data/xhtmlWithTwoTransformations-output.rdf');
 
 
 $tests[] = array('name' => 'Two transformations linked from the body of a document with the GRDDL profile',
                  'in' => 'http://www.w3.org/2001/sw/grddl-wg/td/xhtmlWithMoreThanOneGrddlTransformation.html',
-                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/xhtmlWithTwoTransformations-output.rdf');
+                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/xhtmlWithTwoTransformations-output.rdf',
+                 'realistic' => dirname(__FILE__) . '/data/xhtmlWithTwoTransformations-output.rdf');
 
 
 $tests[] = array('name' => 'XML document linking to its transformer through the GRDDL attribute',
                  'in' => 'http://www.w3.org/2001/sw/grddl-wg/td/xmlWithGrddlAttributeAndNonXMLNamespaceDocument.xml',
-                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/xmlWithGrddlAttributeAndNonXMLNamespaceDocument-output.rdf');
+                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/xmlWithGrddlAttributeAndNonXMLNamespaceDocument-output.rdf',
+                 'realistic' => dirname(__FILE__) . '/data/xmlWithGrddlAttributeAndNonXMLNamespaceDocument-output.rdf');
 
 //Namespace Documents and Absolute Locations
 $tests[] = array('name' => 'An hcard profile',
                  'in' => 'http://www.w3.org/2001/sw/grddl-wg/td/card.html',
-                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/card-output.rdf');
+                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/card-output.rdf',
+                 'realistic' => dirname(__FILE__) . '/data/card-output.rdf');
 
 $tests[] = array('name' => '2 profiles: eRDF and hCard',
                  'in' => 'http://www.w3.org/2001/sw/grddl-wg/td/multiprofile.html',
-                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/multiprofile-output.rdf');
+                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/multiprofile-output.rdf',
+                 'realistic' => dirname(__FILE__) . '/data/multiprofile-output.rdf');
 
 $tests[] = array('name' => 'Namespace documents and media types 1',
                  'in' => 'http://www.w3.org/2001/sw/grddl-wg/td/sq1.xml',
-                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/sq1-output.rdf');
+                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/sq1-output.rdf',
+                 'realistic' => dirname(__FILE__) . '/data/sq1-output.rdf');
 
 $tests[] = array('name' => 'Namespace documents and media types 2',
                  'in' => 'http://www.w3.org/2001/sw/grddl-wg/td/sq2.xml',
-                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/sq2-output.rdf');
+                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/sq2-output.rdf',
+                 'realistic' => dirname(__FILE__) . '/data/sq2-output.rdf');
 
 $tests[] = array('name' => 'A variant of the card5n test',
                  'in' => 'http://www.w3.org/2001/sw/grddl-wg/td/card5na.html',
-                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/card5n-output.rdf');
+                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/card5n-output.rdf',
+                 'realistic' => dirname(__FILE__) . '/data/card5n-output.rdf');
 
 $tests[] = array('name' => 'hcard from a 1998 review comment on P3P',
                  'in' => 'http://www.w3.org/2001/sw/grddl-wg/td/card5n.html',
-                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/card5n-output.rdf');
+                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/card5n-output.rdf',
+                 'realistic' => dirname(__FILE__) . '/data/card5n-output.rdf');
 
 $tests[] = array('name' => 'A copy of the hcard profile',
                  'in' => 'http://www.w3.org/2001/sw/grddl-wg/td/hcard.html',
-                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/hcard-output.rdf');
+                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/hcard-output.rdf',
+                 'realistic' => dirname(__FILE__) . '/data/hcard-output.rdf');
 /** @bug issue 8 */
 /*
 $tests[] = array('name' => 'An XML document with two namespace transformations',
                  'in' => 'http://www.w3.org/2001/sw/grddl-wg/td/two-transforms.xml',
-                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/two-transforms-output.rdf');
+                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/two-transforms-output.rdf',
+                 'realistic' => dirname(__FILE__) . '/data/two-transforms-output.rdf');
 */
 $tests[] = array('name' => 'An XML document with two namespace transformations and a transform on the root element',
                  'in' => 'http://www.w3.org/2001/sw/grddl-wg/td/three-transforms.xml',
-                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/three-transforms-output.rdf');
+                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/three-transforms-output.rdf',
+                 'realistic' => dirname(__FILE__) . '/data/three-transforms-output.rdf');
 
 $tests[] = array('name' => 'An XML document with two namespace transformations and two transforms on the root element',
                  'in' => 'http://www.w3.org/2001/sw/grddl-wg/td/four-transforms.xml',
-                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/four-transforms-output.rdf');
+                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/four-transforms-output.rdf',
+                 'realistic' => dirname(__FILE__) . '/data/four-transforms-output.rdf');
 
 $tests[] = array('name' => 'A variant of the hcard profile',
                  'in' => 'http://www.w3.org/2001/sw/grddl-wg/td/hcarda.html',
-                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/hcard-output.rdf');
+                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/hcard-output.rdf',
+                 'realistic' => dirname(__FILE__) . '/data/hcard-output.rdf');
 
 
 $tests[] = array('name' => 'Document linking to its transformer through a GRDDL-enabled profile',
                  'in'  => 'http://www.w3.org/2001/sw/grddl-wg/td/xhtmlWithGrddlEnabledProfile.html',
-                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/xhtmlWithGrddlEnabledProfile-output.rdf');
+                 'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/xhtmlWithGrddlEnabledProfile-output.rdf',
+                 'realistic' => dirname(__FILE__) . '/data/xhtmlWithGrddlEnabledProfile-output.rdf');
 
 // Library tests
 /*
@@ -469,7 +493,11 @@ foreach ($tests as $test) {
     $grddl = XML_GRDDL::factory('xsl', $options);
 
     $in  = $grddl->fetch($test['in']);
-    $out = $grddl->fetch($test['out']);
+    if (!file_exists($test['realistic'])) {
+        file_put_contents($test['realistic'], $grddl->fetch($test['out']));
+    }
+
+    $out = $grddl->fetch($test['realistic']);
 
     $stylesheets = $grddl->inspect($in, $test['in']);
 
@@ -492,24 +520,3 @@ foreach ($tests as $test) {
     }
 
 }
-
-/*
-$options = array('documentTransformations' => true, 'namespaceTransformations' => true);
-$grddl = XML_GRDDL::factory('xsl', $options);
-
-//$xml = $grddl->fetch(dirname(__FILE__) . '/tests/XML_GRDDL/data/test_02.xml');
-$url = 'http://www.w3.org/2001/sw/grddl-wg/td/titleauthor.html';
-$xml = $grddl->fetch($url);
-
-$stylesheets = $grddl->inspect($xml, $url); //Returns a list of available XSL transformations
-
-$rdf_xml = array();
-foreach ($stylesheets as $stylesheet) {
-    $rdf_xml[] = $grddl->transform($stylesheet, $xml);
-}
-
-
-
-print_r($stylesheets);
-print_r($rdf_xml);
-*/
