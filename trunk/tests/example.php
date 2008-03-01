@@ -51,6 +51,7 @@ $tests = array();
 
 //Localized Tests
 //
+
 $tests[] = array('name' => 'P3P work-alike',
                  'in' => 'http://www.w3.org/2001/sw/grddl-wg/td/xmlWithGrddlAttribute.xml',
                  'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/xmlWithGrddlAttribute-output.rdf',
@@ -152,6 +153,7 @@ $tests[] = array('name' => 'A copy of the hcard profile',
                  'in' => 'http://www.w3.org/2001/sw/grddl-wg/td/hcard.html',
                  'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/hcard-output.rdf',
                  'realistic' => dirname(__FILE__) . '/data/hcard-output.rdf');
+
 /** @bug issue 8 */
 /*
 $tests[] = array('name' => 'An XML document with two namespace transformations',
@@ -159,6 +161,7 @@ $tests[] = array('name' => 'An XML document with two namespace transformations',
                  'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/two-transforms-output.rdf',
                  'realistic' => dirname(__FILE__) . '/data/two-transforms-output.rdf');
 */
+
 $tests[] = array('name' => 'An XML document with two namespace transformations and a transform on the root element',
                  'in' => 'http://www.w3.org/2001/sw/grddl-wg/td/three-transforms.xml',
                  'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/three-transforms-output.rdf',
@@ -509,10 +512,13 @@ foreach ($tests as $test) {
     $result = array_reduce($rdf_xml, array($grddl, 'merge'));
 
     try {
-        PHPUnit_Framework_Assert::assertSame($out, $result);
+        PHPUnit_Framework_Assert::assertSame(trim($out), trim($result));
+        print $test['name'] . ": Pass\n";
     } catch (PHPUnit_Framework_AssertionFailedError $e) {
         print $test['name'] . "\n";
         print $e->toString() . "\n\n";
+
+        print $test['realistic'] . "\n";
         print "Got:\n";
         print $result . "\n";
         print "Expected:\n";
