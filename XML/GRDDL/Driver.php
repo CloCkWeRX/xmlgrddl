@@ -353,7 +353,7 @@ abstract class XML_GRDDL_Driver
      *
      * @return  string  Contents of $path
      */
-    public function fetch($path)
+    public function fetch($path, $preferred_extension = 'html')
     {
 
         if ($this->isURI($path)) {
@@ -395,7 +395,9 @@ abstract class XML_GRDDL_Driver
                 $url = new Net_URL($path);
 
                 $rdf_documents = array('http://www.w3.org/2001/sw/grddl-wg/td/sq2ns#',
-                                        'http://www.w3.org/2001/sw/grddl-wg/td/sq2ns');
+                                        'http://www.w3.org/2001/sw/grddl-wg/td/sq2ns',
+                                        'http://www.w3.org/2001/sw/grddl-wg/td/two-transforms-ns#',
+                                        'http://www.w3.org/2001/sw/grddl-wg/td/two-transforms-ns');
 
                 $xml_documents = array('http://www.w3.org/2001/sw/grddl-wg/td/sq1ns#',
                                         'http://www.w3.org/2001/sw/grddl-wg/td/sq1ns');
@@ -405,7 +407,7 @@ abstract class XML_GRDDL_Driver
                 } elseif (in_array($path, $xml_documents)) {
                     $url->path .= '.xml';
                 } else {
-                    $url->path .= '.html';
+                    $url->path .= '.' . $preferred_extension;
                 }
 
                 return $this->fetch($url->getURL());
