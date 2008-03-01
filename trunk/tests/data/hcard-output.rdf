@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dataview="http://www.w3.org/2003/g/data-view#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
-  <rdf:Description rdf:about="">
-    <dataview:profileTransformation rdf:resource="hcard2rdf.xsl"/>
-  </rdf:Description>
   <rdf:Property rdf:ID="locality">
     <rdfs:comment>See "locality" in section 3.2.1 of RFC 2426.</rdfs:comment>
     <rdfs:label>locality</rdfs:label>
@@ -205,5 +202,7 @@
     <rdfs:comment>See section 3.6.7 of RFC 2426.</rdfs:comment>
     <rdfs:label>uid</rdfs:label>
   </rdf:Property>
+  <rdf:Description rdf:about="">
+    <dataview:profileTransformation rdf:resource="hcard2rdf.xsl"/>
+  </rdf:Description>
 </rdf:RDF>
-
