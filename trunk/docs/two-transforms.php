@@ -39,35 +39,40 @@
  * @author    Daniel O'Connor <daniel.oconnor@gmail.com>
  * @copyright 2008 Daniel O'Connor
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   SVN: $Id$
+ * @version   SVN: $Id: namespace-documents2.php 23 2008-03-01 04:00:26Z daniel.oconnor $
  * @link      http://code.google.com/p/xmlgrddl/
  */
 
-require_once 'XML/GRDDL/Driver.php';
+require_once 'XML/GRDDL.php';
 
-class XML_GRDDL_Driver_Xsl extends XML_GRDDL_Driver
-{
-    public function __construct($options = array())
-    {
-        if (!extension_loaded('xsl')) {
-            throw new Exception("Don't forget to enable the xsl extension");
-        }
+/**
+ * An XML document with two namespace transformations
+ *
+ * Compare the results to http://www.w3.org/2001/sw/grddl-wg/td/two-transforms-output.rdf
+ */
 
-        parent::__construct($options);
-    }
+$url = 'http://www.w3.org/2001/sw/grddl-wg/td/two-transforms.xml';
 
-    public function transform($stylesheet, $xml)
-    {
-        $dom = new DOMDocument('1.0');
-        $dom->loadXML($xml);
+//Set what kind of transformations we're interested in.
+$options = array('documentTransformations' => true,     // XML
+                 'namespaceTransformations' => true,    // XML namespaces
+                 'htmlTransformations' => true,         // HTML <link> transforms
+                 'htmlProfileTransformations' => true); // HTML Profile transform
 
-        $xslt = $this->fetch($stylesheet, 'xsl');
-        $xsl = new DOMDocument();
-        $xsl->load($xslt);
+$grddl = XML_GRDDL::factory('xsl', $options);
 
-        $proc = new XSLTProcessor();
-        $proc->importStyleSheet($xsl);
+$data        = $grddl->fetch($url);
+$stylesheets = $grddl->inspect($data, $url);
 
-        return $proc->transformToXML($dom);
-    }
+var_dump($data);
+var_dump($stylesheets);
+$rdf_xml = array();
+foreach ($stylesheets as $stylesheet) {
+    $rdf_xml[] = $grddl->transform($stylesheet, $data);
 }
+
+$result = array_reduce($rdf_xml, array($grddl, 'merge'));
+
+var_dump($result);
+//var_dump($grddl->crawl($url));
+
