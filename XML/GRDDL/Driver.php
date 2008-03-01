@@ -122,7 +122,7 @@ abstract class XML_GRDDL_Driver
     {
         $nodes = $sxe->xpath($xpath);
 
-        $dom     = new DOMDocument('1.0');
+        $dom     = new DOMDocument('1.0', 'UTF-8');
         $dom_sxe = dom_import_simplexml($sxe);
         $dom_sxe = $dom->importNode($dom_sxe, true);
         $dom_sxe = $dom->appendChild($dom_sxe);
@@ -454,8 +454,8 @@ abstract class XML_GRDDL_Driver
             return $graph_xml2;
         }
 
-        $dom1 = new DomDocument();
-        $dom2 = new DomDocument();
+        $dom1 = new DomDocument('1.0', 'UTF-8');
+        $dom2 = new DomDocument('1.0', 'UTF-8');
 
         $dom1->preserveWhiteSpace = false;
         $dom1->formatOutput = true;
