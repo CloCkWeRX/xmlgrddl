@@ -416,7 +416,7 @@ These tests help check for robustness of implementations in the face of various 
 
 */
 foreach ($tests as $test) {
-    $options = array('documentTransformations' => true, 'namespaceTransformations' => true, 'htmlTransformations' => true);
+    $options = array('documentTransformations' => true, 'namespaceTransformations' => true, 'htmlTransformations' => true, 'htmlProfileTransformations' => true);
     $grddl = XML_GRDDL::factory('xsl', $options);
 
     $in     = $grddl->fetch($test['in']);
@@ -429,7 +429,7 @@ foreach ($tests as $test) {
         $rdf_xml[] = $grddl->transform($stylesheet, $in);
     }
 
-	$result = array_reduce($rdf_xml, array($grddl, 'merge'));
+    $result = array_reduce($rdf_xml, array($grddl, 'merge'));
 
     try {
         PHPUnit_Framework_Assert::assertSame($out, $result);
@@ -441,7 +441,7 @@ foreach ($tests as $test) {
         print "Expected:\n";
         print $out . "\n\n";
     }
-    
+
 }
 
 /*
