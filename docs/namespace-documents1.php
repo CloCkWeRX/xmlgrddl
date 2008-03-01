@@ -61,4 +61,18 @@ $options = array('documentTransformations' => true,     // XML
 
 $grddl = XML_GRDDL::factory('xsl', $options);
 
-var_dump($grddl->crawl($url));
+$data        = $grddl->fetch($url);
+$stylesheets = $grddl->inspect($data, $url);
+
+var_dump($data);
+var_dump($stylesheets);
+$rdf_xml = array();
+foreach ($stylesheets as $stylesheet) {
+    $rdf_xml[] = $grddl->transform($stylesheet, $data);
+}
+
+$result = array_reduce($rdf_xml, array($grddl, 'merge'));
+
+var_dump($result);
+//var_dump($grddl->crawl($url));
+
