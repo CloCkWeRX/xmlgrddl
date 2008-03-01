@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.7.1" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0     http://pear.php.net/dtd/tasks-1.0.xsd     http://pear.php.net/dtd/package-2.0     http://pear.php.net/dtd/package-2.0.xsd">
+ <name>XML_GRDDL</name>
+ <uri>http://code.google.com/p/xmlgrddl/</uri>
+ <summary>A PHP library for dealing with GRDDL.</summary>
+ <description>Features
+
+    * Different XSLT engines can be used
+    * Merging of RDF results, as per spec
+    * Pretty close to passing GRDDL test suite tests</description>
+ <lead>
+  <name>Daniel O&apos;Connor</name>
+  <user>doconnor</user>
+  <email>daniel.oconnor@gmail.com</email>
+  <active>yes</active>
+ </lead>
+ <date>2008-03-01</date>
+ <time>02:53:52</time>
+ <version>
+  <release>0.0.2</release>
+  <api>0.0.1</api>
+ </version>
+ <stability>
+  <release>alpha</release>
+  <api>alpha</api>
+ </stability>
+ <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
+ <notes>Implemented proper html profile attribute reading (eRDF, microformats)
+PEAR friendly coding style
+Better error handling / hackyness added to appease w3 servers
+Refactored internal code</notes>
+ <contents>
+  <dir baseinstalldir="PEAR" name="/">
+   <file baseinstalldir="" md5sum="b976814eca7991d4b251cfe01026c338" name="docs/44225.php" role="doc" />
+   <file baseinstalldir="PEAR" md5sum="24673528b118b6a6dcd1e0e92593cd68" name="docs/an-hcard-profile.php" role="doc" />
+   <file baseinstalldir="PEAR" md5sum="2afba145bbcc8837c475d34da98f75d6" name="docs/danc-hcal.php" role="doc" />
+   <file baseinstalldir="" md5sum="564c236f1b62b1189c6d1519bf3b693f" name="docs/example.php" role="doc" />
+   <file baseinstalldir="PEAR" md5sum="2e4f7391713b5d9a1bf689a3e785a2bf" name="docs/namespace-documents1.php" role="doc" />
+   <file baseinstalldir="" md5sum="036156f4aaee1c636f9a521df247487f" name="XML/GRDDL.php" role="php" />
+   <file baseinstalldir="" md5sum="d9f149053531301de375a486218e22c1" name="XML/GRDDL/Driver.php" role="php" />
+   <file baseinstalldir="PEAR" md5sum="7eca341a7304def203e082a52523855f" name="XML/GRDDL/Driver/Xsl.php" role="php" />
+  </dir>
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>5</min>
+   </php>
+   <pearinstaller>
+    <min>1.4.0</min>
+   </pearinstaller>
+   <package>
+    <name>HTTP_Request</name>
+    <channel>pear.php.net</channel>
+    <min>1.4.2</min>
+   </package>
+   <package>
+    <name>Net_URL</name>
+    <channel>pear.php.net</channel>
+   </package>
+   <extension>
+    <name>xsl</name>
+   </extension>
+  </required>
+ </dependencies>
+ <phprelease />
+ <changelog>
+  <release>
+   <version>
+    <release>0.0.1</release>
+    <api>0.0.1</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2008-02-29</date>
+   <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
+   <notes>Initial pear package</notes>
+  </release>
+  <release>
+   <version>
+    <release>0.0.2</release>
+    <api>0.0.1</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2008-03-01</date>
+   <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
+   <notes>Implemented proper html profile attribute reading (eRDF, microformats)
+PEAR friendly coding style
+Better error handling / hackyness added to appease w3 servers
+Refactored internal code</notes>
+  </release>
+ </changelog>
+</package>
