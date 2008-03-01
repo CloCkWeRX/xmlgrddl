@@ -457,6 +457,9 @@ abstract class XML_GRDDL_Driver
         $dom1 = new DomDocument();
         $dom2 = new DomDocument();
 
+        $dom1->preserveWhiteSpace = false;
+        $dom1->formatOutput = true;
+
         $dom1->loadXML($graph_xml1);
         $dom2->loadXML($graph_xml2);
 

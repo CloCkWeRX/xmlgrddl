@@ -3,8 +3,9 @@
   <rdf:Description rdf:about="">
     <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">XHTML document testing the GRDDL profile used along with other profiles</dc:title>
   </rdf:Description>
-<rdf:Description xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:foaf="http://xmlns.com/foaf/0.1/" rdf:about="">
+  <rdf:Description xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:foaf="http://xmlns.com/foaf/0.1/" rdf:about="">
     <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/" rdf:parseType="Resource">
       <foaf:homepage rdf:resource="http://www.w3.org/People/Dom/"/>
     </dc:creator>
-  </rdf:Description></rdf:RDF>
+  </rdf:Description>
+</rdf:RDF>
