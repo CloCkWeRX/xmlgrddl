@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <r:RDF xmlns:r="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-  <r:Description r:about="projects.xml">
+  <r:Description r:about="">
     <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">A few Semantic Web Tools</dc:title>
   </r:Description>
   <r:Property r:about="http://purl.org/dc/elements/1.1/title">
