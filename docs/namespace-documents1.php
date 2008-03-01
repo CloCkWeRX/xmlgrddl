@@ -10,10 +10,10 @@ require_once 'XML/GRDDL.php';
 $url = 'http://www.w3.org/2001/sw/grddl-wg/td/sq1.xml';
 
 //Set what kind of transformations we're interested in.
-$options = array('documentTransformations' => true,     //For dealing with XML
-                 'namespaceTransformations' => true,    //For dealing with XML namespaces
-                 'htmlTransformations' => true,         //For dealing with HTML <link> transformations
-                 'htmlProfileTransformations' => true); //For dealing with HTML Profile transformations
+$options = array('documentTransformations' => true,     // XML
+                 'namespaceTransformations' => true,    // XML namespaces
+                 'htmlTransformations' => true,         // HTML <link> transforms
+                 'htmlProfileTransformations' => true); // HTML Profile transform
 
 $grddl = XML_GRDDL::factory('xsl', $options);
 
