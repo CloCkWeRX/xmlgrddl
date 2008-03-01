@@ -416,11 +416,15 @@ These tests help check for robustness of implementations in the face of various 
 
 */
 foreach ($tests as $test) {
-    $options = array('documentTransformations' => true, 'namespaceTransformations' => true, 'htmlTransformations' => true, 'htmlProfileTransformations' => true);
+    $options = array('documentTransformations' => true,
+                        'namespaceTransformations'   => true,
+                        'htmlTransformations'     => true,
+                        'htmlProfileTransformations' => true);
+
     $grddl = XML_GRDDL::factory('xsl', $options);
 
-    $in     = $grddl->fetch($test['in']);
-    $out    = $grddl->fetch($test['out']);
+    $in  = $grddl->fetch($test['in']);
+    $out = $grddl->fetch($test['out']);
 
     $stylesheets = $grddl->inspect($in, $test['in']);
 
