@@ -1,0 +1,300 @@
+---------- PHP ----------
+P3P work-alike
+	W3C tests: All tests were passed (or had an alternate test pass)!
+	PHP tests: Pass
+Get RDF from a spreadsheet
+	W3C tests: All tests were passed (or had an alternate test pass)!
+	PHP tests: Pass
+RDFa example
+	W3C tests: All tests were passed (or had an alternate test pass)!
+	PHP tests: Pass
+Inline transformation reference
+	W3C tests: All tests were passed (or had an alternate test pass)!
+	PHP tests: Pass
+Base URI: Same document reference
+	W3C tests: All tests were passed (or had an alternate test pass)!
+	PHP tests: Pass
+Title / Author (from specification)
+	W3C tests: All tests were passed (or had an alternate test pass)!
+	PHP tests: Pass
+One transform linked from the head of a document with only the GRDDL profile
+	W3C tests: All tests were passed (or had an alternate test pass)!
+	PHP tests: Pass
+One transform linked from the body of a document with only the GRDDL profile
+	W3C tests: All tests were passed (or had an alternate test pass)!
+	PHP tests: Pass
+One transform linked from the head of a document with several profiles, including the GRDDL profile
+	W3C tests: All tests were passed (or had an alternate test pass)!
+	PHP tests: Pass
+Two transformations linked from the body of a document with the GRDDL profile
+	W3C tests: All tests were passed (or had an alternate test pass)!
+	PHP tests: Pass
+XML document linking to its transformer through the GRDDL attribute
+	W3C tests: All tests were passed (or had an alternate test pass)!
+	PHP tests: Pass
+An hcard profile
+	W3C tests: All tests were passed (or had an alternate test pass)!
+	PHP tests: Pass
+2 profiles: eRDF and hCard
+	W3C tests: All tests were passed (or had an alternate test pass)!
+	PHP tests: Pass
+Namespace documents and media types 1
+	W3C tests: All tests were passed (or had an alternate test pass)!
+	PHP tests: Pass
+Namespace documents and media types 2
+	W3C tests: All tests were passed (or had an alternate test pass)!
+	PHP tests: Pass
+A variant of the card5n test
+	W3C tests: All tests were passed (or had an alternate test pass)!
+	PHP tests: Pass
+hcard from a 1998 review comment on P3P
+	W3C tests: All tests were passed (or had an alternate test pass)!
+	PHP tests: Pass
+An XML document with two namespace transformations and a transform on the root element
+	W3C tests: All tests were passed (or had an alternate test pass)!
+	PHP tests: Pass
+An XML document with two namespace transformations and two transforms on the root element
+	W3C tests: All tests were passed (or had an alternate test pass)!
+	PHP tests: Pass
+Document linking to its transformer through a GRDDL-enabled profile
+	W3C tests: All tests were passed (or had an alternate test pass)!
+	PHP tests: Pass
+Embedded RDF1
+	W3C tests: Traceback (most recent call last):
+  File "G:\work\grddl-tests\testft.py", line 340, in <module>
+    else: sys.exit(main())
+  File "G:\work\grddl-tests\testft.py", line 325, in main
+    results = process(action, processor, tests, project, tester,localRun=localOnly)
+  File "G:\work\grddl-tests\testft.py", line 141, in process
+    data.parse(manifest)
+  File "build\bdist.win32\egg\rdflib\Graph.py", line 661, in parse
+  File "build\bdist.win32\egg\rdflib\syntax\parsers\RDFXMLParser.py", line 37, in parse
+  File "G:\Python25\lib\xml\sax\expatreader.py", line 107, in parse
+    xmlreader.IncrementalParser.parse(self, source)
+  File "G:\Python25\lib\xml\sax\xmlreader.py", line 123, in parse
+    self.feed(buffer)
+  File "G:\Python25\lib\xml\sax\expatreader.py", line 207, in feed
+    self._parser.Parse(data, isFinal)
+  File "G:\Python25\lib\xml\sax\expatreader.py", line 338, in start_element_ns
+    AttributesNSImpl(newattrs, qnames))
+  File "build\bdist.win32\egg\rdflib\syntax\parsers\RDFXMLHandler.py", line 163, in startElementNS
+  File "build\bdist.win32\egg\rdflib\syntax\parsers\RDFXMLHandler.py", line 257, in node_element_start
+  File "build\bdist.win32\egg\rdflib\syntax\parsers\RDFXMLHandler.py", line 190, in error
+rdflib.exceptions.ParserError: http://www.w3.org/2001/sw/grddl-wg/td/inline-rdf1.xml:10:6: Invalid node element URI: http://www.w3.org/1999/02/22-rdf-syntax-ns#RDF
+	PHP tests: Pass
+Embedded RDF2
+	W3C tests: Traceback (most recent call last):
+  File "G:\work\grddl-tests\testft.py", line 340, in <module>
+    else: sys.exit(main())
+  File "G:\work\grddl-tests\testft.py", line 325, in main
+    results = process(action, processor, tests, project, tester,localRun=localOnly)
+  File "G:\work\grddl-tests\testft.py", line 141, in process
+    data.parse(manifest)
+  File "build\bdist.win32\egg\rdflib\Graph.py", line 661, in parse
+  File "build\bdist.win32\egg\rdflib\syntax\parsers\RDFXMLParser.py", line 37, in parse
+  File "G:\Python25\lib\xml\sax\expatreader.py", line 107, in parse
+    xmlreader.IncrementalParser.parse(self, source)
+  File "G:\Python25\lib\xml\sax\xmlreader.py", line 123, in parse
+    self.feed(buffer)
+  File "G:\Python25\lib\xml\sax\expatreader.py", line 207, in feed
+    self._parser.Parse(data, isFinal)
+  File "G:\Python25\lib\xml\sax\expatreader.py", line 338, in start_element_ns
+    AttributesNSImpl(newattrs, qnames))
+  File "build\bdist.win32\egg\rdflib\syntax\parsers\RDFXMLHandler.py", line 163, in startElementNS
+  File "build\bdist.win32\egg\rdflib\syntax\parsers\RDFXMLHandler.py", line 257, in node_element_start
+  File "build\bdist.win32\egg\rdflib\syntax\parsers\RDFXMLHandler.py", line 190, in error
+rdflib.exceptions.ParserError: http://www.w3.org/2001/sw/grddl-wg/td/inline-rdf2.xml:12:6: Invalid node element URI: http://www.w3.org/1999/02/22-rdf-syntax-ns#RDF
+	PHP tests: Pass
+Embedded RDF3
+	W3C tests: All tests were passed (or had an alternate test pass)!
+	PHP tests: Pass
+Glean Profile
+	W3C tests: All tests were passed (or had an alternate test pass)!
+	PHP tests: Pass
+Embedded RDF using a relative xml:base
+	W3C tests: Traceback (most recent call last):
+  File "G:\work\grddl-tests\testft.py", line 340, in <module>
+    else: sys.exit(main())
+  File "G:\work\grddl-tests\testft.py", line 325, in main
+    results = process(action, processor, tests, project, tester,localRun=localOnly)
+  File "G:\work\grddl-tests\testft.py", line 141, in process
+    data.parse(manifest)
+  File "build\bdist.win32\egg\rdflib\Graph.py", line 661, in parse
+  File "build\bdist.win32\egg\rdflib\syntax\parsers\RDFXMLParser.py", line 37, in parse
+  File "G:\Python25\lib\xml\sax\expatreader.py", line 107, in parse
+    xmlreader.IncrementalParser.parse(self, source)
+  File "G:\Python25\lib\xml\sax\xmlreader.py", line 123, in parse
+    self.feed(buffer)
+  File "G:\Python25\lib\xml\sax\expatreader.py", line 207, in feed
+    self._parser.Parse(data, isFinal)
+  File "G:\Python25\lib\xml\sax\expatreader.py", line 338, in start_element_ns
+    AttributesNSImpl(newattrs, qnames))
+  File "build\bdist.win32\egg\rdflib\syntax\parsers\RDFXMLHandler.py", line 163, in startElementNS
+  File "build\bdist.win32\egg\rdflib\syntax\parsers\RDFXMLHandler.py", line 257, in node_element_start
+  File "build\bdist.win32\egg\rdflib\syntax\parsers\RDFXMLHandler.py", line 190, in error
+rdflib.exceptions.ParserError: http://www.w3.org/2001/sw/grddl-wg/td/inline-rdf4.xml:11:6: Invalid node element URI: http://www.w3.org/1999/02/22-rdf-syntax-ns#RDF
+	PHP tests: Failed asserting that <text> is identical to <text>.
+
+G:\work\xml_grddl\tests/data/embedded-rdf4-output.rdf
+Got:
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:data-view="http://www.w3.org/2003/g/data-view#" xmlns:xa="http://www.w3.org/2003/g/xml-attributes#">
+  <rdf:Description rdf:about="" rdf:value="one"/>
+</rdf:RDF>
+
+Expected:
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:data-view="http://www.w3.org/2003/g/data-view#">
+  <rdf:Description rdf:about="" xml:base="../.." rdf:about="" rdf:value="one" />
+</rdf:RDF>
+
+Embedded RDF using an absolute xml:base
+	W3C tests: Traceback (most recent call last):
+  File "G:\work\grddl-tests\testft.py", line 340, in <module>
+    else: sys.exit(main())
+  File "G:\work\grddl-tests\testft.py", line 325, in main
+    results = process(action, processor, tests, project, tester,localRun=localOnly)
+  File "G:\work\grddl-tests\testft.py", line 141, in process
+    data.parse(manifest)
+  File "build\bdist.win32\egg\rdflib\Graph.py", line 661, in parse
+  File "build\bdist.win32\egg\rdflib\syntax\parsers\RDFXMLParser.py", line 37, in parse
+  File "G:\Python25\lib\xml\sax\expatreader.py", line 107, in parse
+    xmlreader.IncrementalParser.parse(self, source)
+  File "G:\Python25\lib\xml\sax\xmlreader.py", line 123, in parse
+    self.feed(buffer)
+  File "G:\Python25\lib\xml\sax\expatreader.py", line 207, in feed
+    self._parser.Parse(data, isFinal)
+  File "G:\Python25\lib\xml\sax\expatreader.py", line 338, in start_element_ns
+    AttributesNSImpl(newattrs, qnames))
+  File "build\bdist.win32\egg\rdflib\syntax\parsers\RDFXMLHandler.py", line 163, in startElementNS
+  File "build\bdist.win32\egg\rdflib\syntax\parsers\RDFXMLHandler.py", line 257, in node_element_start
+  File "build\bdist.win32\egg\rdflib\syntax\parsers\RDFXMLHandler.py", line 190, in error
+rdflib.exceptions.ParserError: http://www.w3.org/2001/sw/grddl-wg/td/inline-rdf5.xml:11:6: Invalid node element URI: http://www.w3.org/1999/02/22-rdf-syntax-ns#RDF
+	PHP tests: Failed asserting that <text> is identical to <text>.
+
+G:\work\xml_grddl\tests/data/embedded-rdf5-output.rdf
+Got:
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:data-view="http://www.w3.org/2003/g/data-view#" xmlns:xa="http://www.w3.org/2003/g/xml-attributes#">
+  <rdf:Description rdf:about="" rdf:value="one"/>
+</rdf:RDF>
+
+Expected:
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:data-view="http://www.w3.org/2003/g/data-view#">
+  <rdf:Description rdf:about="" xml:base="http://example.org/" rdf:value="one" />
+</rdf:RDF>
+
+Embedded RDF using two nested absolute xml:base
+	W3C tests: Traceback (most recent call last):
+  File "G:\work\grddl-tests\testft.py", line 340, in <module>
+    else: sys.exit(main())
+  File "G:\work\grddl-tests\testft.py", line 325, in main
+    results = process(action, processor, tests, project, tester,localRun=localOnly)
+  File "G:\work\grddl-tests\testft.py", line 141, in process
+    data.parse(manifest)
+  File "build\bdist.win32\egg\rdflib\Graph.py", line 661, in parse
+  File "build\bdist.win32\egg\rdflib\syntax\parsers\RDFXMLParser.py", line 37, in parse
+  File "G:\Python25\lib\xml\sax\expatreader.py", line 107, in parse
+    xmlreader.IncrementalParser.parse(self, source)
+  File "G:\Python25\lib\xml\sax\xmlreader.py", line 123, in parse
+    self.feed(buffer)
+  File "G:\Python25\lib\xml\sax\expatreader.py", line 207, in feed
+    self._parser.Parse(data, isFinal)
+  File "G:\Python25\lib\xml\sax\expatreader.py", line 338, in start_element_ns
+    AttributesNSImpl(newattrs, qnames))
+  File "build\bdist.win32\egg\rdflib\syntax\parsers\RDFXMLHandler.py", line 163, in startElementNS
+  File "build\bdist.win32\egg\rdflib\syntax\parsers\RDFXMLHandler.py", line 257, in node_element_start
+  File "build\bdist.win32\egg\rdflib\syntax\parsers\RDFXMLHandler.py", line 190, in error
+rdflib.exceptions.ParserError: http://www.w3.org/2001/sw/grddl-wg/td/inline-rdf6.xml:12:6: Invalid node element URI: http://www.w3.org/1999/02/22-rdf-syntax-ns#RDF
+	PHP tests: Pass
+Embedded RDF using two different xml:base on two different blocks of RDF
+	W3C tests: Traceback (most recent call last):
+  File "G:\work\grddl-tests\testft.py", line 340, in <module>
+    else: sys.exit(main())
+  File "G:\work\grddl-tests\testft.py", line 325, in main
+    results = process(action, processor, tests, project, tester,localRun=localOnly)
+  File "G:\work\grddl-tests\testft.py", line 141, in process
+    data.parse(manifest)
+  File "build\bdist.win32\egg\rdflib\Graph.py", line 661, in parse
+  File "build\bdist.win32\egg\rdflib\syntax\parsers\RDFXMLParser.py", line 37, in parse
+  File "G:\Python25\lib\xml\sax\expatreader.py", line 107, in parse
+    xmlreader.IncrementalParser.parse(self, source)
+  File "G:\Python25\lib\xml\sax\xmlreader.py", line 123, in parse
+    self.feed(buffer)
+  File "G:\Python25\lib\xml\sax\expatreader.py", line 207, in feed
+    self._parser.Parse(data, isFinal)
+  File "G:\Python25\lib\xml\sax\expatreader.py", line 338, in start_element_ns
+    AttributesNSImpl(newattrs, qnames))
+  File "build\bdist.win32\egg\rdflib\syntax\parsers\RDFXMLHandler.py", line 163, in startElementNS
+  File "build\bdist.win32\egg\rdflib\syntax\parsers\RDFXMLHandler.py", line 257, in node_element_start
+  File "build\bdist.win32\egg\rdflib\syntax\parsers\RDFXMLHandler.py", line 190, in error
+rdflib.exceptions.ParserError: http://www.w3.org/2001/sw/grddl-wg/td/inline-rdf8.xml:14:6: Invalid node element URI: http://www.w3.org/1999/02/22-rdf-syntax-ns#RDF
+	PHP tests: Pass
+Embedded RDF using two different xml:lang on two different blocks of RDF
+	W3C tests: Traceback (most recent call last):
+  File "G:\work\grddl-tests\testft.py", line 340, in <module>
+    else: sys.exit(main())
+  File "G:\work\grddl-tests\testft.py", line 325, in main
+    results = process(action, processor, tests, project, tester,localRun=localOnly)
+  File "G:\work\grddl-tests\testft.py", line 141, in process
+    data.parse(manifest)
+  File "build\bdist.win32\egg\rdflib\Graph.py", line 661, in parse
+  File "build\bdist.win32\egg\rdflib\syntax\parsers\RDFXMLParser.py", line 37, in parse
+  File "G:\Python25\lib\xml\sax\expatreader.py", line 107, in parse
+    xmlreader.IncrementalParser.parse(self, source)
+  File "G:\Python25\lib\xml\sax\xmlreader.py", line 123, in parse
+    self.feed(buffer)
+  File "G:\Python25\lib\xml\sax\expatreader.py", line 207, in feed
+    self._parser.Parse(data, isFinal)
+  File "G:\Python25\lib\xml\sax\expatreader.py", line 338, in start_element_ns
+    AttributesNSImpl(newattrs, qnames))
+  File "build\bdist.win32\egg\rdflib\syntax\parsers\RDFXMLHandler.py", line 163, in startElementNS
+  File "build\bdist.win32\egg\rdflib\syntax\parsers\RDFXMLHandler.py", line 257, in node_element_start
+  File "build\bdist.win32\egg\rdflib\syntax\parsers\RDFXMLHandler.py", line 190, in error
+rdflib.exceptions.ParserError: http://www.w3.org/2001/sw/grddl-wg/td/inline-rdf9.xml:13:6: Invalid node element URI: http://www.w3.org/1999/02/22-rdf-syntax-ns#RDF
+	PHP tests: Pass
+An XHTML profile using a base element
+	W3C tests: All tests were passed (or had an alternate test pass)!
+	PHP tests: Failed asserting that <text> is identical to <text>.
+
+G:\work\xml_grddl\tests/data/grddlProfileWithBaseElement-output.rdf
+Got:
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dataview="http://www.w3.org/2003/g/data-view#">
+  <rdf:Description rdf:about="">
+    <dataview:profileTransformation rdf:resource="whichdir"/>
+  </rdf:Description>
+</rdf:RDF>
+
+Expected:
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dataview="http://www.w3.org/2003/g/data-view#">
+  <rdf:Description rdf:about="http://www.w3.org/2001/sw/grddl-wg/td/grddlProfileWithBaseElement">
+    <dataview:profileTransformation rdf:resource="http://www.w3.org/2001/sw/grddl-wg/td/whichdir"/>
+  </rdf:Description>
+</rdf:RDF>
+
+XHTML with an XHTML profile using a base element
+	W3C tests: All tests were passed (or had an alternate test pass)!
+	PHP tests: Failed asserting that <string:> is identical to <text>.
+
+G:\work\xml_grddl\tests/data/xhtmlProfileBase1-output.rdf
+Got:
+
+Expected:
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+  <rdf:Description rdf:about="">
+    <rdfs:comment>Transformed by stylesheet from /2001/sw/grddl-wg/td/</rdfs:comment>
+  </rdf:Description>
+</rdf:RDF>
+
+
+PHP Notice:  HTTP 404 while retrieving http://example.org/one# in G:\work\xml_grddl\XML\GRDDL\Driver.php on line 242
+PHP Notice:  HTTP 404 while retrieving http://example.org/one# in G:\work\xml_grddl\XML\GRDDL\Driver.php on line 242
+PHP Notice:  HTTP 404 while retrieving http://example.org/one# in G:\work\xml_grddl\XML\GRDDL\Driver.php on line 242
+PHP Notice:  HTTP 404 while retrieving http://example.org/one# in G:\work\xml_grddl\XML\GRDDL\Driver.php on line 242
+
+Output completed (4 min 48 sec consumed)

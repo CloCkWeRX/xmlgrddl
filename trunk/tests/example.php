@@ -306,10 +306,15 @@ foreach ($tests as $test) {
     $result = array_reduce($rdf_xml, array($grddl, 'merge'));
 
     try {
-        PHPUnit_Framework_Assert::assertSame(trim($out), trim($result));
-        print $test['name'] . ": Pass\n";
-    } catch (PHPUnit_Framework_AssertionFailedError $e) {
         print $test['name'] . "\n";
+        print "\tW3C tests: ";
+        exec('g:\python25\python G:\work\grddl-tests\testft.py -r g:/work/xml_grddl/scripts/xml_grddl.bat ' . $test['in']);
+
+        PHPUnit_Framework_Assert::assertSame(trim($out), trim($result));
+        print "\tPHP tests: Pass\n\n";
+
+    } catch (PHPUnit_Framework_AssertionFailedError $e) {
+        print "\tPHP tests: ";
         print $e->toString() . "\n\n";
 
         print $test['realistic'] . "\n";
