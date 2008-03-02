@@ -70,7 +70,13 @@ $tests[] = array('name' => 'Embedded RDF using a relative xml:base',
                  'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/embedded-rdf4-output.rdf',
                  'realistic' => dirname(__FILE__) . '/data/embedded-rdf4-output.rdf');
 
-/* @bug    Fails this test, incorrect xml:base attribute being rendered */
+/*
+'The base IRI of other XML documents
+
+When an xml:base attribute is present on the root element of an XML document, this specifies the base IRI for that document, following section 5.1.1 of RFC 3986.
+
+When there is no xml:base attribute on the root element, even if there is such an attribute on a descendent element, then section 5.1.1 of RFC 3986 does not apply.'
+*/
 $tests[] = array('name' => 'Embedded RDF using an absolute xml:base',
                  'in' => 'http://www.w3.org/2001/sw/grddl-wg/td/inline-rdf5.xml',
                  'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/embedded-rdf5-output.rdf',
