@@ -40,13 +40,25 @@
  * @copyright 2008 Daniel O'Connor
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   SVN: $Id$
- * @version   @package_version@
  * @link      http://code.google.com/p/xmlgrddl/
  */
 
 require_once 'HTTP/Request.php';
 require_once 'Net/URL.php';
 
+/**
+ * An abstract driver for GRDDL
+ *
+ * Provides public methods to fetch documents, discover transformations,
+ * execute transformations and merge resulting documents.
+ *
+ * @category Semantic_Web
+ * @package  XML_GRDDL
+ * @author   Daniel O'Connor <daniel.oconnor@gmail.com>
+ * @license  http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version  Release: @package_version@
+ * @link     http://code.google.com/p/xmlgrddl/
+ */
 abstract class XML_GRDDL_Driver
 {
 
@@ -83,28 +95,28 @@ abstract class XML_GRDDL_Driver
 
         $sxe->registerXPathNamespace('grddl', XML_GRDDL::NS);
 
-        $transformations = array();
+        $xsl = array();
         if ($this->options['htmlTransformations']) {
-            $new_transformations = $this->discoverHTMLTransformations($sxe, $original_url);
-            $transformations     = array_merge($new_transformations, $transformations);
+            $new = $this->discoverHTMLTransformations($sxe, $original_url);
+            $xsl = array_merge($new, $xsl);
         }
 
         if ($this->options['htmlProfileTransformations']) {
-            $new_transformations = $this->discoverHTMLProfileTransformations($sxe, $original_url);
-            $transformations     = array_merge($new_transformations, $transformations);
+            $new = $this->discoverHTMLProfileTransformations($sxe, $original_url);
+            $xsl = array_merge($new, $xsl);
         }
 
         if ($this->options['documentTransformations']) {
-            $new_transformations = $this->discoverDocumentTransformations($sxe, $original_url);
-            $transformations     = array_merge($new_transformations, $transformations);
+            $new = $this->discoverDocumentTransformations($sxe, $original_url);
+            $xsl = array_merge($new, $xsl);
         }
 
         if ($this->options['namespaceTransformations']) {
-            $new_transformations = $this->discoverNamespaceTransformations($sxe, $original_url);
-            $transformations     = array_merge($new_transformations, $transformations);
+            $new = $this->discoverNamespaceTransformations($sxe, $original_url);
+            $xsl = array_merge($new, $xsl);
         }
 
-        return $transformations;
+        return $xsl;
     }
 
     /**
@@ -114,13 +126,15 @@ abstract class XML_GRDDL_Driver
      *                                         transformations, found by $xpath
      * @param string           $original_url   Original url this document lived at
      * @param string           $xpath          XPath expression to evaluate
-     * @param string           $attribute_name The attribute to read on the selected node
-     * @param string           $namespace      The namespace of the attribute, if applicable
+     * @param string           $attribute_name The node attribute to read
+     * @param string           $namespace      The namespace of the attribute,
+     *                                         if applicable
      *
      * @return  string[]    A list of transformations, as urls
      */
-    protected function discoverTransformations(SimpleXMLElement $sxe, $original_url, $xpath,
-                                                $attribute_name, $namespace = null)
+    protected function discoverTransformations(SimpleXMLElement $sxe, $original_url,
+                                                $xpath, $attribute_name,
+                                                $namespace = null)
     {
         $nodes = $sxe->xpath($xpath);
 
@@ -156,38 +170,45 @@ abstract class XML_GRDDL_Driver
      *
      * @return  string[]    An array of XSL transformation urls.
      */
-    protected function discoverHTMLTransformations(SimpleXMLElement $sxe, $original_url = null)
+    protected function discoverHTMLTransformations(SimpleXMLElement $sxe,
+                                                    $original_url = null)
     {
 
         $sxe->registerXPathNamespace('xhtml', XML_GRDDL::XHTML_NS);
 
-        $transformation_urls = $this->discoverTransformations($sxe, $original_url, "//xhtml:*[contains(@rel, 'transformation')]", 'href');
+        $xpath = "//xhtml:*[contains(@rel, 'transformation')]";
 
-        return $transformation_urls;
+        $xsl = $this->discoverTransformations($sxe, $original_url, $xpath, 'href');
+
+        return $xsl;
     }
 
     /**
      * Look for profileTransformations (via PROFILE tags).
      *
-     * @param SimpleXMLElement $sxe          Prepopulated document to inspect for transformations, found by $xpath
+     * @param SimpleXMLElement $sxe          Prepopulated document to inspect
+     *                                       for transformations, found by $xpath
      * @param string           $original_url Original url this document lived at
      *
      * @todo    Determine if I need to make //xhtml:head[@profile] softer for HTML 4
-     * @todo    Determine if I need to make //xhtml:head[@profile] behave like a namespace transformation (I think I might?)
+     * @todo    Determine if I need to make //xhtml:head[@profile] behave like
+     *          a namespace transformation (I think I might?)
      *
      * @return  string[]    A list of transformations, as urls
      */
-    protected function discoverHTMLProfileTransformations(SimpleXMLElement $sxe, $original_url = null)
+    protected function discoverHTMLProfileTransformations(SimpleXMLElement $sxe,
+                                                          $original_url = null)
     {
 
         $sxe->registerXPathNamespace('xhtml', XML_GRDDL::XHTML_NS);
 
-        //Todo: Ensure this actually works as expected
-        $profile_urls = $this->discoverTransformations($sxe, $original_url, "//xhtml:head[@profile]", 'profile');
+        $xpath    = "//xhtml:head[@profile]";
+        $profiles = $this->discoverTransformations($sxe, $original_url, $xpath,
+                                                    'profile');
 
         //Todo: extract to knownHTMLProfileTransformations()?
-        $profile_transformation_urls = array();
-        foreach ($profile_urls as $profile_url) {
+        $all_profile_xsls = array();
+        foreach ($profiles as $profile_url) {
 
             try {
                 $xhtml = $this->fetch($profile_url);
@@ -200,13 +221,18 @@ abstract class XML_GRDDL_Driver
 
             if ($profile instanceOf SimpleXMLElement) {
                 $profile->registerXPathNamespace('xhtml', XML_GRDDL::XHTML_NS);
-                $profile_transformations     = $this->discoverTransformations($profile, $profile_url, "//xhtml:*[contains(@rel, 'profileTransformation')]", 'href');
-                $profile_transformation_urls = array_merge($profile_transformation_urls, $profile_transformations);
+
+                $xpath = "//xhtml:*[contains(@rel, 'profileTransformation')]";
+
+                $profile_xsl = $this->discoverTransformations($profile, $profile_url,
+                                                                $xpath, 'href');
+
+                $all_profile_xsls = array_merge($all_profile_xsls, $profile_xsl);
             }
 
         }
 
-        return $profile_transformation_urls;
+        return $all_profile_xsls;
     }
 
     /**
@@ -223,20 +249,26 @@ abstract class XML_GRDDL_Driver
     {
         $transformation_urls = array();
         try {
-            $xml                 = $this->fetch($ns_url);
-            $namespace           = @simplexml_load_string($xml);
+            $xml       = $this->fetch($ns_url);
+            $namespace = @simplexml_load_string($xml);
 
             if ($namespace instanceOf SimpleXMLElement) {
                 $namespace->registerXPathNamespace('grddl', XML_GRDDL::NS);
 
-                $transformation_urls = $this->discoverTransformations($namespace, $ns_url, "//*[@grddl:namespaceTransformation]",
-                                                                            'namespaceTransformation', XML_GRDDL::NS);
+                $xpath     = "//*[@grddl:namespaceTransformation]";
+                $attribute = 'namespaceTransformation';
+
+                $xsl = $this->discoverTransformations($namespace, $ns_url,
+                                                       $xpath, $attribute,
+                                                       XML_GRDDL::NS);
 
                 //Todo: make this stricter to select rdf:Description about:($ns_url)?
-                $rdf_transformation_urls = $this->discoverTransformations($namespace, $ns_url, "//grddl:namespaceTransformation",
-                                                                            'resource', XML_GRDDL::RDF_NS);
+                $xpath   = "//grddl:namespaceTransformation";
+                $rdf_xsl = $this->discoverTransformations($namespace, $ns_url,
+                                                           $xpath, 'resource',
+                                                           XML_GRDDL::RDF_NS);
 
-                $transformation_urls = array_merge($transformation_urls, $rdf_transformation_urls);
+                $transformation_urls = array_merge($xsl, $rdf_xsl);
             }
         } catch (Exception $e) {
             trigger_error($e->getMessage(), E_USER_NOTICE);
@@ -270,13 +302,17 @@ abstract class XML_GRDDL_Driver
      *      and namespace-uri()=
      *        "http://www.w3.org/2003/g/data-view#"]
      *
-     * matches an attribute of an element E, then for each space-separated token REF in the value of that attribute, the resource identified[WEBARCH]
-     & by the absolute form (see section 5.2 Relative Resolution in [RFC3986]) of REF with respect to the base IRI[RFC3987],[XMLBASE] of E
+     * matches an attribute of an element E, then for each space-separated token
+     * REF in the value of that attribute, the resource identified[WEBARCH]
+     * by the absolute form (see section 5.2 Relative Resolution in [RFC3986]) of
+     * REF with respect to the base IRI[RFC3987],[XMLBASE] of E
      * is a GRDDL transformation of N.
      *
-     * Space-separated tokens are the maximal non-empty subsequences not containing the whitespace characters #x9, #xA, #xD or #x20.
+     * Space-separated tokens are the maximal non-empty subsequences not
+     * containing the whitespace characters #x9, #xA, #xD or #x20.
      *
-     * @param SimpleXMLElement $sxe          Prepopulated document to inspect for transformations.
+     * @param SimpleXMLElement $sxe          Prepopulated document to inspect
+     *                                       for transformations.
      * @param string           $original_url The original url this document lived at.
      *
      * @return  string[]    A list of transformations, as urls
@@ -350,13 +386,16 @@ abstract class XML_GRDDL_Driver
     /**
      * Fetch a URL, specifically asking for XML or RDF where available.
      *
-     * @param string $path Path to fetch - typically URL.
+     * @param string $path                Path to fetch - typically URL.
+     * @param string $preferred_extension Preferred default extension
      *
      * @throws  Exception  Unable to fetch url or file
      *
      * @bug Deal with error response codes to exceptions
      * @bug Deal with ambigious reponse codes (300)
      * @bug Deal with race conditions & url redirection
+     *
+     * @todo Remove ugly preferred_extension hackery.
      *
      * @return  string  Contents of $path
      */
@@ -401,17 +440,19 @@ abstract class XML_GRDDL_Driver
                 //further ewww
                 $url = new Net_URL($path);
 
-                $rdf_documents = array('http://www.w3.org/2001/sw/grddl-wg/td/sq2ns#',
-                                        'http://www.w3.org/2001/sw/grddl-wg/td/sq2ns',
-                                        'http://www.w3.org/2001/sw/grddl-wg/td/two-transforms-ns#',
-                                        'http://www.w3.org/2001/sw/grddl-wg/td/two-transforms-ns');
+                $base_path = 'http://www.w3.org/2001/sw/grddl-wg/td/';
 
-                $xml_documents = array('http://www.w3.org/2001/sw/grddl-wg/td/sq1ns#',
-                                        'http://www.w3.org/2001/sw/grddl-wg/td/sq1ns');
+                $rdf_docs = array($base_path . 'sq2ns#',
+                                  $base_path . 'sq2ns',
+                                  $base_path . 'two-transforms-ns#',
+                                  $base_path . 'two-transforms-ns');
 
-                if (in_array($path, $rdf_documents)) {
+                $xml_docs = array($base_path . 'sq1ns#',
+                                  $base_path . 'sq1ns');
+
+                if (in_array($path, $rdf_docs)) {
                     $url->path .= '.rdf';
-                } elseif (in_array($path, $xml_documents)) {
+                } elseif (in_array($path, $xml_docs)) {
                     $url->path .= '.xml';
                 } else {
                     $url->path .= '.' . $preferred_extension;
@@ -465,7 +506,7 @@ abstract class XML_GRDDL_Driver
         $dom2 = new DomDocument('1.0', 'UTF-8');
 
         $dom1->preserveWhiteSpace = false;
-        $dom1->formatOutput = true;
+        $dom1->formatOutput       = true;
 
         $dom1->loadXML($graph_xml1);
         $dom2->loadXML($graph_xml2);
