@@ -1,5 +1,6 @@
 <?php
 // Library tests
+
 $tests[] = array('name' => 'Embedded RDF1',
                  'in' => 'http://www.w3.org/2001/sw/grddl-wg/td/inline-rdf1.xml',
                  'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/embedded-rdf1-output.rdf',
@@ -20,11 +21,14 @@ $tests[] = array('name' => 'Glean Profile',
                  'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/profile-with-spaces-in-rel-output.rdf',
                  'realistic' => dirname(__FILE__) . '/data/profile-with-spaces-in-rel-output.rdf');
 
+/** @bug    Fails this test, incorrect xml:base attribute being rendered */
+
 $tests[] = array('name' => 'Embedded RDF using a relative xml:base',
                  'in' => 'http://www.w3.org/2001/sw/grddl-wg/td/inline-rdf4.xml',
                  'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/embedded-rdf4-output.rdf',
                  'realistic' => dirname(__FILE__) . '/data/embedded-rdf4-output.rdf');
 
+/** @bug    Fails this test, incorrect xml:base attribute being rendered */
 $tests[] = array('name' => 'Embedded RDF using an absolute xml:base',
                  'in' => 'http://www.w3.org/2001/sw/grddl-wg/td/inline-rdf5.xml',
                  'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/embedded-rdf5-output.rdf',
@@ -49,9 +53,9 @@ $tests[] = array('name' => 'Embedded RDF using two different xml:lang on two dif
 $tests[] = array('name' => 'An XHTML profile using a base element',
                  'in' => 'http://www.w3.org/2001/sw/grddl-wg/td/base/grddlProfileWithBaseElement.html',
                  'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/grddlProfileWithBaseElement-output.rdf',
-                 'realistic' => dirname(__FILE__) . '/data/embedded-rdf9-output.rdf');
+                 'realistic' => dirname(__FILE__) . '/data/grddlProfileWithBaseElement-output.rdf');
 
 $tests[] = array('name' => 'XHTML with an XHTML profile using a base element',
                  'in' => 'http://www.w3.org/2001/sw/grddl-wg/td/xhtmlProfileBase1.html',
                  'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/xhtmlProfileBase1-output.rdf',
-                 'realistic' => dirname(__FILE__) . '/data/embedded-rdf9-output.rdf');
+                 'realistic' => dirname(__FILE__) . '/data/xhtmlProfileBase1-output.rdf');
