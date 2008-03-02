@@ -74,12 +74,11 @@ $tests[] = array('name' => 'Title / Author (from specification)',
                  'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/titleauthor-output.rdf',
                  'realistic' => dirname(__FILE__) . '/data/titleauthor-output.rdf');
 
-/* //Skipping test: We'll never try to transform a document with no transformations
 $tests[] = array('name' => 'RDF/XML document',
                  'in' => 'http://www.w3.org/2001/sw/grddl-wg/td/projects.rdf',
                  'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/projects.rdf',
                  'realistic' => dirname(__FILE__) . '/data/projects.rdf');
-*/
+
 
 $tests[] = array('name' => 'One transform linked from the head of a document with only the GRDDL profile',
                  'in' => 'http://www.w3.org/2001/sw/grddl-wg/td/xhtmlWithGrddlProfile.html',
