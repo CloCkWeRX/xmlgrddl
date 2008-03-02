@@ -3,11 +3,13 @@ require_once 'XML/GRDDL.php';
 
 $file = $_SERVER['argv'][1];
 
-$options = array('documentTransformations' => true,     //For dealing with XML
-                 'namespaceTransformations' => true,    //For dealing with XML namespaces
-                 'htmlTransformations' => true,         //For dealing with HTML <link> transformations
-                 'htmlProfileTransformations' => true,  //For dealing with HTML Profile transformations
-                 'library' => true);
+$options = array('documentTransformations' => true,
+                    'htmlTransformations' => true,
+                    'htmlProfileTransformations' => true,
+                    'namespaceTransformations' => true,
+                    'preserveWhiteSpace' => false,
+                    'formatOutput' => true,
+                    'quiet' => true);
 
 $grddl = XML_GRDDL::factory('xsl', $options);
 
