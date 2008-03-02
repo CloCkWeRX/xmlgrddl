@@ -48,7 +48,8 @@ require_once 'XML/GRDDL.php';
 /**
  * An XML document with two namespace transformations
  *
- * Compare the results to http://www.w3.org/2001/sw/grddl-wg/td/two-transforms-output.rdf
+ * Compare the results to
+ * http://www.w3.org/2001/sw/grddl-wg/td/two-transforms-output.rdf
  */
 
 $url = 'http://www.w3.org/2001/sw/grddl-wg/td/two-transforms.xml';

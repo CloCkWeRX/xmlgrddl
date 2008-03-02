@@ -65,7 +65,7 @@ abstract class XML_GRDDL_Driver
     protected $options;
 
     /**
-     * Instance a new instance of XML_GRRDL_Driver directly
+     * Make a new instance of XML_GRRDL_Driver directly
      *
      * @param mixed[] $options An array of driver specific options
      *

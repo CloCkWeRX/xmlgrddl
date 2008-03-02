@@ -40,14 +40,36 @@
  * @copyright 2008 Daniel O'Connor
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   SVN: $Id$
- * @version   @package_version@
  * @link      http://code.google.com/p/xmlgrddl/
  */
 
 require_once 'XML/GRDDL/Driver.php';
 
+/**
+ * A driver for PHP 5's XSL extension.
+ *
+ * Requires PHP 5.2.6, XSL extension
+ *
+ * @category Semantic_Web
+ * @package  XML_GRDDL
+ * @author   Daniel O'Connor <daniel.oconnor@gmail.com>
+ * @license  http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version  Release: @package_version@
+ * @link     http://code.google.com/p/xmlgrddl/
+ */
 class XML_GRDDL_Driver_Xsl extends XML_GRDDL_Driver
 {
+    /**
+     * Make a new instance of XML_GRRDL_Driver_XSL directly
+     *
+     * @param mixed[] $options An array of driver specific options
+     *
+     * @todo Document driver specific options!
+     *
+     * @see XML_GRDDL::factory()
+     *
+     * @return
+     */
     public function __construct($options = array())
     {
         if (!extension_loaded('xsl')) {
@@ -57,11 +79,20 @@ class XML_GRDDL_Driver_Xsl extends XML_GRDDL_Driver
         parent::__construct($options);
     }
 
+    /**
+     * Transform the given XML with the provided XSLT.
+     *
+     * @param string $stylesheet URL or file location of an XSLT transformation
+     * @param string $xml        String of XML
+     *
+     * @return  string  Transformed document contents.
+     */
     public function transform($stylesheet, $xml)
     {
         $old_cwd = getcwd();
 
         $paths = array();
+
         $paths[] = '@DATADIR@/@package_name@/data/grddl-library/';
         $paths[] = dirname(__FILE__) . '/../../../data/grddl-library/';
 
@@ -83,6 +114,7 @@ class XML_GRDDL_Driver_Xsl extends XML_GRDDL_Driver
 
 
             $xslt = $this->fetch($stylesheet, 'xsl');
+
             $xsl = new DOMDocument();
             $xsl->loadXML($xslt);
 
