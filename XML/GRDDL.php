@@ -40,6 +40,7 @@
  * @copyright 2008 Daniel O'Connor
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   SVN: $Id$
+ * @version   @package_version@
  * @link      http://code.google.com/p/xmlgrddl/
  */
 

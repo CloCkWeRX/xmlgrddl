@@ -40,6 +40,7 @@
  * @copyright 2008 Daniel O'Connor
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   SVN: $Id$
+ * @version   @package_version@
  * @link      http://code.google.com/p/xmlgrddl/
  */
 
@@ -58,17 +59,41 @@ class XML_GRDDL_Driver_Xsl extends XML_GRDDL_Driver
 
     public function transform($stylesheet, $xml)
     {
-        $dom = new DOMDocument('1.0');
-        $dom->loadXML($xml);
+        $old_cwd = getcwd();
+
+        $paths = array();
+        $paths[] = '@DATADIR@/@package_name@/data/grddl-library/';
+        $paths[] = dirname(__FILE__) . '/../../../data/grddl-library/';
+
+        foreach ($paths as $path) {
+            if (file_exists($path)) {
+                chdir($path);
+                break;
+            }
+        }
+
+        if (getcwd() == $old_cwd) {
+            //throw new Exception("Could not access standard transform library");
+        }
+
+        try {
+            //Cheat: set cwd() to an xslt library dir?
+            $dom = new DOMDocument('1.0');
+            $dom->loadXML($xml);
 
 
-        $xslt = $this->fetch($stylesheet, 'xsl');
-        $xsl = new DOMDocument();
-        $xsl->loadXML($xslt);
+            $xslt = $this->fetch($stylesheet, 'xsl');
+            $xsl = new DOMDocument();
+            $xsl->loadXML($xslt);
 
-        $proc = new XSLTProcessor();
-        $proc->importStyleSheet($xsl);
+            $proc = new XSLTProcessor();
+            $proc->importStyleSheet($xsl);
 
-        return $proc->transformToXML($dom);
+            return $proc->transformToXML($dom);
+        } catch (Exception $e) {
+            chdir($old_cwd);
+
+            throw $e;
+        }
     }
 }
