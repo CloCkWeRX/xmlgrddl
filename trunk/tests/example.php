@@ -46,37 +46,42 @@
 require_once 'XML/GRDDL.php';
 require_once 'PHPUnit/Framework/Assert.php';
 
+$options = array('documentTransformations' => true,
+                'htmlTransformations' => true,
+                'htmlProfileTransformations' => true,
+                'namespaceTransformations' => true,
+                'preserveWhiteSpace' => false,
+                'formatOutput' => true,
+                'quiet' => true && false);
+
 //See http://www.w3.org/TR/grddl-tests/#grddl-library
 $tests = array();
 
 //Localized Tests
-require_once 'local.php';
+//require_once 'local.php';
 
 //Namespace Documents and Absolute Locations
-require_once 'namespaces.php';
+//require_once 'namespaces.php';
 
 // Library tests
-require_once 'library.php';
+//require_once 'library.php';
 
 // Ambiguous Infosets, Representations, and Traversals
 require_once 'ambiguous.php';
 
 foreach ($tests as $test) {
-    $grddl = XML_GRDDL::factory('xsl', array('documentTransformations' => true,
-                                                    'htmlTransformations' => true,
-                                                    'htmlProfileTransformations' => true,
-                                                    'namespaceTransformations' => true,
-                                                    'preserveWhiteSpace' => false,
-                                                    'formatOutput' => true,
-                                                    'quiet' => true));
+    $test_options = array_merge($options, isset($test['options']) ? $test['options'] : array());
+    $grddl = XML_GRDDL::factory('xsl', $test_options);
 
     $in = $grddl->fetch($test['in']);
 
     if (!file_exists($test['realistic'])) {
         file_put_contents($test['realistic'], $grddl->fetch($test['out']));
     }
-
-    $out = $grddl->fetch($test['realistic']);
+    $out = "";
+    if (!empty($test['realistic'])) {
+        $out = $grddl->fetch($test['realistic']);
+    }
 
     $stylesheets = $grddl->inspect($in, $test['in']);
 
