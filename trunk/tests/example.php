@@ -280,13 +280,7 @@ These tests help check for robustness of implementations in the face of various 
 
 */
 foreach ($tests as $test) {
-    $options = array('documentTransformations' => true,
-                        'namespaceTransformations'   => true,
-                        'htmlTransformations'     => true,
-                        'htmlProfileTransformations' => true,
-                        'library' => true);
-
-    $grddl = XML_GRDDL::factory('xsl', $options);
+    $grddl = XML_GRDDL::factory('xsl');
 
     $in = $grddl->fetch($test['in']);
 
@@ -307,10 +301,7 @@ foreach ($tests as $test) {
 
     try {
         print $test['name'] . "\n";
-        print "\tW3C tests: ";
-        exec('g:\python25\python G:\work\grddl-tests\testft.py -r g:/work/xml_grddl/scripts/xml_grddl.bat ' . $test['in']);
-
-        PHPUnit_Framework_Assert::assertSame(trim($out), trim($result));
+        PHPUnit_Framework_Assert::assertSame(trim($grddl->prettify($out)), trim($grddl->prettify($result)));
         print "\tPHP tests: Pass\n\n";
 
     } catch (PHPUnit_Framework_AssertionFailedError $e) {
@@ -325,3 +316,17 @@ foreach ($tests as $test) {
     }
 
 }
+
+/*
+
+define('PYTHON_BIN', 'g:/Python25/python.exe');
+define('SCRIPT_DIR', 'g:/work/xml_grddl/scripts');
+define('TEST_DIR', dirname(__FILE__));
+
+
+        print "\tW3C tests: ";
+
+//        $cmd = sprintf('%s %s/testft.py --debug -r %s/xml_grddl %s', PYTHON_BIN, SCRIPT_DIR, SCRIPT_DIR, $test['in']);
+//        print $cmd . "\n";
+//        print shell_exec($cmd) . "\n";
+*/
