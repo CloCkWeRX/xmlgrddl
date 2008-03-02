@@ -1,0 +1,758 @@
+#summary How to use XML_GRDDL
+#labels Phase-Implementation,Featured
+
+Three quick examples of using XML_GRDDL.
+
+= Find all GRDDL transformations =
+I have a document, and I want to see if it has GRDDL transformations anywhere.
+{{{
+<?php
+require_once 'XML/GRDDL.php';
+
+/**
+ * Example: Discover if there are any GRDDL transformations
+ * from Dan Connolly's w3 homepage.
+ */
+
+$url = 'http://www.w3.org/People/Connolly/';
+
+//Load a new GRDDL driver, using PHP's internal XSL extension
+$grddl = XML_GRDDL::factory('Xsl');
+
+//Retrieve the URL, using content negotiation
+$xml = $grddl->fetch($url);
+
+//Inspect the XML, and make sure we're aware of the baseURI
+$stylesheets = $grddl->inspect($xml, $url);
+
+print "Transformations available for " . $url . ":\n";
+var_dump($stylesheets);
+}}}
+
+Produces:
+{{{
+Transformations available for http://www.w3.org/People/Connolly/:
+array(4) {
+  [0]=>
+  string(40) "http://www.w3.org/2002/12/cal/glean-hcal"
+  [1]=>
+  string(63) "http://www.w3.org/2002/12/cal/../../../2006/vcard/hcard2rdf.xsl"
+  [2]=>
+  string(40) "http://purl.org/NET/erdf/extract-rdf.xsl"
+  [4]=>
+  string(44) "http://www.w3.org/2002/12/cal/glean-hcal.xsl"
+}
+}}}
+
+= Extract RDF using a transformation =
+{{{
+//Use those transformations
+$rdf_xml = array();
+foreach ($stylesheets as $stylesheet) {
+    $rdf_xml[] = $grddl->transform($stylesheet, $xml);
+}
+
+foreach ($stylesheets as $n => $stylesheet) {
+    print "Transformation " . $stylesheet . " produced:\n";
+    print $rdf_xml[$n] . "\n\n";
+}
+}}}
+
+Produces
+{{{
+Transformation http://www.w3.org/2002/12/cal/glean-hcal produced:
+<?xml version="1.0"?>
+<r:RDF xmlns:r="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:c="http://www.w3.org/2002/12/cal/icaltzd#" xmlns:h="http://www.w3.org/1999/xhtml">
+  <c:Vcalendar r:about="http://www.w3.org/People/Connolly/">
+    <c:prodid>-//connolly.w3.org//RDF Calendar $Date: 2007/06/30 19:05:32 $ (BETA)//EN</c:prodid>
+    <c:version>2.0</c:version>
+    <c:component>
+      <c:Vevent r:about="http://www.w3.org/People/Connolly/#w3ctp200711">
+        <c:organizer r:resource="http://www.w3.org/People/Connolly/#me"/>
+        <summary xmlns="http://www.w3.org/2002/12/cal/icaltzd#">W3C Technical
+  Plenary Meetings</summary>
+        <dtstart xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2007-11-05</dtstart>
+        <dtend xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2007-11-11</dtend>
+        <url xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:resource="http://www.w3.org/2007/11/TPAC/"/>
+        <location xmlns="http://www.w3.org/2002/12/cal/icaltzd#">Cambridge,
+  MA</location>
+      </c:Vevent>
+    </c:component>
+    <c:component>
+      <c:Vevent r:about="http://www.w3.org/People/Connolly/#_6345">
+        <c:organizer r:resource="http://www.w3.org/People/Connolly/#me"/>
+        <summary xmlns="http://www.w3.org/2002/12/cal/icaltzd#">W3C Video on the Web Workshop</summary>
+        <dtstart xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2007-12-12</dtstart>
+        <dtend xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2007-12-14</dtend>
+        <url xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:resource="http://www.w3.org/2007/08/video"/>
+        <location xmlns="http://www.w3.org/2002/12/cal/icaltzd#">San Jose, CA</location>
+      </c:Vevent>
+    </c:component>
+    <c:component>
+      <c:Vevent r:about="http://www.w3.org/People/Connolly/#_6768">
+        <c:organizer r:resource="http://www.w3.org/People/Connolly/#me"/>
+        <summary xmlns="http://www.w3.org/2002/12/cal/icaltzd#">Tools of Change (TOC)</summary>
+        <dtstart xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2008-02-10</dtstart>
+        <dtend xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2008-02-14</dtend>
+        <url xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:resource="http://www.w3.org/People/Connolly/#_6768"/>
+        <location xmlns="http://www.w3.org/2002/12/cal/icaltzd#">New York, NY</location>
+      </c:Vevent>
+    </c:component>
+    <c:component>
+      <c:Vevent r:about="http://www.w3.org/People/Connolly/#tag200802">
+        <c:organizer r:resource="http://www.w3.org/People/Connolly/#me"/>
+        <summary xmlns="http://www.w3.org/2002/12/cal/icaltzd#">TAG meeting</summary>
+        <dtstart xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2008-02-26</dtstart>
+        <dtend xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2008-02-29</dtend>
+        <url xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:resource="http://www.w3.org/2001/tag/#deliverables"/>
+        <location xmlns="http://www.w3.org/2002/12/cal/icaltzd#">Vancouver</location>
+      </c:Vevent>
+    </c:component>
+    <c:component>
+      <c:Vevent r:about="http://www.w3.org/People/Connolly/#sxsw2008">
+        <c:organizer r:resource="http://www.w3.org/People/Connolly/#me"/>
+        <summary xmlns="http://www.w3.org/2002/12/cal/icaltzd#">SXSW Interactive</summary>
+        <dtstart xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2008-03-07</dtstart>
+        <dtend xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2008-03-12</dtend>
+        <url xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:resource="http://2008.sxsw.com/interactive/"/>
+        <location xmlns="http://www.w3.org/2002/12/cal/icaltzd#">Austin,
+  TX</location>
+      </c:Vevent>
+    </c:component>
+    <c:component>
+      <c:Vevent r:about="http://www.w3.org/People/Connolly/#_6432">
+        <c:organizer r:resource="http://www.w3.org/People/Connolly/#me"/>
+        <summary xmlns="http://www.w3.org/2002/12/cal/icaltzd#">W3C AC meeting</summary>
+        <dtstart xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2008-04-20</dtstart>
+        <dtend xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2008-04-23</dtend>
+        <url xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:resource="http://www.w3.org/Member/Meeting/"/>
+        <location xmlns="http://www.w3.org/2002/12/cal/icaltzd#">Beijing, China</location>
+      </c:Vevent>
+    </c:component>
+    <c:component>
+      <c:Vevent r:about="http://www.w3.org/People/Connolly/#_6522">
+        <c:organizer r:resource="http://www.w3.org/People/Connolly/#me"/>
+        <summary xmlns="http://www.w3.org/2002/12/cal/icaltzd#">TAG ftf</summary>
+        <dtstart xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2008-05-19</dtstart>
+        <dtend xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2008-05-22</dtend>
+        <url xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:resource="http://www.w3.org/People/Connolly/#_6522"/>
+        <location xmlns="http://www.w3.org/2002/12/cal/icaltzd#">Bristol</location>
+      </c:Vevent>
+    </c:component>
+    <c:component>
+      <c:Vevent r:about="http://www.w3.org/People/Connolly/#semtech2008">
+        <c:organizer r:resource="http://www.w3.org/People/Connolly/#me"/>
+        <summary xmlns="http://www.w3.org/2002/12/cal/icaltzd#">SemTech
+  Conference</summary>
+        <dtstart xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2008-05-18</dtstart>
+        <dtend xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2008-05-23</dtend>
+        <url xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:resource="http://www.w3.org/People/Connolly/#semtech2008"/>
+        <location xmlns="http://www.w3.org/2002/12/cal/icaltzd#">San JosÃ©</location>
+        <status xmlns="http://www.w3.org/2002/12/cal/icaltzd#">declined</status>
+      </c:Vevent>
+    </c:component>
+    <c:component>
+      <c:Vevent r:about="http://www.w3.org/People/Connolly/#_6839">
+        <c:organizer r:resource="http://www.w3.org/People/Connolly/#me"/>
+        <summary xmlns="http://www.w3.org/2002/12/cal/icaltzd#">Linked Data Planet</summary>
+        <dtstart xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2008-06-17</dtstart>
+        <dtend xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2008-06-19</dtend>
+        <url xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:resource="http://www.w3.org/People/Connolly/#_6839"/>
+        <location xmlns="http://www.w3.org/2002/12/cal/icaltzd#">Roosevelt Hotel, NY</location>
+        <status xmlns="http://www.w3.org/2002/12/cal/icaltzd#">tentative</status>
+      </c:Vevent>
+    </c:component>
+    <c:component>
+      <c:Vevent r:about="http://www.w3.org/People/Connolly/#_6813">
+        <c:organizer r:resource="http://www.w3.org/People/Connolly/#me"/>
+        <summary xmlns="http://www.w3.org/2002/12/cal/icaltzd#">KM Australia 2008</summary>
+        <dtstart xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2008-07-21</dtstart>
+        <dtend xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2008-07-24</dtend>
+        <url xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:resource="http://www.w3.org/People/Connolly/#_6813"/>
+        <location xmlns="http://www.w3.org/2002/12/cal/icaltzd#">Melbourne Convention Centre, Australia</location>
+      </c:Vevent>
+    </c:component>
+  </c:Vcalendar>
+</r:RDF>
+
+
+Transformation http://www.w3.org/2002/12/cal/../../../2006/vcard/hcard2rdf.xsl produced:
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:v="http://www.w3.org/2006/vcard/ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:h="http://www.w3.org/1999/xhtml">
+  <v:VCard>
+    <v:logo rdf:resource="../../Icons/w3c_home.png"/>
+    <v:fn>Dan Connolly</v:fn>
+    <v:photo rdf:resource="9704/dan_c_thumb.jpg"/>
+    <v:title>Research Scientist</v:title>
+    <v:org rdf:parseType="Resource">
+      <rdf:type rdf:resource="http://www.w3.org/2006/vcard/ns#Organization"/>
+      <v:organization-name>MIT/CSAIL</v:organization-name>
+    </v:org>
+    <v:url rdf:resource="http://www.csail.mit.edu/"/>
+    <v:email rdf:resource="mailto:connolly@w3.org"/>
+    <v:adr rdf:parseType="Resource">
+      <rdf:type rdf:resource="http://www.w3.org/2006/vcard/ns#Address"/>
+      <v:extendedAddress>Room 32-G506</v:extendedAddress>
+      <v:streetAddress>32 Vassar Street</v:streetAddress>
+      <v:locality>Cambridge</v:locality>
+      <v:region>MA</v:region>
+      <v:postalCode>02139</v:postalCode>
+      <v:countryName>USA</v:countryName>
+    </v:adr>
+    <v:geo rdf:parseType="Resource">
+      <rdf:type rdf:resource="http://www.w3.org/2006/vcard/ns#Geo"/>
+    </v:geo>
+    <v:tel rdf:resource="tel:+1-617-395-0241"/>
+    <v:url rdf:resource="irc://irc.freenode.net/DanC,isnick"/>
+    <v:url rdf:resource="http://www.w3.org/People/Connolly/"/>
+  </v:VCard>
+  <v:VCard rdf:ID="mci">
+    <v:fn>Kansas
+    City International Airport</v:fn>
+    <v:url rdf:resource="http://en.wikipedia.org/wiki/Kansas_City_International_Airport"/>
+    <v:org rdf:parseType="Resource">
+      <rdf:type rdf:resource="http://www.w3.org/2006/vcard/ns#Organization"/>
+      <v:organization-name>Kansas
+    City International Airport</v:organization-name>
+    </v:org>
+    <v:adr rdf:parseType="Resource">
+      <rdf:type rdf:resource="http://www.w3.org/2006/vcard/ns#Address"/>
+      <v:locality>Kansas
+    City</v:locality>
+    </v:adr>
+    <v:geo rdf:parseType="Resource">
+      <rdf:type rdf:resource="http://www.w3.org/2006/vcard/ns#Geo"/>
+      <v:latitude>39.2975</v:latitude>
+      <v:longitude>-94.7139</v:longitude>
+    </v:geo>
+  </v:VCard>
+</rdf:RDF>
+
+
+Transformation http://purl.org/NET/erdf/extract-rdf.xsl produced:
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:h="http://www.w3.org/1999/xhtml" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:doap="http://usefulinc.com/ns/doap#" xmlns:admin="http://webns.net/mvcb/">
+  <rdf:Description rdf:about="">
+    <admin:generatorAgent rdf:resource="http://purl.org/NET/erdf/extract"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="">
+    <created xmlns="http://purl.org/dc/terms/">1994-02</created>
+    <versionInfo xmlns="http://www.w3.org/2002/07/owl#">$Revision: 1.532 $ of $Date: 2008/02/06 15:51:50 $</versionInfo>
+    <modified xmlns="http://purl.org/dc/terms/">$Date: 2008/02/06 15:51:50 $</modified>
+    <primaryTopic xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="#me" rdfs:label="Dan Connolly"/>
+    <license xmlns="http://purl.org/dc/terms/" rdf:resource="http://www.w3.org/Consortium/Legal/2002/copyright-documents-20021231" rdfs:label="some rights reserved"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#travl"/>
+  <rdf:Description rdf:about="#w3ctp200711"/>
+  <rdf:Description rdf:about="#_6345"/>
+  <rdf:Description rdf:about="#_6768"/>
+  <rdf:Description rdf:about="#tag200802"/>
+  <rdf:Description rdf:about="#sxsw2008"/>
+  <rdf:Description rdf:about="#_6432"/>
+  <rdf:Description rdf:about="#_6522"/>
+  <rdf:Description rdf:about="#semtech2008"/>
+  <rdf:Description rdf:about="#_6839"/>
+  <rdf:Description rdf:about="#_6813"/>
+  <rdf:Description rdf:about="#me">
+    <name xmlns="http://xmlns.com/foaf/0.1/">Dan Connolly</name>
+    <nick xmlns="http://xmlns.com/foaf/0.1/">DanC</nick>
+    <mbox xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="mailto:connolly@w3.org" rdfs:label="connolly@w3.org"/>
+    <homepage xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://www.w3.org/People/Connolly/"/>
+    <currentProject xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="../../html/wg/" rdfs:label="HTML WG"/>
+    <currentProject xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="../../2001/tag/" rdfs:label="TAG"/>
+    <interest xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://www.w3.org/2003/g/data-view" rdfs:label="GRDDL"/>
+    <currentProject xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="../../2001/sw/grddl-wg/" rdfs:label="WG"/>
+    <interest xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://www.w3.org/2002/12/cal/" rdfs:label="RDF Calendar"/>
+    <currentProject xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://www.w3.org/2002/12/cal/" rdfs:label="RDF Calendar"/>
+    <interest xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="../../QA/" rdfs:label="QA"/>
+    <currentProject xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="../../2001/sw/DataAccess/" rdfs:label="DAWG/SPARQL"/>
+    <currentProject xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://www.w3.org/2001/sw/interest/" rdfs:label="Semantic Web IG"/>
+    <interest xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="/2004/OWL/" rdfs:label="OWL"/>
+    <pastProject xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="../../MarkUp/html-spec/index.html" rdfs:label="HTML 2"/>
+    <weblog xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://dig.csail.mit.edu/breadcrumbs/blog/2" rdfs:label="breadcrumbs"/>
+    <currentProject xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="/2000/10/swap/doc/cwm" rdfs:label="cwm"/>
+    <currentProject xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="/DesignIssues/Notation3" rdfs:label="N3"/>
+    <currentProject xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://dig.csail.mit.edu/2005/ajar/ajaw/Help" rdfs:label="tabulator"/>
+    <currentProject xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://www.policyawareweb.org/" rdfs:label="PAW"/>
+    <currentProject xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://dig.csail.mit.edu/TAMI/" rdfs:label="TAMI"/>
+    <interest xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://www.microformats.org/" rdfs:label="microformats"/>
+    <made xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://www.advogato.org/person/connolly/" rdfs:label="open source"/>
+    <weblog xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://www.advogato.org/person/connolly/" rdfs:label="open source"/>
+    <seeAlso xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.advogato.org/person/connolly/foaf.rdf"/>
+    <openid xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="./"/>
+    <made xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://dm93.org/" rdfs:label="family"/>
+    <interest xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://dm93.org/z2001/VolleyBallInKC" rdfs:label="volleyball"/>
+    <interest xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://dm93.org/z2001/ThreeChordsAndTheTruth" rdfs:label="guitar"/>
+    <workplaceHomepage xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://www.csail.mit.edu/" rdfs:label="CSAIL"/>
+    <currentProject xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://dig.csail.mit.edu/" rdfs:label="DIG"/>
+    <workplaceHomepage xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="../../" rdfs:label="W3C"/>
+    <pastProject xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="/Protocols/" rdfs:label="HTTP"/>
+    <pastProject xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="/XML/" rdfs:label="XML"/>
+    <made xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://del.icio.us/connolly/w3c" rdfs:label="del.ici.ous links and notes"/>
+    <made xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="/2000/10/swap/doc/" rdfs:label="Semantic Web Tutorial Using N3"/>
+    <interest xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="/2000/10/swap/pim/travel.html" rdfs:label="Semantic Web Travel&#10;    Tools"/>
+    <made xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://dig.csail.mit.edu/breadcrumbs/node/171" rdfs:label="Celebrating OWL interoperability and spec&#10;    quality"/>
+    <made xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://www.w3.org/2002/12/cal/mash/slides" rdfs:label="Semantic Web Data Integration with hCalendar and&#10;    GRDDL"/>
+    <made xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://www.w3.org/TR/rdfcal/" rdfs:label="RDF Calendar - an application of the Resource&#10;    Description Framework to iCalendar Data"/>
+    <made xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://www-mit.w3.org/2000/Talks/www9-larch/all.htm" rdfs:label="Specifying Web Architecture with Larch"/>
+    <publications xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="pubs" rdfs:label="pubs/writings"/>
+    <img xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="9704/dan_c_thumb.jpg" rdfs:label="Dan in 1997"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#me2">
+    <based_near xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="#mci"/>
+    <nick xmlns="http://xmlns.com/foaf/0.1/">DanC</nick>
+    <sameAs xmlns="http://www.w3.org/2002/07/owl#" rdf:resource="#me"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="#mci">
+    <lat xmlns="http://www.w3.org/2003/01/geo/wgs84_pos#">39.2975</lat>
+    <long xmlns="http://www.w3.org/2003/01/geo/wgs84_pos#">-94.7139</long>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://feeds.technorati.com/events/http%3A//www.w3.org/People/Connolly/"/>
+  <rdf:Description rdf:about="http://www.w3.org/2007/11/TPAC/"/>
+  <rdf:Description rdf:about="http://www.w3.org/2007/08/video"/>
+  <rdf:Description rdf:about="http://en.oreilly.com/toc2008/public/content/home"/>
+  <rdf:Description rdf:about="http://en.wikipedia.org/wiki/Vancouver"/>
+  <rdf:Description rdf:about="http://www.w3.org/2001/tag/#deliverables"/>
+  <rdf:Description rdf:about="http://2008.sxsw.com/interactive/"/>
+  <rdf:Description rdf:about="http://www.w3.org/Member/Meeting/"/>
+  <rdf:Description rdf:about="http://www.w3.org/2001/tag/#deliverables"/>
+  <rdf:Description rdf:about="http://www.linkeddataplanet.com/index.php"/>
+  <rdf:Description rdf:about="http://www.kmaustralia.com/"/>
+  <rdf:Description rdf:about="http://www2007.org/"/>
+  <rdf:Description rdf:about="../../"/>
+  <rdf:Description rdf:about="http://www.csail.mit.edu/"/>
+  <rdf:Description rdf:about="mailto:connolly@w3.org"/>
+  <rdf:Description rdf:about="http://maps.google.com/maps?f=q&amp;hl=en&amp;geocode=&amp;q=32+Vassar+Street,+02139&amp;sll=37.0625,-95.677068&amp;sspn=76.725149,106.523438&amp;ie=UTF8&amp;z=16&amp;iwloc=addr&amp;om=1"/>
+  <rdf:Description rdf:about="http://www.csail.mit.edu/resources/maps/5G/G506.gif"/>
+  <rdf:Description rdf:about="tel:+1-617-395-0241"/>
+  <rdf:Description rdf:about="irc://irc.freenode.net/DanC,isnick"/>
+  <rdf:Description rdf:about="http://www.w3.org/People/Connolly/"/>
+  <rdf:Description rdf:about="http://technorati.com/contacts/http://www.w3.org/People/Connolly/"/>
+  <rdf:Description rdf:about="../../"/>
+  <rdf:Description rdf:about="http://en.wikipedia.org/wiki/Kansas_City_International_Airport">
+    <primaryTopic xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="#mci"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="/2000/10/swap/doc/">
+    <title xmlns="http://purl.org/dc/elements/1.1/">Semantic Web Tutorial Using N3</title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://dig.csail.mit.edu/breadcrumbs/node/171">
+    <title xmlns="http://purl.org/dc/elements/1.1/">Celebrating OWL interoperability and spec
+    quality</title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2002/12/cal/mash/slides">
+    <title xmlns="http://purl.org/dc/elements/1.1/">Semantic Web Data Integration with hCalendar and
+    GRDDL</title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/TR/rdfcal/">
+    <title xmlns="http://purl.org/dc/elements/1.1/">RDF Calendar - an application of the Resource
+    Description Framework to iCalendar Data</title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www-mit.w3.org/2000/Talks/www9-larch/all.htm">
+    <title xmlns="http://purl.org/dc/elements/1.1/">Specifying Web Architecture with Larch</title>
+  </rdf:Description>
+</rdf:RDF>
+}}}
+
+= Merge one or more RDF/XML documents =
+{{{
+//print $grddl->merge($xml1, $xml2); returns the combined 
+//XML but we've got lots to merge, so we'll do it with array_reduce.
+
+$result = array_reduce($rdf_xml, array($grddl, 'merge'));
+
+print "The RDF/XML which extracted from " . $url . " is:\n";
+print $result;
+}}}
+Produces:
+{{{
+The RDF/XML which extracted from http://www.w3.org/People/Connolly/ is:
+<?xml version="1.0"?>
+<r:RDF xmlns:r="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:c="http://www.w3.org/2002/12/cal/icaltzd#" xmlns:h="http://www.w3.org/1999/xhtml">
+  <c:Vcalendar r:about="http://www.w3.org/People/Connolly/">
+    <c:prodid>-//connolly.w3.org//RDF Calendar $Date: 2007/06/30 19:05:32 $ (BETA)//EN</c:prodid>
+    <c:version>2.0</c:version>
+    <c:component>
+      <c:Vevent r:about="http://www.w3.org/People/Connolly/#w3ctp200711">
+        <c:organizer r:resource="http://www.w3.org/People/Connolly/#me"/>
+        <summary xmlns="http://www.w3.org/2002/12/cal/icaltzd#">W3C Technical
+  Plenary Meetings</summary>
+        <dtstart xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2007-11-05</dtstart>
+        <dtend xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2007-11-11</dtend>
+        <url xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:resource="http://www.w3.org/2007/11/TPAC/"/>
+        <location xmlns="http://www.w3.org/2002/12/cal/icaltzd#">Cambridge,
+  MA</location>
+      </c:Vevent>
+    </c:component>
+    <c:component>
+      <c:Vevent r:about="http://www.w3.org/People/Connolly/#_6345">
+        <c:organizer r:resource="http://www.w3.org/People/Connolly/#me"/>
+        <summary xmlns="http://www.w3.org/2002/12/cal/icaltzd#">W3C Video on the Web Workshop</summary>
+        <dtstart xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2007-12-12</dtstart>
+        <dtend xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2007-12-14</dtend>
+        <url xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:resource="http://www.w3.org/2007/08/video"/>
+        <location xmlns="http://www.w3.org/2002/12/cal/icaltzd#">San Jose, CA</location>
+      </c:Vevent>
+    </c:component>
+    <c:component>
+      <c:Vevent r:about="http://www.w3.org/People/Connolly/#_6768">
+        <c:organizer r:resource="http://www.w3.org/People/Connolly/#me"/>
+        <summary xmlns="http://www.w3.org/2002/12/cal/icaltzd#">Tools of Change (TOC)</summary>
+        <dtstart xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2008-02-10</dtstart>
+        <dtend xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2008-02-14</dtend>
+        <url xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:resource="http://www.w3.org/People/Connolly/#_6768"/>
+        <location xmlns="http://www.w3.org/2002/12/cal/icaltzd#">New York, NY</location>
+      </c:Vevent>
+    </c:component>
+    <c:component>
+      <c:Vevent r:about="http://www.w3.org/People/Connolly/#tag200802">
+        <c:organizer r:resource="http://www.w3.org/People/Connolly/#me"/>
+        <summary xmlns="http://www.w3.org/2002/12/cal/icaltzd#">TAG meeting</summary>
+        <dtstart xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2008-02-26</dtstart>
+        <dtend xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2008-02-29</dtend>
+        <url xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:resource="http://www.w3.org/2001/tag/#deliverables"/>
+        <location xmlns="http://www.w3.org/2002/12/cal/icaltzd#">Vancouver</location>
+      </c:Vevent>
+    </c:component>
+    <c:component>
+      <c:Vevent r:about="http://www.w3.org/People/Connolly/#sxsw2008">
+        <c:organizer r:resource="http://www.w3.org/People/Connolly/#me"/>
+        <summary xmlns="http://www.w3.org/2002/12/cal/icaltzd#">SXSW Interactive</summary>
+        <dtstart xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2008-03-07</dtstart>
+        <dtend xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2008-03-12</dtend>
+        <url xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:resource="http://2008.sxsw.com/interactive/"/>
+        <location xmlns="http://www.w3.org/2002/12/cal/icaltzd#">Austin,
+  TX</location>
+      </c:Vevent>
+    </c:component>
+    <c:component>
+      <c:Vevent r:about="http://www.w3.org/People/Connolly/#_6432">
+        <c:organizer r:resource="http://www.w3.org/People/Connolly/#me"/>
+        <summary xmlns="http://www.w3.org/2002/12/cal/icaltzd#">W3C AC meeting</summary>
+        <dtstart xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2008-04-20</dtstart>
+        <dtend xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2008-04-23</dtend>
+        <url xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:resource="http://www.w3.org/Member/Meeting/"/>
+        <location xmlns="http://www.w3.org/2002/12/cal/icaltzd#">Beijing, China</location>
+      </c:Vevent>
+    </c:component>
+    <c:component>
+      <c:Vevent r:about="http://www.w3.org/People/Connolly/#_6522">
+        <c:organizer r:resource="http://www.w3.org/People/Connolly/#me"/>
+        <summary xmlns="http://www.w3.org/2002/12/cal/icaltzd#">TAG ftf</summary>
+        <dtstart xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2008-05-19</dtstart>
+        <dtend xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2008-05-22</dtend>
+        <url xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:resource="http://www.w3.org/People/Connolly/#_6522"/>
+        <location xmlns="http://www.w3.org/2002/12/cal/icaltzd#">Bristol</location>
+      </c:Vevent>
+    </c:component>
+    <c:component>
+      <c:Vevent r:about="http://www.w3.org/People/Connolly/#semtech2008">
+        <c:organizer r:resource="http://www.w3.org/People/Connolly/#me"/>
+        <summary xmlns="http://www.w3.org/2002/12/cal/icaltzd#">SemTech
+  Conference</summary>
+        <dtstart xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2008-05-18</dtstart>
+
+        <dtend xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2008-05-23</dtend>
+        <url xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:resource="http://www.w3.org/People/Connolly/#semtech2008"/>
+        <location xmlns="http://www.w3.org/2002/12/cal/icaltzd#">San Jos&#xE9;</location>
+        <status xmlns="http://www.w3.org/2002/12/cal/icaltzd#">declined</status>
+      </c:Vevent>
+    </c:component>
+    <c:component>
+      <c:Vevent r:about="http://www.w3.org/People/Connolly/#_6839">
+        <c:organizer r:resource="http://www.w3.org/People/Connolly/#me"/>
+        <summary xmlns="http://www.w3.org/2002/12/cal/icaltzd#">Linked Data Planet</summary>
+        <dtstart xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2008-06-17</dtstart>
+        <dtend xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2008-06-19</dtend>
+        <url xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:resource="http://www.w3.org/People/Connolly/#_6839"/>
+        <location xmlns="http://www.w3.org/2002/12/cal/icaltzd#">Roosevelt Hotel, NY</location>
+        <status xmlns="http://www.w3.org/2002/12/cal/icaltzd#">tentative</status>
+      </c:Vevent>
+    </c:component>
+    <c:component>
+      <c:Vevent r:about="http://www.w3.org/People/Connolly/#_6813">
+        <c:organizer r:resource="http://www.w3.org/People/Connolly/#me"/>
+        <summary xmlns="http://www.w3.org/2002/12/cal/icaltzd#">KM Australia 2008</summary>
+        <dtstart xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2008-07-21</dtstart>
+        <dtend xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2008-07-24</dtend>
+        <url xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:resource="http://www.w3.org/People/Connolly/#_6813"/>
+        <location xmlns="http://www.w3.org/2002/12/cal/icaltzd#">Melbourne Convention Centre, Australia</location>
+      </c:Vevent>
+    </c:component>
+  </c:Vcalendar>
+  <v:VCard xmlns:v="http://www.w3.org/2006/vcard/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <v:logo rdf:resource="../../Icons/w3c_home.png"/>
+    <v:fn>Dan Connolly</v:fn>
+    <v:photo rdf:resource="9704/dan_c_thumb.jpg"/>
+    <v:title>Research Scientist</v:title>
+    <v:org rdf:parseType="Resource">
+      <rdf:type rdf:resource="http://www.w3.org/2006/vcard/ns#Organization"/>
+      <v:organization-name>MIT/CSAIL</v:organization-name>
+    </v:org>
+    <v:url rdf:resource="http://www.csail.mit.edu/"/>
+    <v:email rdf:resource="mailto:connolly@w3.org"/>
+    <v:adr rdf:parseType="Resource">
+      <rdf:type rdf:resource="http://www.w3.org/2006/vcard/ns#Address"/>
+      <v:extendedAddress>Room 32-G506</v:extendedAddress>
+      <v:streetAddress>32 Vassar Street</v:streetAddress>
+      <v:locality>Cambridge</v:locality>
+      <v:region>MA</v:region>
+      <v:postalCode>02139</v:postalCode>
+      <v:countryName>USA</v:countryName>
+    </v:adr>
+    <v:geo rdf:parseType="Resource">
+      <rdf:type rdf:resource="http://www.w3.org/2006/vcard/ns#Geo"/>
+    </v:geo>
+    <v:tel rdf:resource="tel:+1-617-395-0241"/>
+    <v:url rdf:resource="irc://irc.freenode.net/DanC,isnick"/>
+    <v:url rdf:resource="http://www.w3.org/People/Connolly/"/>
+  </v:VCard>
+  <v:VCard xmlns:v="http://www.w3.org/2006/vcard/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:ID="mci">
+    <v:fn>Kansas
+    City International Airport</v:fn>
+    <v:url rdf:resource="http://en.wikipedia.org/wiki/Kansas_City_International_Airport"/>
+    <v:org rdf:parseType="Resource">
+      <rdf:type rdf:resource="http://www.w3.org/2006/vcard/ns#Organization"/>
+      <v:organization-name>Kansas
+    City International Airport</v:organization-name>
+    </v:org>
+    <v:adr rdf:parseType="Resource">
+      <rdf:type rdf:resource="http://www.w3.org/2006/vcard/ns#Address"/>
+      <v:locality>Kansas
+    City</v:locality>
+    </v:adr>
+    <v:geo rdf:parseType="Resource">
+      <rdf:type rdf:resource="http://www.w3.org/2006/vcard/ns#Geo"/>
+      <v:latitude>39.2975</v:latitude>
+      <v:longitude>-94.7139</v:longitude>
+    </v:geo>
+  </v:VCard>
+  <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:admin="http://webns.net/mvcb/" rdf:about="">
+    <admin:generatorAgent rdf:resource="http://purl.org/NET/erdf/extract"/>
+  </rdf:Description>
+  <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:default="http://purl.org/dc/terms/" xmlns:default1="http://www.w3.org/2002/07/owl#" xmlns:default2="http://xmlns.com/foaf/0.1/" rdf:about="">
+    <default:created xmlns="http://purl.org/dc/terms/">1994-02</default:created>
+    <default1:versionInfo xmlns="http://www.w3.org/2002/07/owl#">$Revision: 1.532 $ of $Date: 2008/02/06 15:51:50 $</default1:versionInfo>
+    <default:modified xmlns="http://purl.org/dc/terms/">$Date: 2008/02/06 15:51:50 $</default:modified>
+    <default2:primaryTopic xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="#me" rdfs:label="Dan Connolly"/>
+    <default:license xmlns="http://purl.org/dc/terms/" rdf:resource="http://www.w3.org/Consortium/Legal/2002/copyright-documents-20021231" rdfs:label="some rights reserved"/>
+  </rdf:Description>
+  <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="#travl"/>
+  <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="#w3ctp200711"/>
+  <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="#_6345"/>
+  <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="#_6768"/>
+  <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="#tag200802"/>
+  <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="#sxsw2008"/>
+  <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="#_6432"/>
+  <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="#_6522"/>
+  <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="#semtech2008"/>
+  <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="#_6839"/>
+  <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="#_6813"/>
+  <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:default="http://xmlns.com/foaf/0.1/" rdf:about="#me">
+    <default:name xmlns="http://xmlns.com/foaf/0.1/">Dan Connolly</default:name>
+    <default:nick xmlns="http://xmlns.com/foaf/0.1/">DanC</default:nick>
+    <default:mbox xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="mailto:connolly@w3.org" rdfs:label="connolly@w3.org"/>
+    <default:homepage xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://www.w3.org/People/Connolly/"/>
+    <default:currentProject xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="../../html/wg/" rdfs:label="HTML WG"/>
+    <default:currentProject xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="../../2001/tag/" rdfs:label="TAG"/>
+    <default:interest xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://www.w3.org/2003/g/data-view" rdfs:label="GRDDL"/>
+    <default:currentProject xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="../../2001/sw/grddl-wg/" rdfs:label="WG"/>
+    <default:interest xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://www.w3.org/2002/12/cal/" rdfs:label="RDF Calendar"/>
+    <default:currentProject xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://www.w3.org/2002/12/cal/" rdfs:label="RDF Calendar"/>
+    <default:interest xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="../../QA/" rdfs:label="QA"/>
+    <default:currentProject xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="../../2001/sw/DataAccess/" rdfs:label="DAWG/SPARQL"/>
+    <default:currentProject xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://www.w3.org/2001/sw/interest/" rdfs:label="Semantic Web IG"/>
+    <default:interest xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="/2004/OWL/" rdfs:label="OWL"/>
+    <default:pastProject xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="../../MarkUp/html-spec/index.html" rdfs:label="HTML 2"/>
+    <default:weblog xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://dig.csail.mit.edu/breadcrumbs/blog/2" rdfs:label="breadcrumbs"/>
+    <default:currentProject xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="/2000/10/swap/doc/cwm" rdfs:label="cwm"/>
+    <default:currentProject xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="/DesignIssues/Notation3" rdfs:label="N3"/>
+    <default:currentProject xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://dig.csail.mit.edu/2005/ajar/ajaw/Help" rdfs:label="tabulator"/>
+    <default:currentProject xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://www.policyawareweb.org/" rdfs:label="PAW"/>
+    <default:currentProject xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://dig.csail.mit.edu/TAMI/" rdfs:label="TAMI"/>
+    <default:interest xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://www.microformats.org/" rdfs:label="microformats"/>
+    <default:made xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://www.advogato.org/person/connolly/" rdfs:label="open source"/>
+    <default:weblog xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://www.advogato.org/person/connolly/" rdfs:label="open source"/>
+    <rdfs:seeAlso xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.advogato.org/person/connolly/foaf.rdf"/>
+    <default:openid xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="./"/>
+    <default:made xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://dm93.org/" rdfs:label="family"/>
+    <default:interest xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://dm93.org/z2001/VolleyBallInKC" rdfs:label="volleyball"/>
+    <default:interest xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://dm93.org/z2001/ThreeChordsAndTheTruth" rdfs:label="guitar"/>
+    <default:workplaceHomepage xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://www.csail.mit.edu/" rdfs:label="CSAIL"/>
+    <default:currentProject xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://dig.csail.mit.edu/" rdfs:label="DIG"/>
+    <default:workplaceHomepage xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="../../" rdfs:label="W3C"/>
+    <default:pastProject xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="/Protocols/" rdfs:label="HTTP"/>
+    <default:pastProject xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="/XML/" rdfs:label="XML"/>
+    <default:made xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://del.icio.us/connolly/w3c" rdfs:label="del.ici.ous links and notes"/>
+    <default:made xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="/2000/10/swap/doc/" rdfs:label="Semantic Web Tutorial Using N3"/>
+    <default:interest xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="/2000/10/swap/pim/travel.html" rdfs:label="Semantic Web Travel&#10;    Tools"/>
+    <default:made xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://dig.csail.mit.edu/breadcrumbs/node/171" rdfs:label="Celebrating OWL interoperability and spec&#10;    quality"/>
+    <default:made xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://www.w3.org/2002/12/cal/mash/slides" rdfs:label="Semantic Web Data Integration with hCalendar and&#10;    GRDDL"/>
+    <default:made xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://www.w3.org/TR/rdfcal/" rdfs:label="RDF Calendar - an application of the Resource&#10;    Description Framework to iCalendar Data"/>
+    <default:made xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="http://www-mit.w3.org/2000/Talks/www9-larch/all.htm" rdfs:label="Specifying Web Architecture with Larch"/>
+    <default:publications xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="pubs" rdfs:label="pubs/writings"/>
+    <default:img xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="9704/dan_c_thumb.jpg" rdfs:label="Dan in 1997"/>
+  </rdf:Description>
+  <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:default="http://xmlns.com/foaf/0.1/" xmlns:default1="http://www.w3.org/2002/07/owl#" rdf:about="#me2">
+    <default:based_near xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="#mci"/>
+    <default:nick xmlns="http://xmlns.com/foaf/0.1/">DanC</default:nick>
+    <default1:sameAs xmlns="http://www.w3.org/2002/07/owl#" rdf:resource="#me"/>
+  </rdf:Description>
+  <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:default="http://www.w3.org/2003/01/geo/wgs84_pos#" rdf:about="#mci">
+    <default:lat xmlns="http://www.w3.org/2003/01/geo/wgs84_pos#">39.2975</default:lat>
+    <default:long xmlns="http://www.w3.org/2003/01/geo/wgs84_pos#">-94.7139</default:long>
+  </rdf:Description>
+  <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="http://feeds.technorati.com/events/http%3A//www.w3.org/People/Connolly/"/>
+  <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="http://www.w3.org/2007/11/TPAC/"/>
+  <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="http://www.w3.org/2007/08/video"/>
+  <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="http://en.oreilly.com/toc2008/public/content/home"/>
+  <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="http://en.wikipedia.org/wiki/Vancouver"/>
+  <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="http://www.w3.org/2001/tag/#deliverables"/>
+  <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="http://2008.sxsw.com/interactive/"/>
+  <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="http://www.w3.org/Member/Meeting/"/>
+  <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="http://www.w3.org/2001/tag/#deliverables"/>
+  <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="http://www.linkeddataplanet.com/index.php"/>
+  <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="http://www.kmaustralia.com/"/>
+  <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="http://www2007.org/"/>
+  <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="../../"/>
+  <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="http://www.csail.mit.edu/"/>
+  <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="mailto:connolly@w3.org"/>
+  <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="http://maps.google.com/maps?f=q&amp;hl=en&amp;geocode=&amp;q=32+Vassar+Street,+02139&amp;sll=37.0625,-95.677068&amp;sspn=76.725149,106.523438&amp;ie=UTF8&amp;z=16&amp;iwloc=addr&amp;om=1"/>
+  <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="http://www.csail.mit.edu/resources/maps/5G/G506.gif"/>
+  <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="tel:+1-617-395-0241"/>
+  <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="irc://irc.freenode.net/DanC,isnick"/>
+  <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="http://www.w3.org/People/Connolly/"/>
+  <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="http://technorati.com/contacts/http://www.w3.org/People/Connolly/"/>
+  <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="../../"/>
+  <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:default="http://xmlns.com/foaf/0.1/" rdf:about="http://en.wikipedia.org/wiki/Kansas_City_International_Airport">
+    <default:primaryTopic xmlns="http://xmlns.com/foaf/0.1/" rdf:resource="#mci"/>
+  </rdf:Description>
+  <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:default="http://purl.org/dc/elements/1.1/" rdf:about="/2000/10/swap/doc/">
+    <default:title xmlns="http://purl.org/dc/elements/1.1/">Semantic Web Tutorial Using N3</default:title>
+  </rdf:Description>
+  <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:default="http://purl.org/dc/elements/1.1/" rdf:about="http://dig.csail.mit.edu/breadcrumbs/node/171">
+    <default:title xmlns="http://purl.org/dc/elements/1.1/">Celebrating OWL interoperability and spec
+    quality</default:title>
+  </rdf:Description>
+  <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:default="http://purl.org/dc/elements/1.1/" rdf:about="http://www.w3.org/2002/12/cal/mash/slides">
+    <default:title xmlns="http://purl.org/dc/elements/1.1/">Semantic Web Data Integration with hCalendar and
+    GRDDL</default:title>
+  </rdf:Description>
+  <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:default="http://purl.org/dc/elements/1.1/" rdf:about="http://www.w3.org/TR/rdfcal/">
+    <default:title xmlns="http://purl.org/dc/elements/1.1/">RDF Calendar - an application of the Resource
+    Description Framework to iCalendar Data</default:title>
+  </rdf:Description>
+  <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:default="http://purl.org/dc/elements/1.1/" rdf:about="http://www-mit.w3.org/2000/Talks/www9-larch/all.htm">
+    <default:title xmlns="http://purl.org/dc/elements/1.1/">Specifying Web Architecture with Larch</default:title>
+  </rdf:Description>
+  <c:Vcalendar r:about="http://www.w3.org/People/Connolly/">
+    <c:prodid>-//connolly.w3.org//RDF Calendar $Date: 2007/06/30 19:05:32 $ (BETA)//EN</c:prodid>
+    <c:version>2.0</c:version>
+    <c:component>
+      <c:Vevent r:about="http://www.w3.org/People/Connolly/#w3ctp200711">
+        <c:organizer r:resource="http://www.w3.org/People/Connolly/#me"/>
+        <c:summary xmlns="http://www.w3.org/2002/12/cal/icaltzd#">W3C Technical
+  Plenary Meetings</c:summary>
+        <c:dtstart xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2007-11-05</c:dtstart>
+        <c:dtend xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2007-11-11</c:dtend>
+        <c:url xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:resource="http://www.w3.org/2007/11/TPAC/"/>
+        <c:location xmlns="http://www.w3.org/2002/12/cal/icaltzd#">Cambridge,
+  MA</c:location>
+      </c:Vevent>
+    </c:component>
+    <c:component>
+      <c:Vevent r:about="http://www.w3.org/People/Connolly/#_6345">
+        <c:organizer r:resource="http://www.w3.org/People/Connolly/#me"/>
+        <c:summary xmlns="http://www.w3.org/2002/12/cal/icaltzd#">W3C Video on the Web Workshop</c:summary>
+        <c:dtstart xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2007-12-12</c:dtstart>
+        <c:dtend xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2007-12-14</c:dtend>
+        <c:url xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:resource="http://www.w3.org/2007/08/video"/>
+        <c:location xmlns="http://www.w3.org/2002/12/cal/icaltzd#">San Jose, CA</c:location>
+      </c:Vevent>
+    </c:component>
+    <c:component>
+      <c:Vevent r:about="http://www.w3.org/People/Connolly/#_6768">
+        <c:organizer r:resource="http://www.w3.org/People/Connolly/#me"/>
+        <c:summary xmlns="http://www.w3.org/2002/12/cal/icaltzd#">Tools of Change (TOC)</c:summary>
+        <c:dtstart xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2008-02-10</c:dtstart>
+        <c:dtend xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2008-02-14</c:dtend>
+        <c:url xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:resource="http://www.w3.org/People/Connolly/#_6768"/>
+        <c:location xmlns="http://www.w3.org/2002/12/cal/icaltzd#">New York, NY</c:location>
+      </c:Vevent>
+    </c:component>
+    <c:component>
+      <c:Vevent r:about="http://www.w3.org/People/Connolly/#tag200802">
+        <c:organizer r:resource="http://www.w3.org/People/Connolly/#me"/>
+        <c:summary xmlns="http://www.w3.org/2002/12/cal/icaltzd#">TAG meeting</c:summary>
+        <c:dtstart xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2008-02-26</c:dtstart>
+        <c:dtend xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2008-02-29</c:dtend>
+        <c:url xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:resource="http://www.w3.org/2001/tag/#deliverables"/>
+        <c:location xmlns="http://www.w3.org/2002/12/cal/icaltzd#">Vancouver</c:location>
+      </c:Vevent>
+    </c:component>
+    <c:component>
+      <c:Vevent r:about="http://www.w3.org/People/Connolly/#sxsw2008">
+        <c:organizer r:resource="http://www.w3.org/People/Connolly/#me"/>
+        <c:summary xmlns="http://www.w3.org/2002/12/cal/icaltzd#">SXSW Interactive</c:summary>
+        <c:dtstart xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2008-03-07</c:dtstart>
+        <c:dtend xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2008-03-12</c:dtend>
+        <c:url xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:resource="http://2008.sxsw.com/interactive/"/>
+        <c:location xmlns="http://www.w3.org/2002/12/cal/icaltzd#">Austin,
+  TX</c:location>
+      </c:Vevent>
+    </c:component>
+    <c:component>
+      <c:Vevent r:about="http://www.w3.org/People/Connolly/#_6432">
+        <c:organizer r:resource="http://www.w3.org/People/Connolly/#me"/>
+        <c:summary xmlns="http://www.w3.org/2002/12/cal/icaltzd#">W3C AC meeting</c:summary>
+        <c:dtstart xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2008-04-20</c:dtstart>
+        <c:dtend xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2008-04-23</c:dtend>
+        <c:url xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:resource="http://www.w3.org/Member/Meeting/"/>
+        <c:location xmlns="http://www.w3.org/2002/12/cal/icaltzd#">Beijing, China</c:location>
+      </c:Vevent>
+    </c:component>
+    <c:component>
+      <c:Vevent r:about="http://www.w3.org/People/Connolly/#_6522">
+        <c:organizer r:resource="http://www.w3.org/People/Connolly/#me"/>
+        <c:summary xmlns="http://www.w3.org/2002/12/cal/icaltzd#">TAG ftf</c:summary>
+        <c:dtstart xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2008-05-19</c:dtstart>
+        <c:dtend xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2008-05-22</c:dtend>
+        <c:url xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:resource="http://www.w3.org/People/Connolly/#_6522"/>
+        <c:location xmlns="http://www.w3.org/2002/12/cal/icaltzd#">Bristol</c:location>
+      </c:Vevent>
+    </c:component>
+    <c:component>
+      <c:Vevent r:about="http://www.w3.org/People/Connolly/#semtech2008">
+        <c:organizer r:resource="http://www.w3.org/People/Connolly/#me"/>
+        <c:summary xmlns="http://www.w3.org/2002/12/cal/icaltzd#">SemTech
+  Conference</c:summary>
+        <c:dtstart xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2008-05-18</c:dtstart>
+        <c:dtend xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2008-05-23</c:dtend>
+        <c:url xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:resource="http://www.w3.org/People/Connolly/#semtech2008"/>
+        <c:location xmlns="http://www.w3.org/2002/12/cal/icaltzd#">San Jos&#xE9;</c:location>
+        <c:status xmlns="http://www.w3.org/2002/12/cal/icaltzd#">declined</c:status>
+      </c:Vevent>
+    </c:component>
+    <c:component>
+      <c:Vevent r:about="http://www.w3.org/People/Connolly/#_6839">
+        <c:organizer r:resource="http://www.w3.org/People/Connolly/#me"/>
+        <c:summary xmlns="http://www.w3.org/2002/12/cal/icaltzd#">Linked Data Planet</c:summary>
+        <c:dtstart xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2008-06-17</c:dtstart>
+        <c:dtend xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2008-06-19</c:dtend>
+        <c:url xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:resource="http://www.w3.org/People/Connolly/#_6839"/>
+        <c:location xmlns="http://www.w3.org/2002/12/cal/icaltzd#">Roosevelt Hotel, NY</c:location>
+        <c:status xmlns="http://www.w3.org/2002/12/cal/icaltzd#">tentative</c:status>
+      </c:Vevent>
+    </c:component>
+    <c:component>
+      <c:Vevent r:about="http://www.w3.org/People/Connolly/#_6813">
+        <c:organizer r:resource="http://www.w3.org/People/Connolly/#me"/>
+        <c:summary xmlns="http://www.w3.org/2002/12/cal/icaltzd#">KM Australia 2008</c:summary>
+        <c:dtstart xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2008-07-21</c:dtstart>
+        <c:dtend xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:datatype="http://www.w3.org/2001/XMLSchema#date">2008-07-24</c:dtend>
+        <c:url xmlns="http://www.w3.org/2002/12/cal/icaltzd#" r:resource="http://www.w3.org/People/Connolly/#_6813"/>
+        <c:location xmlns="http://www.w3.org/2002/12/cal/icaltzd#">Melbourne Convention Centre, Australia</c:location>
+      </c:Vevent>
+    </c:component>
+  </c:Vcalendar>
+</r:RDF>
+}}}
