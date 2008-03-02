@@ -6,7 +6,10 @@
       <v:organization-name>Data Access Technologies</v:organization-name>
     </v:org>
     <v:fn>
-    Cory B. Casanave</v:fn>
+          Cory
+          B.
+          Casanave
+        </v:fn>
     <v:n rdf:parseType="Resource">
       <rdf:type rdf:resource="http://www.w3.org/2006/vcard/ns#Name"/>
       <v:given-name>Cory</v:given-name>
