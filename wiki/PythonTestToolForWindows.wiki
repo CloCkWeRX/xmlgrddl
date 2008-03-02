@@ -1,6 +1,6 @@
+#labels Phase-Deploy
 Instructions on installing the W3C python test tool for Windows
 
-== Details ==
 First, install python from http://www.python.org/
   * Extract to `c:\python25\`
   * Add `c:\python25\` to your path (My Computer -> Properties -> Advanced -> Environment Variables)
@@ -15,5 +15,5 @@ Third, get [http://rdflib.net/ rdflib].
 Fourth, get the [http://www.w3.org/TR/grddl-tests/#deliverables grddl-tests] zip file
  * Extract somewhere useful
 
-= See also =
-[http://www.w3.org/TR/grddl-tests/#testft]
+== See also ==
+[http://www.w3.org/TR/grddl-tests/#testft W3C GRDDL test suite]
