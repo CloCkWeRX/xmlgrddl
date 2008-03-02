@@ -1,10 +1,11 @@
-#summary How to use XML_GRDDL
+#summary Quick examples of using XML_GRDDL
 #labels Phase-Implementation,Featured
 
-Three quick examples of using XML_GRDDL.
 
 = Find all GRDDL transformations =
 I have a document, and I want to see if it has GRDDL transformations anywhere.
+
+I simply use `XML_GRDDL_Driver::fetch($url)` and `XML_GRDDL_Driver::inspect($xml, $base_url)` to do so.
 {{{
 <?php
 require_once 'XML/GRDDL.php';
@@ -29,7 +30,7 @@ print "Transformations available for " . $url . ":\n";
 var_dump($stylesheets);
 }}}
 
-Produces:
+This produces a handy array of unique URLs. We should be able to follow these and get a useful XSLT file from them.
 {{{
 Transformations available for http://www.w3.org/People/Connolly/:
 array(4) {
@@ -44,7 +45,10 @@ array(4) {
 }
 }}}
 
-= Extract RDF using a transformation =
+= Extract RDF/XML using a transformation =
+So, I've got my array of transformations, but how do I use them?
+
+Simply do `XML_GRDDL_Driver::transform($stylesheet_url, $xml);`
 {{{
 //Use those transformations
 $rdf_xml = array();
@@ -58,7 +62,7 @@ foreach ($stylesheets as $n => $stylesheet) {
 }
 }}}
 
-Produces
+This produces an RDF/XML document from each transformation.
 {{{
 Transformation http://www.w3.org/2002/12/cal/glean-hcal produced:
 <?xml version="1.0"?>
@@ -354,10 +358,12 @@ Transformation http://purl.org/NET/erdf/extract-rdf.xsl produced:
 }}}
 
 = Merge one or more RDF/XML documents =
-{{{
-//print $grddl->merge($xml1, $xml2); returns the combined 
-//XML but we've got lots to merge, so we'll do it with array_reduce.
+So, we've got all of these fragments of RDF/XML to describe the page. I could put them individually into a triple store, but what if we want just one aggregate document?
 
+This is where `array_reduce()` and `XML_GRDDL_Driver::merge($xml1, $xml2)` come in handy.
+
+`XML_GRDDL_Driver::merge($xml1, $xml2)` will combine two XML documents, but since we've got more than that, we'll just keep repeating it.
+{{{
 $result = array_reduce($rdf_xml, array($grddl, 'merge'));
 
 print "The RDF/XML which extracted from " . $url . " is:\n";
@@ -756,3 +762,8 @@ The RDF/XML which extracted from http://www.w3.org/People/Connolly/ is:
   </c:Vcalendar>
 </r:RDF>
 }}}
+
+= This is too hard, just give me the RDF! =
+Too much stuffing around? Just want to crawl a document and be on your way?
+
+`XML_GRDDL_Driver::crawl($url)` will perform all of the above steps and give you back merged RDF/XML
