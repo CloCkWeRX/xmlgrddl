@@ -40,6 +40,7 @@
  * @copyright 2008 Daniel O'Connor
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   SVN: $Id$
+ * @version   @package_version@
  * @link      http://code.google.com/p/xmlgrddl/
  */
 
@@ -97,6 +98,7 @@ abstract class XML_GRDDL_Driver
             $new_transformations = $this->discoverDocumentTransformations($sxe, $original_url);
             $transformations     = array_merge($new_transformations, $transformations);
         }
+
         if ($this->options['namespaceTransformations']) {
             $new_transformations = $this->discoverNamespaceTransformations($sxe, $original_url);
             $transformations     = array_merge($new_transformations, $transformations);
@@ -214,25 +216,30 @@ abstract class XML_GRDDL_Driver
      * @param string $ns_url Namespace URL
      *
      * @todo    Check a cache of some description
+     * @todo    Logging
      * @return  string[]    An array of transformation urls described in $ns_url
      */
     protected function knownNamespaceTransformations($ns_url)
     {
         $transformation_urls = array();
-        $xml                 = $this->fetch($ns_url);
-        $namespace           = @simplexml_load_string($xml);
+        try {
+            $xml                 = $this->fetch($ns_url);
+            $namespace           = @simplexml_load_string($xml);
 
-        if ($namespace instanceOf SimpleXMLElement) {
-            $namespace->registerXPathNamespace('grddl', XML_GRDDL::NS);
+            if ($namespace instanceOf SimpleXMLElement) {
+                $namespace->registerXPathNamespace('grddl', XML_GRDDL::NS);
 
-            $transformation_urls = $this->discoverTransformations($namespace, $ns_url, "//*[@grddl:namespaceTransformation]",
-                                                                        'namespaceTransformation', XML_GRDDL::NS);
+                $transformation_urls = $this->discoverTransformations($namespace, $ns_url, "//*[@grddl:namespaceTransformation]",
+                                                                            'namespaceTransformation', XML_GRDDL::NS);
 
-            //Todo: make this stricter to select rdf:Description about:($ns_url)?
-            $rdf_transformation_urls = $this->discoverTransformations($namespace, $ns_url, "//grddl:namespaceTransformation",
-                                                                        'resource', XML_GRDDL::RDF_NS);
+                //Todo: make this stricter to select rdf:Description about:($ns_url)?
+                $rdf_transformation_urls = $this->discoverTransformations($namespace, $ns_url, "//grddl:namespaceTransformation",
+                                                                            'resource', XML_GRDDL::RDF_NS);
 
-            $transformation_urls = array_merge($transformation_urls, $rdf_transformation_urls);
+                $transformation_urls = array_merge($transformation_urls, $rdf_transformation_urls);
+            }
+        } catch (Exception $e) {
+            trigger_error($e->getMessage(), E_USER_NOTICE);
         }
         return $transformation_urls;
     }
