@@ -74,7 +74,9 @@ class XML_GRDDL
                                    $options = array('documentTransformations' => true,
                                                     'htmlTransformations' => true,
                                                     'htmlProfileTransformations' => true,
-                                                    'namespaceTransformations' => true))
+                                                    'namespaceTransformations' => true,
+                                                    'preserveWhiteSpace' => false,
+                                                    'formatOutput' => true))
     {
         $class = 'XML_GRDDL_Driver_' . $driver;
 

@@ -271,7 +271,9 @@ abstract class XML_GRDDL_Driver
                 $transformation_urls = array_merge($xsl, $rdf_xsl);
             }
         } catch (Exception $e) {
-            trigger_error($e->getMessage(), E_USER_NOTICE);
+            if (empty($this->options['quiet'])) {
+                trigger_error($e->getMessage(), E_USER_NOTICE);
+            }
         }
         return $transformation_urls;
     }
@@ -410,7 +412,7 @@ abstract class XML_GRDDL_Driver
 
             //HTTP 200 OK
             if ($req->getResponseCode() == 200) {
-                return $req->getResponseBody();
+                return $this->prettify($req->getResponseBody());
             }
 
 
@@ -472,11 +474,48 @@ abstract class XML_GRDDL_Driver
             $content = file_get_contents($path);
 
             if ($content) {
-                return $content;
+                return $this->prettify($content);
             }
         }
 
         throw new Exception("Unable to fetch " . $path);
+    }
+
+    /**
+     * Prettify XML.
+     *
+     * Obeys options for preserveWhiteSpace & formatOutput,
+     * and removes redundant namespaces
+     *
+     * @param string $xml XML to format
+     *
+     * @see XML_GRDDL::factory()
+     *
+     * @return string Formatted XML
+     */
+    public function prettify($xml)
+    {
+        $dom = new DomDocument('1.0');
+
+        $dom->preserveWhiteSpace = $this->options['preserveWhiteSpace'];
+        $dom->formatOutput       = $this->options['formatOutput'];
+
+        $options = LIBXML_NSCLEAN & LIBXML_COMPACT;
+        if (!empty($this->options['quiet'])) {
+            $options = $options & LIBXML_NOERR & LIBXML_NOWARNING & LIBXML_ERR_NONE;
+            libxml_use_internal_errors(true);
+        }
+
+        if ($dom->loadXML($xml, $options)) {
+
+            if (!empty($this->options['quiet'])) {
+                libxml_clear_errors();
+            }
+
+            return $dom->saveXML($dom);
+        }
+
+        return $xml;
     }
 
     /**
@@ -506,14 +545,18 @@ abstract class XML_GRDDL_Driver
             return $graph_xml2;
         }
 
-        $dom1 = new DomDocument('1.0', 'UTF-8');
-        $dom2 = new DomDocument('1.0', 'UTF-8');
+        $dom1 = new DomDocument('1.0');
+        $dom2 = new DomDocument('1.0');
 
-        $dom1->preserveWhiteSpace = false;
-        $dom1->formatOutput       = true;
 
-        $dom1->loadXML($graph_xml1);
-        $dom2->loadXML($graph_xml2);
+        $dom1->preserveWhiteSpace = $this->options['preserveWhiteSpace'];
+        $dom1->formatOutput       = $this->options['formatOutput'];
+
+        $dom2->preserveWhiteSpace = $this->options['preserveWhiteSpace'];
+        $dom2->formatOutput       = $this->options['formatOutput'];
+
+        $dom1->loadXML($graph_xml1, LIBXML_NSCLEAN & LIBXML_COMPACT);
+        $dom2->loadXML($graph_xml2, LIBXML_NSCLEAN & LIBXML_COMPACT);
 
         // pull all child elements of second XML
         $xpath      = new DomXPath($dom2);
@@ -525,7 +568,7 @@ abstract class XML_GRDDL_Driver
             $dom1->documentElement->appendChild($node);
         }
 
-        return $dom1->saveXML();
+        return $this->prettify($dom1->saveXML());
     }
 
     /**
