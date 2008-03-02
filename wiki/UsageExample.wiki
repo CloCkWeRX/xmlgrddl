@@ -1,6 +1,27 @@
 #summary Quick examples of using XML_GRDDL
 #labels Phase-Implementation,Featured
 
+= I want RDF/XML from a document, and I want it now =
+Just want to crawl a document and be on your way?
+
+`XML_GRDDL_Driver::crawl($url)` will perform all of the below steps and give you back merged RDF/XML
+
+{{{
+/**
+ * Example: Discover RDF/XML from Dan Connolly's w3 homepage.
+ */
+require_once 'XML/GRDDL.php';
+
+$url = 'http://www.w3.org/People/Connolly/';
+
+$grddl = XML_GRDDL::factory('Xsl');
+try {
+    var_dump($grddl->crawl($url));
+} catch (Exception $e) {
+    print $e->getMessage();
+}
+}}}
+
 
 = Find all GRDDL transformations =
 I have a document, and I want to see if it has GRDDL transformations anywhere.
@@ -762,8 +783,3 @@ The RDF/XML which extracted from http://www.w3.org/People/Connolly/ is:
   </c:Vcalendar>
 </r:RDF>
 }}}
-
-= This is too hard, just give me the RDF! =
-Too much stuffing around? Just want to crawl a document and be on your way?
-
-`XML_GRDDL_Driver::crawl($url)` will perform all of the above steps and give you back merged RDF/XML
