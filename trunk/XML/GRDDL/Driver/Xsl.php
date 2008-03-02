@@ -89,6 +89,10 @@ class XML_GRDDL_Driver_Xsl extends XML_GRDDL_Driver
      */
     public function transform($stylesheet, $xml)
     {
+        if (empty($stylesheet) || empty($xml)) {
+            return $xml;
+        }
+
         $old_cwd = getcwd();
 
         $paths = array();

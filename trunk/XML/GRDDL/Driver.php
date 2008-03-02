@@ -116,7 +116,7 @@ abstract class XML_GRDDL_Driver
             $xsl = array_merge($new, $xsl);
         }
 
-        return $xsl;
+        return array_unique($xsl);
     }
 
     /**
@@ -469,7 +469,11 @@ abstract class XML_GRDDL_Driver
         }
 
         if (file_exists($path)) {
-            return file_get_contents($path);
+            $content = file_get_contents($path);
+
+            if ($content) {
+                return $content;
+            }
         }
 
         throw new Exception("Unable to fetch " . $path);
