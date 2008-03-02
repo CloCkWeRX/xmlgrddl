@@ -46,6 +46,7 @@
 //http://bugs.php.net/bug.php?id=44225
 
 $xml = "http://www.w3.org/2001/sw/grddl-wg/td/xhtmlWithMoreThanOneGrddlTransformation.html";
+
 $stylesheet = "http://www.w3.org/2001/sw/grddl-wg/td/getAuthor.xsl";
 
 $dom = new DOMDocument('1.0');

@@ -40,7 +40,6 @@
  * @copyright 2008 Daniel O'Connor
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   SVN: $Id$
- * @version   @package_version@
  * @link      http://code.google.com/p/xmlgrddl/
  */
 
@@ -51,13 +50,13 @@ require_once 'PHPUnit/Framework/Assert.php';
 $tests = array();
 
 //Localized Tests
-include_once 'local.php';
+require_once 'local.php';
 
 //Namespace Documents and Absolute Locations
-include_once 'namespaces.php';
+require_once 'namespaces.php';
 
 // Library tests
-include_once 'library.php';
+require_once 'library.php';
 
 
 /*
@@ -289,7 +288,8 @@ foreach ($tests as $test) {
 
     $grddl = XML_GRDDL::factory('xsl', $options);
 
-    $in  = $grddl->fetch($test['in']);
+    $in = $grddl->fetch($test['in']);
+
     if (!file_exists($test['realistic'])) {
         file_put_contents($test['realistic'], $grddl->fetch($test['out']));
     }

@@ -40,10 +40,21 @@
  * @copyright 2008 Daniel O'Connor
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   SVN: $Id$
- * @version   @package_version@
  * @link      http://code.google.com/p/xmlgrddl/
  */
 
+/**
+ * A driver for PHP 5's XSL extension.
+ *
+ * Requires PHP 5.2.6, XSL extension
+ *
+ * @category Semantic_Web
+ * @package  XML_GRDDL
+ * @author   Daniel O'Connor <daniel.oconnor@gmail.com>
+ * @license  http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version  Release: @package_version@
+ * @link     http://code.google.com/p/xmlgrddl/
+ */
 class XML_GRDDL
 {
     const NS       = "http://www.w3.org/2003/g/data-view#";
