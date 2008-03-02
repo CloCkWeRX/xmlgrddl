@@ -1,21 +1,19 @@
-#Instructions on installing the W3C python test tool for Windows
+Instructions on installing the W3C python test tool for Windows
 
-
-
-= Details =
+== Details ==
 First, install python from http://www.python.org/
   * Extract to `c:\python25\`
   * Add `c:\python25\` to your path (My Computer -> Properties -> Advanced -> Environment Variables)
 
-Second, follow these <a href="http://boodebr.org/main/python/build-windows-extensions">steps</a>
+Second, follow these [http://boodebr.org/main/python/build-windows-extensions steps to get mingw] (and gcc to compile things).
 
-Third, get <a href="http://rdflib.net/">rdflib</a>.
+Third, get [http://rdflib.net/ rdflib].
   * Extract to `c:\rdflib`
   * From the command line, run `python setup install`
   * Repeat if prompted
 
-Fourth, get the <a href="http://www.w3.org/TR/grddl-tests/#deliverables">grddl-tests</a> zip file
+Fourth, get the [http://www.w3.org/TR/grddl-tests/#deliverables grddl-tests] zip file
  * Extract somewhere useful
 
 = See also =
-http://www.w3.org/TR/grddl-tests/#testft
+[http://www.w3.org/TR/grddl-tests/#testft]
