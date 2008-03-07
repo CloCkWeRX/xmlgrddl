@@ -62,7 +62,9 @@ require_once 'Net/URL.php';
 abstract class XML_GRDDL_Driver
 {
 
-    protected $options;
+    public $options;
+
+    protected $url_cache = array();
 
     /**
      * Make a new instance of XML_GRRDL_Driver directly
@@ -403,6 +405,18 @@ abstract class XML_GRDDL_Driver
      */
     public function fetch($path, $preferred_extension = 'html')
     {
+        /** @todo remove me */
+        if (empty($path)) {
+            throw new Exception("You must provide a path");
+        }
+
+        if (isset($this->url_cache[$path])) {
+            if ($this->url_cache[$path]['requests']++ > 9) {
+                throw new Exception("This resource has been request too many times, possible race condition");
+            }
+
+            return $this->url_cache[$path]['data'];
+        }
 
         if ($this->isURI($path)) {
             $req = &new HTTP_Request($path);
@@ -412,7 +426,9 @@ abstract class XML_GRDDL_Driver
 
             //HTTP 200 OK
             if ($req->getResponseCode() == 200) {
-                return $this->prettify($req->getResponseBody());
+                $this->url_cache[$path] = array();
+                $this->url_cache[$path]['requests'] = 1;
+                return $this->url_cache[$path]['data'] = $this->prettify($req->getResponseBody());
             }
 
 
@@ -423,7 +439,9 @@ abstract class XML_GRDDL_Driver
             if ($req->getResponseCode() == 301) {
                 //For now, return response body, otherwise,
                 // consider following redirect?
-                return $req->getResponseBody();
+                $this->url_cache[$path] = array();
+                $this->url_cache[$path]['requests'] = 1;
+                return $this->url_cache[$path]['data'] = $this->prettify($req->getResponseBody());
             }
 
             //HTTP 302 - UH...
@@ -450,7 +468,11 @@ abstract class XML_GRDDL_Driver
                                   $base_path . 'two-transforms-ns');
 
                 $xml_docs = array($base_path . 'sq1ns#',
-                                  $base_path . 'sq1ns');
+                                  $base_path . 'sq1ns',
+                                  $base_path . 'loop-ns-b',
+                                  $base_path . 'loopx',
+                                  $base_path . 'loopy');
+
 
                 if (in_array($path, $rdf_docs)) {
                     $url->path .= '.rdf';
@@ -470,7 +492,7 @@ abstract class XML_GRDDL_Driver
                                     . ' while retrieving ' . $path);
         }
 
-        if (file_exists($path)) {
+        if (file_exists($path) && is_file($path)) {
             $content = file_get_contents($path);
 
             if ($content) {
@@ -493,8 +515,12 @@ abstract class XML_GRDDL_Driver
      *
      * @return string Formatted XML
      */
-    public function prettify($xml)
+    public function prettify($xml, $original_url = null)
     {
+        if (empty($xml)) {
+            return $xml;
+        }
+
         $dom = new DomDocument('1.0');
 
         $dom->preserveWhiteSpace = $this->options['preserveWhiteSpace'];
@@ -502,11 +528,16 @@ abstract class XML_GRDDL_Driver
 
         $options = LIBXML_NSCLEAN & LIBXML_COMPACT;
         if (!empty($this->options['quiet'])) {
-            $options = $options & LIBXML_NOERR & LIBXML_NOWARNING & LIBXML_ERR_NONE;
+            $options = $options & LIBXML_NOERROR & LIBXML_NOWARNING & LIBXML_ERR_NONE;
             libxml_use_internal_errors(true);
         }
 
         if ($dom->loadXML($xml, $options)) {
+
+            //
+            if (!empty($this->options['xinclude'])) {
+                $dom->xinclude($options);
+            }
 
             if (!empty($this->options['quiet'])) {
                 libxml_clear_errors();
