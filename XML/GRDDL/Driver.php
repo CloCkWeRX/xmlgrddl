@@ -101,6 +101,8 @@ abstract class XML_GRDDL_Driver
         foreach ($xml_docs as $path) {
             $this->logRedirect($path, $path . '.xml');
         }
+
+        $this->logRedirect($base_path . 'base/xmlWithBase.html', $base_path . 'base/xmlWithBase.xml');
     }
 
     /**
@@ -488,33 +490,14 @@ abstract class XML_GRDDL_Driver
             //ewwwww
             if ($req->getResponseCode() == 300) {
                 //further ewww
-                $url = new Net_URL($path);
 
-                $base_path = 'http://www.w3.org/2001/sw/grddl-wg/td/';
-
-                $rdf_docs = array($base_path . 'sq2ns#',
-                                  $base_path . 'sq2ns',
-                                  $base_path . 'two-transforms-ns#',
-                                  $base_path . 'two-transforms-ns');
-
-                $xml_docs = array($base_path . 'sq1ns#',
-                                  $base_path . 'sq1ns',
-                                  $base_path . 'loop-ns-b',
-                                  $base_path . 'loopx',
-                                  $base_path . 'loopy');
-
-
-                if (in_array($path, $rdf_docs)) {
-                    $url->path .= '.rdf';
-                } elseif (in_array($path, $xml_docs)) {
-                    $url->path .= '.xml';
-                } else {
-                    $url->path .= '.' . $preferred_extension;
+                $new_path = $this->findRedirect($path);
+                if (empty($new_path)) {
+                    $new_path = $path . '.' . $preferred_extension;
                 }
 
-                return $this->fetch($url->getURL());
+                return $this->fetch($new_path);
             }
-
 
 
 
