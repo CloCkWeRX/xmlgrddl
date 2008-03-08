@@ -313,6 +313,26 @@ abstract class XML_GRDDL_Driver
     }
 
     /**
+     * Workaround the fact DOMDocument::baseURI does not parse correctly.
+     *
+     * @param DOMDocument $dom object to inspect
+     *
+     * @bug http://bugs.php.net/bug.php?id=44367
+     *
+     * @return string
+     */
+    protected function findBaseURIFromDOMDocument(DOMDocument $dom) {
+        if (!empty($dom->baseURI)) {
+            return $dom->baseURI;
+        }
+
+        $s = simplexml_import_dom($dom);
+        $attributes = $s->attributes('http://www.w3.org/XML/1998/namespace');
+
+        return isset($attributes['base']) ? $attributes['base'] : null;
+    }
+
+    /**
      * Inspect a DOMDocument and kludge together a base URI.
      *
      * Otherwise, try to use the existing original document location.
@@ -476,10 +496,10 @@ abstract class XML_GRDDL_Driver
                 return $this->url_cache[$path]['data'] = $this->prettify($req->getResponseBody());
             }
 
-            //HTTP 302 - UH...
-            if ($req->getResponseCode() == 302) {
+            $redirections = array(302, 303, 307);
+            if (in_array($req->getResponseCode(), $redirections)) {
                 //Obey the Location:
-                // ... but consider race conditions
+                // @todo ... but consider race conditions
                 $headers = $req->getResponseHeader();
 
                 return $this->fetch($headers['location']);
@@ -536,8 +556,8 @@ abstract class XML_GRDDL_Driver
 
         $dom = new DomDocument('1.0');
 
-        $dom->preserveWhiteSpace = $this->options['preserveWhiteSpace'];
-        $dom->formatOutput       = $this->options['formatOutput'];
+        $dom->preserveWhiteSpace = !empty($this->options['preserveWhiteSpace']);
+        $dom->formatOutput       = !empty($this->options['formatOutput']);
 
         $options = LIBXML_NSCLEAN & LIBXML_COMPACT;
         if (!empty($this->options['quiet'])) {
@@ -557,6 +577,17 @@ abstract class XML_GRDDL_Driver
             }
 
             return $dom->saveXML($dom);
+        } elseif (!empty($this->options['tidy'])) {
+            /** @todo   Better way to check if its acutally HTML */
+            $config = array(
+                       'indent'         => true,
+                       'output-xhtml'   => true);
+
+            $tidy = new tidy();
+            $tidy->parseString($xml, $config, 'utf8');
+            $tidy->cleanRepair();
+
+            return (string)$tidy;
         }
 
         return $xml;
