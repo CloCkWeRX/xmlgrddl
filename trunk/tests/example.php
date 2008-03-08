@@ -45,6 +45,7 @@
 
 require_once 'XML/GRDDL.php';
 require_once 'PHPUnit/Framework/Assert.php';
+require_once 'Log.php';
 
 $options = array('documentTransformations' => true,
                 'htmlTransformations' => true,
@@ -54,6 +55,11 @@ $options = array('documentTransformations' => true,
                 'formatOutput' => true,
                 'tidy' => true,
                 'quiet' => true && false);
+
+$log = &Log::singleton('console', '', 'ident');
+
+$options['log'] = $log;
+
 
 //See http://www.w3.org/TR/grddl-tests/#grddl-library
 $tests = array();
