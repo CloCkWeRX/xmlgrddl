@@ -96,8 +96,15 @@ abstract class XML_GRDDL_Driver
         }
 
         $sxe->registerXPathNamespace('grddl', XML_GRDDL::NS);
+        $sxe->registerXPathNamespace('rdf', XML_GRDDL::RDF_NS);
 
         $xsl = array();
+
+        //Detect if this document itself is RDF
+        if ($sxe->xpath('/rdf:RDF')) {
+            $xsl[] = 'inline-rdf';
+        }
+
         if ($this->options['htmlTransformations']) {
             $new = $this->discoverHTMLTransformations($sxe, $original_url);
             $xsl = array_merge($new, $xsl);
