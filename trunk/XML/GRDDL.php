@@ -60,6 +60,7 @@ class XML_GRDDL
     const NS       = "http://www.w3.org/2003/g/data-view#";
     const XHTML_NS = 'http://www.w3.org/1999/xhtml';
     const RDF_NS   = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#';
+    const XML_NS   = 'http://www.w3.org/XML/1998/namespace';
 
     /**
      * Instantiate a new instance of a GRDDL driver.
