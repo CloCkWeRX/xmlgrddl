@@ -52,47 +52,49 @@ $options = array('documentTransformations' => true,
                 'namespaceTransformations' => true,
                 'preserveWhiteSpace' => false,
                 'formatOutput' => true,
+                'tidy' => true,
                 'quiet' => true && false);
 
 //See http://www.w3.org/TR/grddl-tests/#grddl-library
 $tests = array();
 
 //Localized Tests
-//require_once 'local.php';
+require_once 'local.php';
 
 //Namespace Documents and Absolute Locations
-//require_once 'namespaces.php';
+require_once 'namespaces.php';
 
 // Library tests
-//require_once 'library.php';
+require_once 'library.php';
 
 // Ambiguous Infosets, Representations, and Traversals
 require_once 'ambiguous.php';
 
 foreach ($tests as $test) {
-    $test_options = array_merge($options, isset($test['options']) ? $test['options'] : array());
-    $grddl = XML_GRDDL::factory('xsl', $test_options);
-
-    $in = $grddl->fetch($test['in']);
-
-    if (!file_exists($test['realistic'])) {
-        file_put_contents($test['realistic'], $grddl->fetch($test['out']));
-    }
-    $out = "";
-    if (!empty($test['realistic'])) {
-        $out = $grddl->fetch($test['realistic']);
-    }
-
-    $stylesheets = $grddl->inspect($in, $test['in']);
-
-    $rdf_xml = array();
-    foreach ($stylesheets as $stylesheet) {
-        $rdf_xml[] = $grddl->transform($stylesheet, $in);
-    }
-
-    $result = array_reduce($rdf_xml, array($grddl, 'merge'));
 
     try {
+        $test_options = array_merge($options, isset($test['options']) ? $test['options'] : array());
+        $grddl = XML_GRDDL::factory('xsl', $test_options);
+
+        $in = $grddl->fetch($test['in']);
+
+        if (!file_exists($test['realistic'])) {
+            file_put_contents($test['realistic'], $grddl->fetch($test['out']));
+        }
+        $out = "";
+        if (!empty($test['realistic'])) {
+            $out = $grddl->fetch($test['realistic']);
+        }
+
+        $stylesheets = $grddl->inspect($in, $test['in']);
+
+        $rdf_xml = array();
+        foreach ($stylesheets as $stylesheet) {
+            $rdf_xml[] = $grddl->transform($stylesheet, $in);
+        }
+
+        $result = array_reduce($rdf_xml, array($grddl, 'merge'));
+
         print $test['name'] . "\n";
         PHPUnit_Framework_Assert::assertSame(trim($grddl->prettify($out)), trim($grddl->prettify($result)));
         print "\tPHP tests: Pass\n\n";
@@ -106,6 +108,9 @@ foreach ($tests as $test) {
         print $result . "\n";
         print "Expected:\n";
         print $out . "\n\n";
+    } catch (Exception $e) {
+        print $e->getMessage();
+        print_r($e->getTrace());
     }
 
 }
