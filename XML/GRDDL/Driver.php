@@ -45,6 +45,7 @@
 
 require_once 'HTTP/Request.php';
 require_once 'Net/URL.php';
+require_once 'Log.php';
 
 /**
  * An abstract driver for GRDDL
@@ -62,7 +63,8 @@ require_once 'Net/URL.php';
 abstract class XML_GRDDL_Driver
 {
 
-    public $options;
+    public    $options;
+    protected $logger;
 
     protected $url_cache = array();
 
@@ -78,6 +80,12 @@ abstract class XML_GRDDL_Driver
     public function __construct($options = array())
     {
         $this->options = $options;
+        if (isset($this->options['log'])) {
+            $this->logger = $this->options['log'];
+        } else {
+            $this->logger = Log::singleton('null');
+        }
+
 
         $base_path = 'http://www.w3.org/2001/sw/grddl-wg/td/';
 
@@ -457,6 +465,8 @@ abstract class XML_GRDDL_Driver
      */
     public function fetch($path, $preferred_extension = 'html')
     {
+        $this->logger->log("Fetching " . $path);
+
         /** @todo remove me */
         if (empty($path)) {
             throw new Exception("You must provide a path");
