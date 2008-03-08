@@ -78,6 +78,29 @@ abstract class XML_GRDDL_Driver
     public function __construct($options = array())
     {
         $this->options = $options;
+
+        $base_path = 'http://www.w3.org/2001/sw/grddl-wg/td/';
+
+        $rdf_docs = array($base_path . 'sq2ns#',
+                          $base_path . 'sq2ns',
+                          $base_path . 'two-transforms-ns#',
+                          $base_path . 'two-transforms-ns');
+
+        $xml_docs = array($base_path . 'sq1ns#',
+                          $base_path . 'sq1ns',
+                          $base_path . 'loop-ns-b',
+                          $base_path . 'loopx',
+                          $base_path . 'loopy',
+                          $base_path . 'xmlWithBase',
+                          $base_path . 'base/xmlWithBase');
+
+        foreach ($rdf_docs as $path) {
+            $this->logRedirect($path, $path . '.rdf');
+        }
+
+        foreach ($xml_docs as $path) {
+            $this->logRedirect($path, $path . '.xml');
+        }
     }
 
     /**
@@ -631,5 +654,21 @@ abstract class XML_GRDDL_Driver
         $result = array_reduce($rdf_xml, array($this, 'merge'));
 
         return $result;
+    }
+
+    /**
+     * If this URL has been fetched before,
+     * return its resolved location (after all redirects)
+     *
+     * @param string $url URL
+     *
+     * @return string
+     */
+    protected function findRedirect($url) {
+        return isset($this->url_cache['seeAlso'][$url])? $this->url_cache['seeAlso'][$url] : null;
+    }
+
+    protected function logRedirect($url, $other_url) {
+        $this->url_cache['seeAlso'][$url] = (string)$other_url;
     }
 }
