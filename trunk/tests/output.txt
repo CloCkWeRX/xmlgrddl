@@ -1,95 +1,456 @@
+---------- php ----------
+Mar 09 08:33:13 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/xmlWithGrddlAttribute.xml
+Mar 09 08:33:14 ident [info] Fetching C:\work\xml_grddl\tests/data/xmlWithGrddlAttribute-output.rdf
+Mar 09 08:33:14 ident [info] Fetching http://www.w3.org/2002/01/P3Pv1
+Mar 09 08:33:16 ident [info] Fetching http://www.w3.org/2003/g/data-view#
+Mar 09 08:33:18 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/grokPolicy.xsl
 P3P work-alike
 	PHP tests: Pass
 
-Get RDF from a spreadsheet
-	PHP tests: Pass
+Mar 09 08:33:19 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/projects.xml
+Mar 09 08:33:21 ident [info] Fetching C:\work\xml_grddl\tests/data/projects.rdf
+Mar 09 08:33:21 ident [info] Fetching http://www.gnumeric.org/v10.dtd
 
+Warning: DOMDocument::loadXML(): Space required after the Public Identifier in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SystemLiteral " or ' expected in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SYSTEM or PUBLIC, the URI is missing in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+Mar 09 08:33:21 ident [info] Fetching http://www.w3.org/2001/XMLSchema-instance
+Mar 09 08:33:22 ident [info] Fetching http://www.w3.org/2003/g/data-view#
+Mar 09 08:33:23 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/grokSheet.xsl
+Get RDF from a spreadsheet
+	PHP tests: Failed asserting that <text> is identical to <text>.
+
+C:\work\xml_grddl\tests/data/projects.rdf
+Got:
+<?xml version="1.0"?>
+<r:RDF xmlns:r="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <r:Description r:about="">
+    <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">A few Semantic Web Tools</dc:title>
+  </r:Description>
+  <r:Property r:about="http://purl.org/dc/elements/1.1/title">
+    <s:label xmlns:s="http://www.w3.org/2000/01/rdf-schema#">title</s:label>
+  </r:Property>
+  <r:Property r:about="http://purl.org/dc/elements/1.1/identifier">
+    <s:label xmlns:s="http://www.w3.org/2000/01/rdf-schema#">identifier</s:label>
+  </r:Property>
+  <r:Property r:about="http://purl.org/dc/elements/1.1/description">
+    <s:label xmlns:s="http://www.w3.org/2000/01/rdf-schema#">description</s:label>
+  </r:Property>
+  <r:Description>
+    <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">AutoSemantix</dc:title>
+    <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">http://autosemantix.sourceforge.net/</dc:identifier>
+    <dc:description xmlns:dc="http://purl.org/dc/elements/1.1/">AutoSemantix is a round-trip code generation tool designed to streamline the creation of Semantic Web applications for the Java platform</dc:description>
+  </r:Description>
+  <r:Description>
+    <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">BBN OWL Validator</dc:title>
+    <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">http://owl.bbn.com/validator/</dc:identifier>
+    <dc:description xmlns:dc="http://purl.org/dc/elements/1.1/">BBN OWL Validator</dc:description>
+  </r:Description>
+  <r:Description>
+    <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">Beagle++</dc:title>
+    <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">http://beagle.kbs.uni-hannover.de/index.html</dc:identifier>
+    <dc:description xmlns:dc="http://purl.org/dc/elements/1.1/">Beagle++ is an extensions to the Beagle search tool for the personal information space. Beagle++ now makes that search semantic, moving towards a visious of the Semantic Desktop</dc:description>
+  </r:Description>
+  <r:Description>
+    <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">Bibster</dc:title>
+    <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">http://bibster.semanticweb.org/</dc:identifier>
+    <dc:description xmlns:dc="http://purl.org/dc/elements/1.1/">A semantics-based bibliographic peer-to-peer system</dc:description>
+  </r:Description>
+  <r:Description>
+    <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">Bossam</dc:title>
+    <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">http://mknows.etri.re.kr/bossam/</dc:identifier>
+    <dc:description xmlns:dc="http://purl.org/dc/elements/1.1/">Bossam, a rule-based OWL reasoner (free, well-documented, closed-source)</dc:description>
+  </r:Description>
+</r:RDF>
+
+Expected:
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:data-view="http://www.w3.org/2003/g/data-view#" xmlns:xa="http://www.w3.org/2003/g/xml-attributes#">
+  <r:Description xmlns:r="http://www.w3.org/1999/02/22-rdf-syntax-ns#" r:about="projects.xml">
+    <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">A few Semantic Web Tools</dc:title>
+  </r:Description>
+  <r:Property xmlns:r="http://www.w3.org/1999/02/22-rdf-syntax-ns#" r:about="http://purl.org/dc/elements/1.1/title">
+    <s:label xmlns:s="http://www.w3.org/2000/01/rdf-schema#">title</s:label>
+  </r:Property>
+  <r:Property xmlns:r="http://www.w3.org/1999/02/22-rdf-syntax-ns#" r:about="http://purl.org/dc/elements/1.1/identifier">
+    <s:label xmlns:s="http://www.w3.org/2000/01/rdf-schema#">identifier</s:label>
+  </r:Property>
+  <r:Property xmlns:r="http://www.w3.org/1999/02/22-rdf-syntax-ns#" r:about="http://purl.org/dc/elements/1.1/description">
+    <s:label xmlns:s="http://www.w3.org/2000/01/rdf-schema#">description</s:label>
+  </r:Property>
+  <r:Description xmlns:r="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">AutoSemantix</dc:title>
+    <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">http://autosemantix.sourceforge.net/</dc:identifier>
+    <dc:description xmlns:dc="http://purl.org/dc/elements/1.1/">AutoSemantix is a round-trip code generation tool designed to streamline the creation of Semantic Web applications for the Java platform</dc:description>
+  </r:Description>
+  <r:Description xmlns:r="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">BBN OWL Validator</dc:title>
+    <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">http://owl.bbn.com/validator/</dc:identifier>
+    <dc:description xmlns:dc="http://purl.org/dc/elements/1.1/">BBN OWL Validator</dc:description>
+  </r:Description>
+  <r:Description xmlns:r="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">Beagle++</dc:title>
+    <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">http://beagle.kbs.uni-hannover.de/index.html</dc:identifier>
+    <dc:description xmlns:dc="http://purl.org/dc/elements/1.1/">Beagle++ is an extensions to the Beagle search tool for the personal information space. Beagle++ now makes that search semantic, moving towards a visious of the Semantic Desktop</dc:description>
+  </r:Description>
+  <r:Description xmlns:r="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">Bibster</dc:title>
+    <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">http://bibster.semanticweb.org/</dc:identifier>
+    <dc:description xmlns:dc="http://purl.org/dc/elements/1.1/">A semantics-based bibliographic peer-to-peer system</dc:description>
+  </r:Description>
+  <r:Description xmlns:r="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">Bossam</dc:title>
+    <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">http://mknows.etri.re.kr/bossam/</dc:identifier>
+    <dc:description xmlns:dc="http://purl.org/dc/elements/1.1/">Bossam, a rule-based OWL reasoner (free, well-documented, closed-source)</dc:description>
+  </r:Description>
+</rdf:RDF>
+
+
+Mar 09 08:33:25 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/rdf_sem.html
+Mar 09 08:33:25 ident [info] Fetching C:\work\xml_grddl\tests/data/rdf_sem-output.rdf
+Mar 09 08:33:25 ident [info] Fetching http://www.w3.org/2003/g/data-view
+Mar 09 08:33:27 ident [info] Fetching http://www.w3.org/1999/xhtml
+
+Warning: DOMDocument::loadXML(): Space required after the Public Identifier in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SystemLiteral " or ' expected in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SYSTEM or PUBLIC, the URI is missing in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+Mar 09 08:33:28 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/RDFa2RDFXML.xsl
 RDFa example
 	PHP tests: Pass
 
+Mar 09 08:33:29 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/inline.html
+Mar 09 08:33:30 ident [info] Fetching C:\work\xml_grddl\tests/data/inline.rdf
+Mar 09 08:33:30 ident [info] Fetching http://www.w3.org/2003/g/data-view
+Mar 09 08:33:32 ident [info] Fetching http://www.w3.org/1999/xhtml
+
+Warning: DOMDocument::loadXML(): Space required after the Public Identifier in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SystemLiteral " or ' expected in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SYSTEM or PUBLIC, the URI is missing in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+Mar 09 08:33:32 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/inline.xsl
 Inline transformation reference
 	PHP tests: Pass
 
+Mar 09 08:33:33 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/baseURI.html
+Mar 09 08:33:33 ident [info] Fetching C:\work\xml_grddl\tests/data/baseURI.rdf
+Mar 09 08:33:34 ident [info] Fetching http://www.w3.org/1999/xhtml
+
+Warning: DOMDocument::loadXML(): Space required after the Public Identifier in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SystemLiteral " or ' expected in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SYSTEM or PUBLIC, the URI is missing in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+Mar 09 08:33:34 ident [info] Fetching http://www.w3.org/2003/g/data-view#
+Mar 09 08:33:36 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/baseURI.xsl
 Base URI: Same document reference
 	PHP tests: Pass
 
+Mar 09 08:33:37 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/titleauthor.html
+Mar 09 08:33:37 ident [info] Fetching C:\work\xml_grddl\tests/data/titleauthor-output.rdf
+Mar 09 08:33:37 ident [info] Fetching http://www.w3.org/1999/xhtml
+
+Warning: DOMDocument::loadXML(): Space required after the Public Identifier in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SystemLiteral " or ' expected in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SYSTEM or PUBLIC, the URI is missing in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+Mar 09 08:33:38 ident [info] Fetching http://www.w3.org/2003/g/data-view#
+Mar 09 08:33:39 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/glean_title.xsl
+Mar 09 08:33:40 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/getAuthor.xsl
 Title / Author (from specification)
 	PHP tests: Pass
 
+Mar 09 08:33:41 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/projects.rdf
+Mar 09 08:33:42 ident [info] Fetching C:\work\xml_grddl\tests/data/projects.rdf
+Mar 09 08:33:42 ident [info] Fetching http://www.w3.org/1999/02/22-rdf-syntax-ns#
+Mar 09 08:33:43 ident [info] Fetching http://purl.org/dc/elements/1.1/
+Mar 09 08:33:43 ident [info] The webserver says http://purl.org/dc/elements/1.1/ actually lives at http://dublincore.org/2008/01/14/dcelements.rdf#
+Mar 09 08:33:43 ident [info] Fetching http://dublincore.org/2008/01/14/dcelements.rdf#
+Mar 09 08:33:45 ident [info] Fetching http://www.w3.org/2000/01/rdf-schema#
+Mar 09 08:33:46 ident [info] Fetching inline-rdf
+RDF/XML document
+	PHP tests: Pass
+
+Mar 09 08:33:46 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/xhtmlWithGrddlProfile.html
+Mar 09 08:33:47 ident [info] Fetching C:\work\xml_grddl\tests/data/xhtmlWithGrddlProfile-output.rdf
+Mar 09 08:33:47 ident [info] Fetching http://www.w3.org/2003/g/data-view
+Mar 09 08:33:48 ident [info] Fetching http://www.w3.org/1999/xhtml
+
+Warning: DOMDocument::loadXML(): Space required after the Public Identifier in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SystemLiteral " or ' expected in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SYSTEM or PUBLIC, the URI is missing in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+Mar 09 08:33:49 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/simpleTransform.xsl
 One transform linked from the head of a document with only the GRDDL profile
 	PHP tests: Pass
 
+Mar 09 08:33:50 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/xhtmlWithGrddlTransformationInBody.html
+Mar 09 08:33:50 ident [info] Fetching C:\work\xml_grddl\tests/data/xhtmlWithGrddlTransformationInBody-output.rdf
+Mar 09 08:33:50 ident [info] Fetching http://www.w3.org/2003/g/data-view
+Mar 09 08:33:52 ident [info] Fetching http://www.w3.org/1999/xhtml
+
+Warning: DOMDocument::loadXML(): Space required after the Public Identifier in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SystemLiteral " or ' expected in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SYSTEM or PUBLIC, the URI is missing in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+Mar 09 08:33:53 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/simpleTransform.xsl
 One transform linked from the body of a document with only the GRDDL profile
 	PHP tests: Pass
 
+Mar 09 08:33:53 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/xhtmlWithMoreThanOneProfile.html
+Mar 09 08:33:54 ident [info] Fetching C:\work\xml_grddl\tests/data/xhtmlWithTwoTransformations-output.rdf
+Mar 09 08:33:54 ident [info] Fetching http://www.example.org/NotAGrddlProfile
+Mar 09 08:33:55 ident [info] Fetching http://www.w3.org/2003/g/data-view
+Mar 09 08:33:56 ident [info] Fetching http://www.example.org/AnotherUndereferencableProfile
+Mar 09 08:33:57 ident [info] Fetching http://www.w3.org/1999/xhtml
+
+Warning: DOMDocument::loadXML(): Space required after the Public Identifier in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SystemLiteral " or ' expected in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SYSTEM or PUBLIC, the URI is missing in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+Mar 09 08:33:57 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/simpleTransform.xsl
+Mar 09 08:33:58 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/getAuthor.xsl
 One transform linked from the head of a document with several profiles, including the GRDDL profile
 	PHP tests: Pass
 
+Mar 09 08:33:59 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/xhtmlWithMoreThanOneGrddlTransformation.html
+Mar 09 08:33:59 ident [info] Fetching C:\work\xml_grddl\tests/data/xhtmlWithTwoTransformations-output.rdf
+Mar 09 08:33:59 ident [info] Fetching http://www.w3.org/2003/g/data-view
+Mar 09 08:34:01 ident [info] Fetching http://www.w3.org/1999/xhtml
+
+Warning: DOMDocument::loadXML(): Space required after the Public Identifier in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SystemLiteral " or ' expected in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SYSTEM or PUBLIC, the URI is missing in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+Mar 09 08:34:02 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/simpleTransform.xsl
+Mar 09 08:34:02 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/getAuthor.xsl
 Two transformations linked from the body of a document with the GRDDL profile
 	PHP tests: Pass
 
+Mar 09 08:34:03 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/xmlWithGrddlAttributeAndNonXMLNamespaceDocument.xml
+Mar 09 08:34:04 ident [info] Fetching C:\work\xml_grddl\tests/data/xmlWithGrddlAttributeAndNonXMLNamespaceDocument-output.rdf
+Mar 09 08:34:04 ident [info] Fetching http://www.w3.org/2000/svg
+Mar 09 08:34:05 ident [info] Fetching http://www.w3.org/2003/g/data-view#
+Mar 09 08:34:07 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/svg2dc.xsl
 XML document linking to its transformer through the GRDDL attribute
 	PHP tests: Pass
 
+Mar 09 08:34:07 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/card.html
+Mar 09 08:34:08 ident [info] Fetching C:\work\xml_grddl\tests/data/card-output.rdf
+Mar 09 08:34:08 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/hcard
+Mar 09 08:34:09 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/hcard.html
+Mar 09 08:34:10 ident [info] Fetching http://www.w3.org/1999/xhtml
+
+Warning: DOMDocument::loadXML(): Space required after the Public Identifier in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SystemLiteral " or ' expected in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SYSTEM or PUBLIC, the URI is missing in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+Mar 09 08:34:14 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/hcard2rdf.xsl
 An hcard profile
 	PHP tests: Pass
 
+Mar 09 08:34:16 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/multiprofile.html
+Mar 09 08:34:16 ident [info] Fetching C:\work\xml_grddl\tests/data/multiprofile-output.rdf
+Mar 09 08:34:16 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/erdf
+Mar 09 08:34:17 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/erdf.html
+Mar 09 08:34:18 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/
+
+Warning: DOMDocument::loadXML(): Entity 'nbsp' not defined in Entity, line: 10 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+Mar 09 08:34:21 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/
+Mar 09 08:34:21 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/
+Mar 09 08:34:21 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/
+Mar 09 08:34:21 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/
+Mar 09 08:34:21 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/
+Mar 09 08:34:21 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/
+Mar 09 08:34:21 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/
+Mar 09 08:34:21 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/hcard
+Mar 09 08:34:21 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/hcard.html
+Mar 09 08:34:23 ident [info] Fetching http://www.w3.org/1999/xhtml
+
+Warning: DOMDocument::loadXML(): Space required after the Public Identifier in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SystemLiteral " or ' expected in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SYSTEM or PUBLIC, the URI is missing in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+Mar 09 08:34:24 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/extract-rdf.xsl
+Mar 09 08:34:25 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/hcard2rdf.xsl
 2 profiles: eRDF and hCard
 	PHP tests: Pass
 
+Mar 09 08:34:27 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/sq1.xml
+Mar 09 08:34:28 ident [info] Fetching C:\work\xml_grddl\tests/data/sq1-output.rdf
+Mar 09 08:34:28 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/sq1ns#
+Mar 09 08:34:29 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/sq1ns.xml
+Mar 09 08:34:29 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/sq1t.xsl
 Namespace documents and media types 1
 	PHP tests: Pass
 
+Mar 09 08:34:30 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/sq2.xml
+Mar 09 08:34:31 ident [info] Fetching C:\work\xml_grddl\tests/data/sq2-output.rdf
+Mar 09 08:34:31 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/sq2ns#
+Mar 09 08:34:31 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/sq2ns.rdf
+Mar 09 08:34:32 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/sq1t.xsl
 Namespace documents and media types 2
 	PHP tests: Pass
 
+Mar 09 08:34:33 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/card5na.html
+Mar 09 08:34:33 ident [info] Fetching C:\work\xml_grddl\tests/data/card5n-output.rdf
+Mar 09 08:34:33 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/hcarda
+Mar 09 08:34:34 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/hcarda.html
+Mar 09 08:34:35 ident [info] Fetching http://www.w3.org/1999/xhtml
+
+Warning: DOMDocument::loadXML(): Space required after the Public Identifier in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SystemLiteral " or ' expected in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SYSTEM or PUBLIC, the URI is missing in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+Mar 09 08:34:36 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/hcard2rdf.xsl
 A variant of the card5n test
 	PHP tests: Pass
 
+Mar 09 08:34:38 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/card5n.html
+Mar 09 08:34:39 ident [info] Fetching C:\work\xml_grddl\tests/data/card5n-output.rdf
+Mar 09 08:34:39 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/hcard
+Mar 09 08:34:39 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/hcard.html
+Mar 09 08:34:41 ident [info] Fetching http://www.w3.org/1999/xhtml
+
+Warning: DOMDocument::loadXML(): Space required after the Public Identifier in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SystemLiteral " or ' expected in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SYSTEM or PUBLIC, the URI is missing in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+Mar 09 08:34:41 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/hcard2rdf.xsl
 hcard from a 1998 review comment on P3P
 	PHP tests: Pass
 
+Mar 09 08:34:43 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/three-transforms.xml
+Mar 09 08:34:44 ident [info] Fetching C:\work\xml_grddl\tests/data/three-transforms-output.rdf
+Mar 09 08:34:44 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/two-transforms-ns#
+Mar 09 08:34:45 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/two-transforms-ns.rdf
+Mar 09 08:34:46 ident [info] Fetching http://www.w3.org/2003/g/data-view#
+Mar 09 08:34:47 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/one
+Mar 09 08:34:48 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/one.xsl
+Mar 09 08:34:48 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/two
+Mar 09 08:34:49 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/two.xsl
+Mar 09 08:34:50 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/three
+Mar 09 08:34:50 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/three.xsl
 An XML document with two namespace transformations and a transform on the root element
 	PHP tests: Pass
 
+Mar 09 08:34:51 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/four-transforms.xml
+Mar 09 08:34:52 ident [info] Fetching C:\work\xml_grddl\tests/data/four-transforms-output.rdf
+Mar 09 08:34:52 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/two-transforms-ns#
+Mar 09 08:34:52 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/two-transforms-ns.rdf
+Mar 09 08:34:53 ident [info] Fetching http://www.w3.org/2003/g/data-view#
+Mar 09 08:34:55 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/one
+Mar 09 08:34:55 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/one.xsl
+Mar 09 08:34:56 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/two
+Mar 09 08:34:57 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/two.xsl
+Mar 09 08:34:57 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/four
+Mar 09 08:34:58 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/four.xsl
+Mar 09 08:34:59 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/three
+Mar 09 08:34:59 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/three.xsl
 An XML document with two namespace transformations and two transforms on the root element
 	PHP tests: Pass
 
+Mar 09 08:35:00 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/xhtmlWithGrddlEnabledProfile.html
+Mar 09 08:35:01 ident [info] Fetching C:\work\xml_grddl\tests/data/xhtmlWithGrddlEnabledProfile-output.rdf
+Mar 09 08:35:01 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/grddlProfile.html
+Mar 09 08:35:01 ident [info] Fetching http://www.w3.org/1999/xhtml
+
+Warning: DOMDocument::loadXML(): Space required after the Public Identifier in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SystemLiteral " or ' expected in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SYSTEM or PUBLIC, the URI is missing in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+Mar 09 08:35:02 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/simpleTransform.xsl
 Document linking to its transformer through a GRDDL-enabled profile
 	PHP tests: Pass
 
+Mar 09 08:35:03 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/inline-rdf1.xml
+Mar 09 08:35:03 ident [info] Fetching C:\work\xml_grddl\tests/data/embedded-rdf1-output.rdf
+Mar 09 08:35:04 ident [info] Fetching http://www.w3.org/2003/g/data-view#
+Mar 09 08:35:05 ident [info] Fetching http://www.w3.org/1999/02/22-rdf-syntax-ns#
+Mar 09 08:35:06 ident [info] Fetching http://www.w3.org/2003/g/inline-rdf.xsl
 Embedded RDF1
 	PHP tests: Pass
 
+Mar 09 08:35:07 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/inline-rdf2.xml
+Mar 09 08:35:08 ident [info] Fetching C:\work\xml_grddl\tests/data/embedded-rdf2-output.rdf
+Mar 09 08:35:08 ident [info] Fetching http://www.w3.org/2003/g/data-view#
+Mar 09 08:35:09 ident [info] Fetching http://www.w3.org/1999/02/22-rdf-syntax-ns#
+Mar 09 08:35:10 ident [info] Fetching http://example.org/one#
+
+Notice: HTTP 404 while retrieving http://example.org/one# in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 325
+Mar 09 08:35:11 ident [info] Fetching http://www.w3.org/1999/02/22-rdf-syntax-ns#
+Mar 09 08:35:11 ident [info] Fetching http://www.w3.org/2003/g/inline-rdf.xsl
 Embedded RDF2
 	PHP tests: Pass
 
+Mar 09 08:35:12 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/inline-rdf3.xml
+Mar 09 08:35:13 ident [info] Fetching C:\work\xml_grddl\tests/data/embedded-rdf3-output.rdf
+Mar 09 08:35:13 ident [info] Fetching http://www.w3.org/1999/02/22-rdf-syntax-ns#
+Mar 09 08:35:14 ident [info] Fetching http://www.w3.org/2003/g/data-view#
+Mar 09 08:35:15 ident [info] Fetching http://example.org/one#
+
+Notice: HTTP 404 while retrieving http://example.org/one# in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 325
+Mar 09 08:35:16 ident [info] Fetching http://www.w3.org/2003/g/inline-rdf.xsl
+Mar 09 08:35:16 ident [info] Fetching inline-rdf
 Embedded RDF3
-	PHP tests: Pass
-
-Glean Profile
-	PHP tests: Pass
-
-Embedded RDF using a relative xml:base
 	PHP tests: Failed asserting that <text> is identical to <text>.
 
-G:\work\xml_grddl\tests/data/embedded-rdf4-output.rdf
+C:\work\xml_grddl\tests/data/embedded-rdf3-output.rdf
 Got:
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:data-view="http://www.w3.org/2003/g/data-view#" xmlns:xa="http://www.w3.org/2003/g/xml-attributes#">
-  <rdf:Description rdf:about="" rdf:value="one"/>
+  <r:Description xmlns:r="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:eg="http://example.org/one#" r:about="" eg:value="one"/>
+  <r:Description xmlns:r="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:eg="http://example.org/one#" r:about="" eg:value="one"/>
 </rdf:RDF>
 
 Expected:
-<?xml version="1.0" encoding="utf-8"?>
-<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:data-view="http://www.w3.org/2003/g/data-view#">
-  <rdf:Description rdf:about="" xml:base="../.." rdf:about="" rdf:value="one" />
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:data-view="http://www.w3.org/2003/g/data-view#" xmlns:xa="http://www.w3.org/2003/g/xml-attributes#">
+  <r:Description xmlns:r="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:eg="http://example.org/one#" r:about="" eg:value="one"/>
 </rdf:RDF>
 
-Embedded RDF using an absolute xml:base
+
+Mar 09 08:35:16 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/profile-with-spaces-in-rel.html
+Mar 09 08:35:17 ident [info] Fetching C:\work\xml_grddl\tests/data/profile-with-spaces-in-rel-output.rdf
+Mar 09 08:35:17 ident [info] Fetching http://www.w3.org/2003/g/data-view
+Mar 09 08:35:19 ident [info] Fetching http://www.w3.org/1999/xhtml
+
+Warning: DOMDocument::loadXML(): Space required after the Public Identifier in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SystemLiteral " or ' expected in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SYSTEM or PUBLIC, the URI is missing in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+Mar 09 08:35:19 ident [info] Fetching http://www.w3.org/2003/g/glean-profile
+Mar 09 08:35:21 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/profile-has-spaces-in-rel.sxsl?last
+Mar 09 08:35:21 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/profile-has-spaces-in-rel.sxsl?middle
+Mar 09 08:35:22 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/profile-has-spaces-in-rel.sxsl?duplicate
+Glean Profile
+	PHP tests: Pass
+
+Mar 09 08:35:23 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/inline-rdf4.xml
+Mar 09 08:35:23 ident [info] Fetching C:\work\xml_grddl\tests/data/embedded-rdf4-output.rdf
+Mar 09 08:35:23 ident [info] Fetching http://www.w3.org/XML/1998/namespace
+Mar 09 08:35:24 ident [info] Fetching http://www.w3.org/2003/g/data-view#
+Mar 09 08:35:26 ident [info] Fetching http://www.w3.org/1999/02/22-rdf-syntax-ns#
+Mar 09 08:35:27 ident [info] Fetching http://www.w3.org/2003/g/inline-rdf.xsl
+Embedded RDF using a relative xml:base
 	PHP tests: Failed asserting that <text> is identical to <text>.
 
-G:\work\xml_grddl\tests/data/embedded-rdf5-output.rdf
+C:\work\xml_grddl\tests/data/embedded-rdf4-output.rdf
 Got:
 <?xml version="1.0" encoding="utf-8"?>
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:data-view="http://www.w3.org/2003/g/data-view#" xmlns:xa="http://www.w3.org/2003/g/xml-attributes#">
@@ -99,23 +460,84 @@ Got:
 Expected:
 <?xml version="1.0" encoding="UTF-8"?>
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:data-view="http://www.w3.org/2003/g/data-view#">
-  <rdf:Description rdf:about="" xml:base="http://example.org/" rdf:value="one"/>
+  <rdf:Description xml:base="../.." rdf:about="" rdf:value="one"/>
 </rdf:RDF>
 
 
+Mar 09 08:35:28 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/inline-rdf5.xml
+Mar 09 08:35:28 ident [info] Fetching C:\work\xml_grddl\tests/data/embedded-rdf5-output.rdf
+Mar 09 08:35:28 ident [info] Fetching http://www.w3.org/XML/1998/namespace
+Mar 09 08:35:29 ident [info] Fetching http://www.w3.org/2003/g/data-view#
+Mar 09 08:35:31 ident [info] Fetching http://www.w3.org/1999/02/22-rdf-syntax-ns#
+Mar 09 08:35:32 ident [info] Fetching http://www.w3.org/2003/g/inline-rdf.xsl
+Embedded RDF using an absolute xml:base
+	PHP tests: Failed asserting that <text> is identical to <text>.
+
+C:\work\xml_grddl\tests/data/embedded-rdf5-output.rdf
+Got:
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:data-view="http://www.w3.org/2003/g/data-view#" xmlns:xa="http://www.w3.org/2003/g/xml-attributes#">
+  <rdf:Description rdf:about="" rdf:value="one"/>
+</rdf:RDF>
+
+Expected:
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:data-view="http://www.w3.org/2003/g/data-view#">
+  <rdf:Description xml:base="http://example.org/" rdf:about="" rdf:value="one"/>
+</rdf:RDF>
+
+
+Mar 09 08:35:33 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/inline-rdf6.xml
+Mar 09 08:35:34 ident [info] Fetching C:\work\xml_grddl\tests/data/embedded-rdf6-output.rdf
+Mar 09 08:35:34 ident [info] Fetching http://www.w3.org/XML/1998/namespace
+Mar 09 08:35:35 ident [info] Fetching http://www.w3.org/2003/g/data-view#
+Mar 09 08:35:36 ident [info] Fetching http://www.w3.org/1999/02/22-rdf-syntax-ns#
+Mar 09 08:35:37 ident [info] Fetching http://www.w3.org/2003/g/inline-rdf.xsl
 Embedded RDF using two nested absolute xml:base
 	PHP tests: Pass
 
+Mar 09 08:35:38 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/inline-rdf8.xml
+Mar 09 08:35:39 ident [info] Fetching C:\work\xml_grddl\tests/data/embedded-rdf8-output.rdf
+Mar 09 08:35:39 ident [info] Fetching http://www.w3.org/XML/1998/namespace
+Mar 09 08:35:40 ident [info] Fetching http://www.w3.org/2003/g/data-view#
+Mar 09 08:35:41 ident [info] Fetching http://www.w3.org/1999/02/22-rdf-syntax-ns#
+Mar 09 08:35:42 ident [info] Fetching http://example.org/one#
+
+Notice: HTTP 404 while retrieving http://example.org/one# in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 325
+Mar 09 08:35:43 ident [info] Fetching http://www.w3.org/1999/02/22-rdf-syntax-ns#
+Mar 09 08:35:43 ident [info] Fetching http://www.w3.org/1999/02/22-rdf-syntax-ns#
+Mar 09 08:35:43 ident [info] Fetching http://www.w3.org/2003/g/inline-rdf.xsl
 Embedded RDF using two different xml:base on two different blocks of RDF
 	PHP tests: Pass
 
+Mar 09 08:35:44 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/inline-rdf9.xml
+Mar 09 08:35:44 ident [info] Fetching C:\work\xml_grddl\tests/data/embedded-rdf9-output.rdf
+Mar 09 08:35:44 ident [info] Fetching http://www.w3.org/2003/g/data-view#
+Mar 09 08:35:46 ident [info] Fetching http://www.w3.org/1999/02/22-rdf-syntax-ns#
+Mar 09 08:35:47 ident [info] Fetching http://www.w3.org/XML/1998/namespace
+Mar 09 08:35:48 ident [info] Fetching http://example.org/one#
+
+Notice: HTTP 404 while retrieving http://example.org/one# in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 325
+Mar 09 08:35:48 ident [info] Fetching http://www.w3.org/1999/02/22-rdf-syntax-ns#
+Mar 09 08:35:48 ident [info] Fetching http://www.w3.org/2003/g/inline-rdf.xsl
 Embedded RDF using two different xml:lang on two different blocks of RDF
 	PHP tests: Pass
 
+Mar 09 08:35:49 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/base/grddlProfileWithBaseElement.html
+Mar 09 08:35:50 ident [info] Fetching C:\work\xml_grddl\tests/data/grddlProfileWithBaseElement-output.rdf
+Mar 09 08:35:50 ident [info] Fetching http://www.w3.org/2003/g/data-view
+Mar 09 08:35:51 ident [info] Fetching http://www.w3.org/1999/xhtml
+
+Warning: DOMDocument::loadXML(): Space required after the Public Identifier in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SystemLiteral " or ' expected in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SYSTEM or PUBLIC, the URI is missing in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+Mar 09 08:35:52 ident [info] Fetching http://www.w3.org/2003/g/glean-profile
 An XHTML profile using a base element
 	PHP tests: Failed asserting that <text> is identical to <text>.
 
-G:\work\xml_grddl\tests/data/grddlProfileWithBaseElement-output.rdf
+C:\work\xml_grddl\tests/data/grddlProfileWithBaseElement-output.rdf
 Got:
 <?xml version="1.0" encoding="utf-8"?>
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dataview="http://www.w3.org/2003/g/data-view#">
@@ -133,11 +555,263 @@ Expected:
 </rdf:RDF>
 
 
-XHTML with an XHTML profile using a base element
-	PHP tests: Failed asserting that <string:> is identical to <text>.
+Mar 09 08:35:53 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/xhtmlProfileBase1.html
+Mar 09 08:35:54 ident [info] Fetching C:\work\xml_grddl\tests/data/xhtmlProfileBase1-output.rdf
+Mar 09 08:35:54 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/grddlProfileWithBaseElement
+Mar 09 08:35:54 ident [info] The webserver says http://www.w3.org/2001/sw/grddl-wg/td/grddlProfileWithBaseElement actually lives at http://www.w3.org/2001/sw/grddl-wg/td/base/grddlProfileWithBaseElement
+Mar 09 08:35:54 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/base/grddlProfileWithBaseElement
+Mar 09 08:35:55 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/base/grddlProfileWithBaseElement.html
+Mar 09 08:35:56 ident [info] Fetching http://www.w3.org/1999/xhtml
 
-G:\work\xml_grddl\tests/data/xhtmlProfileBase1-output.rdf
+Warning: DOMDocument::loadXML(): Space required after the Public Identifier in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SystemLiteral " or ' expected in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SYSTEM or PUBLIC, the URI is missing in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+Mar 09 08:35:57 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/whichdir
+Mar 09 08:35:57 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/whichdir.xsl
+XHTML with an XHTML profile using a base element
+	PHP tests: Pass
+
+Mar 09 08:35:58 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/loop.xml
+Mar 09 08:35:59 ident [info] Fetching C:\work\xml_grddl\tests/data/loop-output.rdf
+Mar 09 08:35:59 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/loop-ns-b
+Mar 09 08:35:59 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/loop-ns-b.xml
+Mar 09 08:36:00 ident [info] Fetching http://www.w3.org/2003/g/data-view#
+Mar 09 08:36:02 ident [info] Fetching http://www.w3.org/1999/02/22-rdf-syntax-ns#
+Mar 09 08:36:03 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/sq1t.xsl
+Mar 09 08:36:03 ident [info] Fetching http://www.w3.org/2003/g/embeddedRDF.xsl
+Namepace Loop
+	PHP tests: Pass
+
+Mar 09 08:36:04 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/xinclude1.html
+Mar 09 08:36:05 ident [info] Fetching C:\work\xml_grddl\tests/data/noxinclude1.rdf
+Mar 09 08:36:05 ident [info] Fetching http://www.w3.org/1999/xhtml
+
+Warning: DOMDocument::loadXML(): Space required after the Public Identifier in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SystemLiteral " or ' expected in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SYSTEM or PUBLIC, the URI is missing in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+Mar 09 08:36:05 ident [info] Fetching http://www.w3.org/2003/g/data-view#
+Mar 09 08:36:07 ident [info] Fetching http://www.w3.org/2001/XInclude
+Mar 09 08:36:08 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/glean_title.xsl
+Mar 09 08:36:08 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/getAuthor.xsl
+Testing GRDDL when XInclude processing is disabled
+	PHP tests: Pass
+
+Mar 09 08:36:09 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/grddlonrdf.rdf
+Mar 09 08:36:10 ident [info] Fetching C:\work\xml_grddl\tests/data/grddlonrdf-output3.rdf
+Mar 09 08:36:10 ident [info] Fetching http://www.w3.org/1999/02/22-rdf-syntax-ns#
+Mar 09 08:36:11 ident [info] Fetching http://www.w3.org/2003/g/data-view#
+Mar 09 08:36:12 ident [info] Fetching http://xmlns.com/foaf/0.1/
+Mar 09 08:36:13 ident [info] The webserver says http://xmlns.com/foaf/0.1/ actually lives at http://xmlns.com/foaf/spec/
+Mar 09 08:36:13 ident [info] Fetching http://xmlns.com/foaf/spec/
+Mar 09 08:36:15 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/foaf2con.xsl
+Mar 09 08:36:16 ident [info] Fetching inline-rdf
+Testing GRDDL attributes on RDF documents
+	PHP tests: Pass
+
+Mar 09 08:36:16 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/spaces-in-rel.html
+Mar 09 08:36:17 ident [info] Fetching C:\work\xml_grddl\tests/data/spaces-in-rel-output.rdf
+Mar 09 08:36:17 ident [info] Fetching http://www.w3.org/2003/g/data-view
+Mar 09 08:36:18 ident [info] Fetching http://www.w3.org/1999/xhtml
+
+Warning: DOMDocument::loadXML(): Space required after the Public Identifier in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SystemLiteral " or ' expected in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SYSTEM or PUBLIC, the URI is missing in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+Mar 09 08:36:19 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/spaces-in-rel.sxsl?only
+Mar 09 08:36:19 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/spaces-in-rel.sxsl?first
+Mar 09 08:36:20 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/spaces-in-rel.sxsl?last
+Mar 09 08:36:21 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/spaces-in-rel.sxsl?middle
+Mar 09 08:36:21 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/spaces-in-rel.sxsl?duplicate
+Spaces in rel attribute
+	PHP tests: Pass
+
+Mar 09 08:36:22 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/loopx.xml
+Mar 09 08:36:23 ident [info] Fetching C:\work\xml_grddl\tests/data/loopx-output2.rdf
+Mar 09 08:36:23 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/loopx
+Mar 09 08:36:23 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/loopx.xml
+Mar 09 08:36:23 ident [info] Fetching http://www.w3.org/2003/g/data-view#
+Mar 09 08:36:25 ident [info] Fetching http://www.w3.org/1999/02/22-rdf-syntax-ns#
+Mar 09 08:36:26 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/loopx.xsl
+Mar 09 08:36:27 ident [info] Fetching http://www.w3.org/2003/g/embeddedRDF.xsl
+Namespace loops
+	PHP tests: Failed asserting that <text> is identical to <text>.
+
+C:\work\xml_grddl\tests/data/loopx-output2.rdf
 Got:
+<?xml version="1.0" encoding="UTF-8"?>
+<r:RDF xmlns:r="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:g="http://www.w3.org/2003/g/data-view#">
+  <r:Description r:about="">
+    <g:namespaceTransformation r:resource="loopy.xsl"/>
+  </r:Description>
+  <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:data-view="http://www.w3.org/2003/g/data-view#" rdf:about="" xml:lang="">
+    <data-view:namespaceTransformation xmlns="http://www.w3.org/2001/sw/grddl-wg/td/loopx" rdf:resource="loopx.xsl"/>
+  </rdf:Description>
+</r:RDF>
+
+Expected:
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- A GRDDL aware agent that partially considers
+  GRDDL results of IR, when computing the
+  GRDDL results for IR, may produce this 
+  output.
+-->
+<rdf:RDF xmlns:data-view="http://www.w3.org/2003/g/data-view#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <rdf:Description rdf:about="">
+    <data-view:namespaceTransformation rdf:resource="loopx.xsl"/>
+    <data-view:namespaceTransformation rdf:resource="loopy.xsl"/>
+  </rdf:Description>
+</rdf:RDF>
+
+
+Mar 09 08:36:27 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/html-and-grddl-xform-attr.html
+Mar 09 08:36:28 ident [info] Fetching C:\work\xml_grddl\tests/data/two-transforms-output.rdf
+Mar 09 08:36:28 ident [info] Fetching http://www.w3.org/2003/g/data-view
+Mar 09 08:36:30 ident [info] Fetching http://www.w3.org/1999/xhtml
+
+Warning: DOMDocument::loadXML(): Space required after the Public Identifier in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SystemLiteral " or ' expected in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SYSTEM or PUBLIC, the URI is missing in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+Mar 09 08:36:30 ident [info] Fetching http://www.w3.org/2003/g/data-view#
+Mar 09 08:36:32 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/two
+Mar 09 08:36:33 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/two.xsl
+Mar 09 08:36:33 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/one
+Mar 09 08:36:34 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/one.xsl
+HTML document with transformation attribute on root
+	PHP tests: Pass
+
+Mar 09 08:36:35 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/xhtmlWithGrddlEnabledProfileAndInBodyTransform.html
+Mar 09 08:36:35 ident [info] Fetching C:\work\xml_grddl\tests/data/xhtmlWithGrddlEnabledProfileAndInBodyTransform-output.rdf
+Mar 09 08:36:35 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/grddlProfile.html
+Mar 09 08:36:36 ident [info] Fetching http://www.w3.org/2003/g/data-view
+Mar 09 08:36:38 ident [info] Fetching http://www.w3.org/1999/xhtml
+
+Warning: DOMDocument::loadXML(): Space required after the Public Identifier in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SystemLiteral " or ' expected in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SYSTEM or PUBLIC, the URI is missing in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+Mar 09 08:36:38 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/simpleTransform.xsl
+Mar 09 08:36:39 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/getAuthor.xsl
+Document linking to its transformer through a GRDDL-enabled profile, and with in-line transformation
+	PHP tests: Pass
+
+Mar 09 08:36:40 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/xhtmlWithGrddlEnabledProfileAndADisabledInBodyTransform.html
+Mar 09 08:36:40 ident [info] Fetching C:\work\xml_grddl\tests/data/xhtmlWithGrddlEnabledProfileAndADisabledInBodyTransform-output.rdf
+Mar 09 08:36:40 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/grddlProfile.html
+Mar 09 08:36:41 ident [info] Fetching http://www.w3.org/1999/xhtml
+
+Warning: DOMDocument::loadXML(): Space required after the Public Identifier in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SystemLiteral " or ' expected in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SYSTEM or PUBLIC, the URI is missing in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+Mar 09 08:36:42 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/simpleTransform.xsl
+Mar 09 08:36:42 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/getAuthor.xsl
+Document linking to its transformer through a GRDDL-enabled profile, and with in-line transformation
+	PHP tests: Pass
+
+Mar 09 08:36:43 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/grddlonrdf-xmlmediatype.rdf
+Mar 09 08:36:44 ident [info] Fetching C:\work\xml_grddl\tests/data/grddlonrdf-xmlmediatype-output3.rdf
+Mar 09 08:36:44 ident [info] Fetching http://www.w3.org/1999/02/22-rdf-syntax-ns#
+Mar 09 08:36:45 ident [info] Fetching http://www.w3.org/2003/g/data-view#
+Mar 09 08:36:47 ident [info] Fetching http://xmlns.com/foaf/0.1/
+Mar 09 08:36:47 ident [info] The webserver says http://xmlns.com/foaf/0.1/ actually lives at http://xmlns.com/foaf/spec/
+Mar 09 08:36:47 ident [info] Fetching http://xmlns.com/foaf/spec/
+Mar 09 08:36:49 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/foaf2con.xsl
+Mar 09 08:36:50 ident [info] Fetching inline-rdf
+Testing GRDDL attributes on RDF documents with XML media type
+	PHP tests: Pass
+
+Mar 09 08:36:50 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/multipleRepresentations.html
+Mar 09 08:36:50 ident [info] Fetching C:\work\xml_grddl\tests/data/multipleRepresentationsHtml-output.rdf
+Mar 09 08:36:50 ident [info] Fetching http://www.w3.org/2003/g/data-view
+Mar 09 08:36:52 ident [info] Fetching http://www.w3.org/1999/xhtml
+
+Warning: DOMDocument::loadXML(): Space required after the Public Identifier in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SystemLiteral " or ' expected in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SYSTEM or PUBLIC, the URI is missing in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+Mar 09 08:36:53 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/multipleRepresentationsHtml.xsl
+Multiple Representations (HTML)
+	PHP tests: Pass
+
+Mar 09 08:36:53 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/multipleRepresentations.svg
+Mar 09 08:36:54 ident [info] Fetching C:\work\xml_grddl\tests/data/multipleRepresentationsSvg-output.rdf
+Mar 09 08:36:54 ident [info] Fetching http://www.w3.org/2000/svg
+Mar 09 08:36:55 ident [info] Fetching http://www.w3.org/2003/g/data-view#
+Mar 09 08:36:56 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/multipleRepresentationsSvg.xsl
+Multiple Representations (SVG)
+	PHP tests: Pass
+
+Mar 09 08:36:57 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/multipleRepresentations
+Mar 09 08:36:58 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/multipleRepresentations.html
+Mar 09 08:36:58 ident [info] Fetching C:\work\xml_grddl\tests/data/multipleRepresentationsBoth-output.rdf
+Mar 09 08:36:58 ident [info] Fetching http://www.w3.org/2003/g/data-view
+Mar 09 08:37:00 ident [info] Fetching http://www.w3.org/1999/xhtml
+
+Warning: DOMDocument::loadXML(): Space required after the Public Identifier in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SystemLiteral " or ' expected in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SYSTEM or PUBLIC, the URI is missing in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+Mar 09 08:37:01 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/multipleRepresentationsHtml.xsl
+Multiple Representations (both)
+	PHP tests: Failed asserting that <text> is identical to <text>.
+
+C:\work\xml_grddl\tests/data/multipleRepresentationsBoth-output.rdf
+Got:
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:ex="http://example.org/test#">
+  <rdf:Description>
+    <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">HTML Input for Multiple Representations Test Case</dc:title>
+    <ex:mimetype>text/html</ex:mimetype>
+  </rdf:Description>
+</rdf:RDF>
+
+Expected:
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:ex="http://example.org/test#" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <rdf:Description>
+    <dc:title>SVG Input for multipleRepresentations Test Case</dc:title>
+    <ex:mimetype>image/svg+xml</ex:mimetype>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A0">
+    <ex:mimetype>text/html</ex:mimetype>
+    <dc:title>HTML Input for Multiple Representations Test Case</dc:title>
+  </rdf:Description>
+</rdf:RDF>
+
+
+Mar 09 08:37:01 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/base/xhtmlWithBaseElement.html
+Mar 09 08:37:02 ident [info] Fetching C:\work\xml_grddl\tests/data/xhtmlWithBaseElement-output.rdf
+Mar 09 08:37:02 ident [info] Fetching http://www.w3.org/2003/g/data-view
+Mar 09 08:37:04 ident [info] Fetching http://www.w3.org/1999/xhtml
+
+Warning: DOMDocument::loadXML(): Space required after the Public Identifier in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SystemLiteral " or ' expected in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SYSTEM or PUBLIC, the URI is missing in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+Mar 09 08:37:04 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/base/whichdir.xsl
+An html document with a base element
+	PHP tests: Failed asserting that <text> is identical to <text>.
+
+C:\work\xml_grddl\tests/data/xhtmlWithBaseElement-output.rdf
+Got:
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+  <rdf:Description rdf:about="">
+    <rdfs:comment>Transformed by stylesheet from /2001/sw/grddl-wg/td/base/</rdfs:comment>
+  </rdf:Description>
+</rdf:RDF>
 
 Expected:
 <?xml version="1.0" encoding="UTF-8"?>
@@ -148,3 +822,152 @@ Expected:
 </rdf:RDF>
 
 
+Mar 09 08:37:05 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/base/xhtmlWithoutBaseElement.html
+Mar 09 08:37:06 ident [info] Fetching C:\work\xml_grddl\tests/data/xhtmlWithoutBaseElement-output.rdf
+Mar 09 08:37:06 ident [info] Fetching http://www.w3.org/2003/g/data-view
+Mar 09 08:37:07 ident [info] Fetching http://www.w3.org/1999/xhtml
+
+Warning: DOMDocument::loadXML(): Space required after the Public Identifier in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SystemLiteral " or ' expected in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SYSTEM or PUBLIC, the URI is missing in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+Mar 09 08:37:08 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/base/whichdir.xsl
+A similar html document without a base element
+	PHP tests: Failed asserting that <text> is identical to <text>.
+
+C:\work\xml_grddl\tests/data/xhtmlWithoutBaseElement-output.rdf
+Got:
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+  <rdf:Description rdf:about="">
+    <rdfs:comment>Transformed by stylesheet from /2001/sw/grddl-wg/td/base/</rdfs:comment>
+  </rdf:Description>
+</rdf:RDF>
+
+Expected:
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+  <rdf:Description rdf:about="">
+    <rdfs:comment>Transformed by stylesheet from /2001/sw/grddl-wg/td/</rdfs:comment>
+  </rdf:Description>
+</rdf:RDF>
+
+
+Mar 09 08:37:09 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/xhtmlWithBaseElement.html
+Mar 09 08:37:09 ident [info] The webserver says http://www.w3.org/2001/sw/grddl-wg/td/xhtmlWithBaseElement.html actually lives at http://www.w3.org/2001/sw/grddl-wg/td/base/xhtmlWithBaseElement.html
+Mar 09 08:37:09 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/base/xhtmlWithBaseElement.html
+Mar 09 08:37:10 ident [info] Fetching C:\work\xml_grddl\tests/data/xhtmlWithBaseElement-output.rdf
+Mar 09 08:37:10 ident [info] Fetching http://www.w3.org/2003/g/data-view
+Mar 09 08:37:12 ident [info] Fetching http://www.w3.org/1999/xhtml
+
+Warning: DOMDocument::loadXML(): Space required after the Public Identifier in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SystemLiteral " or ' expected in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SYSTEM or PUBLIC, the URI is missing in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+Mar 09 08:37:12 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/whichdir.xsl
+A redirected html document with a base element
+	PHP tests: Pass
+
+Mar 09 08:37:13 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/xhtmlWithoutBaseElement.html
+Mar 09 08:37:14 ident [info] The webserver says http://www.w3.org/2001/sw/grddl-wg/td/xhtmlWithoutBaseElement.html actually lives at http://www.w3.org/2001/sw/grddl-wg/td/base/xhtmlWithoutBaseElement.html
+Mar 09 08:37:14 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/base/xhtmlWithoutBaseElement.html
+Mar 09 08:37:14 ident [info] Fetching C:\work\xml_grddl\tests/data/xhtmlWithoutBaseElement-output.rdf
+Mar 09 08:37:14 ident [info] Fetching http://www.w3.org/2003/g/data-view
+Mar 09 08:37:16 ident [info] Fetching http://www.w3.org/1999/xhtml
+
+Warning: DOMDocument::loadXML(): Space required after the Public Identifier in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SystemLiteral " or ' expected in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SYSTEM or PUBLIC, the URI is missing in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+Mar 09 08:37:17 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/whichdir.xsl
+A similar redirected html document without a base element
+	PHP tests: Pass
+
+Mar 09 08:37:17 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/base/xmlWithBase.xml
+Mar 09 08:37:18 ident [info] Fetching C:\work\xml_grddl\tests/data/xmlWithBase-output.rdf
+Mar 09 08:37:18 ident [info] Fetching http://www.example.org
+
+Warning: DOMDocument::loadXML(): Opening and ending tag mismatch: body line 5 and BODY in Entity, line: 12 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+Mar 09 08:37:18 ident [info] Fetching http://www.w3.org/XML/1998/namespace
+Mar 09 08:37:19 ident [info] Fetching http://www.w3.org/2003/g/data-view#
+Mar 09 08:37:21 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/base/whichdir.xsl
+ An xml document with an xml:base attribute
+	PHP tests: Pass
+
+Mar 09 08:37:22 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/base/xmlWithoutBase.xml
+Mar 09 08:37:22 ident [info] Fetching C:\work\xml_grddl\tests/data/xmlWithoutBase-output.rdf
+Mar 09 08:37:22 ident [info] Fetching http://www.example.org
+
+Warning: DOMDocument::loadXML(): Opening and ending tag mismatch: body line 5 and BODY in Entity, line: 12 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+Mar 09 08:37:23 ident [info] Fetching http://www.w3.org/2003/g/data-view#
+Mar 09 08:37:24 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/base/whichdir.xsl
+A similar xml document without an xml:base attribute
+	PHP tests: Pass
+
+Mar 09 08:37:25 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/xmlWithBase.xml
+Mar 09 08:37:26 ident [info] The webserver says http://www.w3.org/2001/sw/grddl-wg/td/xmlWithBase.xml actually lives at http://www.w3.org/2001/sw/grddl-wg/td/base/xmlWithBase.html
+Mar 09 08:37:26 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/base/xmlWithBase.html
+Mar 09 08:37:26 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/base/xmlWithBase.xml
+Mar 09 08:37:27 ident [info] Fetching C:\work\xml_grddl\tests/data/xmlWithBase-output.rdf
+Mar 09 08:37:27 ident [info] Fetching http://www.example.org
+
+Warning: DOMDocument::loadXML(): Opening and ending tag mismatch: body line 5 and BODY in Entity, line: 12 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+Mar 09 08:37:28 ident [info] Fetching http://www.w3.org/XML/1998/namespace
+Mar 09 08:37:29 ident [info] Fetching http://www.w3.org/2003/g/data-view#
+Mar 09 08:37:30 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/whichdir.xsl
+A redirected xml document with an xml:base attribute
+	PHP tests: Failed asserting that <text> is identical to <text>.
+
+C:\work\xml_grddl\tests/data/xmlWithBase-output.rdf
+Got:
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+  <rdf:Description rdf:about="">
+    <rdfs:comment>Transformed by stylesheet from /2001/sw/grddl-wg/td/</rdfs:comment>
+  </rdf:Description>
+</rdf:RDF>
+
+Expected:
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+  <rdf:Description rdf:about="">
+    <rdfs:comment>Transformed by stylesheet from /2001/sw/grddl-wg/td/base/</rdfs:comment>
+  </rdf:Description>
+</rdf:RDF>
+
+
+Mar 09 08:37:31 ident [info] Fetching http://www.w3.org/2001/sw/grddl-wg/td/xmlWithoutBase.xml
+
+Warning: DOMDocument::loadXML(): Space required after the Public Identifier in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SystemLiteral " or ' expected in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SYSTEM or PUBLIC, the URI is missing in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+Mar 09 08:37:32 ident [info] Fetching C:\work\xml_grddl\tests/data/xmlWithoutBase-output.rdf
+Mar 09 08:37:32 ident [info] Fetching http://www.w3.org/1999/xhtml
+
+Warning: DOMDocument::loadXML(): Space required after the Public Identifier in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SystemLiteral " or ' expected in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+
+Warning: DOMDocument::loadXML(): SYSTEM or PUBLIC, the URI is missing in Entity, line: 1 in C:\work\xml_grddl\XML\GRDDL\Driver.php on line 586
+A similar redirected xml document without an xml:base attribute
+	PHP tests: Failed asserting that <string:> is identical to <text>.
+
+C:\work\xml_grddl\tests/data/xmlWithoutBase-output.rdf
+Got:
+
+Expected:
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+  <rdf:Description rdf:about="">
+    <rdfs:comment>Transformed by stylesheet from /2001/sw/grddl-wg/td/base/</rdfs:comment>
+  </rdf:Description>
+</rdf:RDF>
+
+
+
+Output completed (4 min 19 sec consumed) - Normal Termination

@@ -86,6 +86,10 @@ abstract class XML_GRDDL_Driver
             $this->logger = Log::singleton('null');
         }
 
+        if (!extension_loaded('tidy') && !empty($options['tidy'])) {
+            throw new Exception("HTML tidy extension does not appear loaded!");
+        }
+
 
         $base_path = 'http://www.w3.org/2001/sw/grddl-wg/td/';
 
@@ -103,11 +107,15 @@ abstract class XML_GRDDL_Driver
                           $base_path . 'base/xmlWithBase');
 
         foreach ($rdf_docs as $path) {
-            $this->logRedirect($path, $path . '.rdf');
+            $url = new Net_URL($path);
+            $url->path .= '.rdf';
+            $this->logRedirect($path, $url->getURL());
         }
 
         foreach ($xml_docs as $path) {
-            $this->logRedirect($path, $path . '.xml');
+            $url = new Net_URL($path);
+            $url->path .= '.xml';
+            $this->logRedirect($path, $url->getURL());
         }
 
         $this->logRedirect($base_path . 'base/xmlWithBase.html', $base_path . 'base/xmlWithBase.xml');
@@ -511,7 +519,7 @@ abstract class XML_GRDDL_Driver
                 //Obey the Location:
                 // @todo ... but consider race conditions
                 $headers = $req->getResponseHeader();
-
+                $this->logger->log("The webserver says " . $path . " actually lives at " . $headers['location']);
                 return $this->fetch($headers['location']);
             }
 
