@@ -14,10 +14,10 @@
   <email>daniel.oconnor@gmail.com</email>
   <active>yes</active>
  </lead>
- <date>2008-03-01</date>
- <time>02:53:52</time>
+ <date>2008-03-09</date>
+ <time>09:17:46</time>
  <version>
-  <release>0.0.2</release>
+  <release>0.0.3</release>
   <api>0.0.1</api>
  </version>
  <stability>
@@ -25,20 +25,91 @@
   <api>alpha</api>
  </stability>
  <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
- <notes>Implemented proper html profile attribute reading (eRDF, microformats)
-PEAR friendly coding style
-Better error handling / hackyness added to appease w3 servers
-Refactored internal code</notes>
+ <notes>Implement code to deal with more tests
+Implement code to deal with RDF/XML documents being returned
+Can&apos;t quite pass xml:base related problems
+Added a HTML tidy option, which allows you to pre-clean input
+Added options for quiet errors (libxml no errors flags)
+Added options for using a Log handler</notes>
  <contents>
   <dir baseinstalldir="PEAR" name="/">
-   <file baseinstalldir="" md5sum="b976814eca7991d4b251cfe01026c338" name="docs/44225.php" role="doc" />
-   <file baseinstalldir="PEAR" md5sum="24673528b118b6a6dcd1e0e92593cd68" name="docs/an-hcard-profile.php" role="doc" />
-   <file baseinstalldir="PEAR" md5sum="2afba145bbcc8837c475d34da98f75d6" name="docs/danc-hcal.php" role="doc" />
-   <file baseinstalldir="" md5sum="564c236f1b62b1189c6d1519bf3b693f" name="docs/example.php" role="doc" />
-   <file baseinstalldir="PEAR" md5sum="2e4f7391713b5d9a1bf689a3e785a2bf" name="docs/namespace-documents1.php" role="doc" />
-   <file baseinstalldir="" md5sum="036156f4aaee1c636f9a521df247487f" name="XML/GRDDL.php" role="php" />
-   <file baseinstalldir="" md5sum="d9f149053531301de375a486218e22c1" name="XML/GRDDL/Driver.php" role="php" />
-   <file baseinstalldir="PEAR" md5sum="7eca341a7304def203e082a52523855f" name="XML/GRDDL/Driver/Xsl.php" role="php" />
+   <file baseinstalldir="PEAR" md5sum="c10c403cd55b402845bc6d39efc83f4e" name="data/grddl-library/glean-profile" role="data" />
+   <file baseinstalldir="PEAR" md5sum="83e9b28a22bed104cc6bf9f33c5ec122" name="data/grddl-library/grokAlternate" role="data" />
+   <file baseinstalldir="PEAR" md5sum="017afd93a4c2a95a50c1fffb9dba4082" name="data/grddl-library/grokPEAR" role="data" />
+   <file baseinstalldir="PEAR" md5sum="a0357d0df76705258b7a29ff42e5727f" name="data/grddl-library/inline-rdf" role="data" />
+   <file baseinstalldir="PEAR" md5sum="5163a11c0b5e88fe2d39054547a3cf9c" name="data/grddl-library/xml-attributes" role="data" />
+   <file baseinstalldir="" md5sum="baad2c23c95f1641e0db84ef91b24b0d" name="docs/44225.php" role="doc" />
+   <file baseinstalldir="PEAR" md5sum="b828bcdc5a94ccc3352f4611b4bcc94c" name="docs/an-hcard-profile.php" role="doc" />
+   <file baseinstalldir="PEAR" md5sum="c30749552733904c276d203b5352756d" name="docs/danc-hcal.php" role="doc" />
+   <file baseinstalldir="PEAR" md5sum="a92f8768ed7d72a3a46b6b62f6f88873" name="docs/discover-grddl.php" role="doc" />
+   <file baseinstalldir="PEAR" md5sum="baab106a6dbd744b8984a3af67743a03" name="docs/namespace-documents1.php" role="doc" />
+   <file baseinstalldir="PEAR" md5sum="76c4cbbb5804bd9604d400e0eb923dea" name="docs/namespace-documents2.php" role="doc" />
+   <file baseinstalldir="PEAR" md5sum="06d9389151518592000231980761630e" name="docs/pear-package.php" role="doc" />
+   <file baseinstalldir="PEAR" md5sum="12d76ef60ae30519926cb5f3da58b243" name="docs/two-transforms.php" role="doc" />
+   <file baseinstalldir="PEAR" md5sum="6e450f906a831737851f15ea0ac6556b" name="docs/xhtmlWithGrddlEnabledProfile.php" role="doc" />
+   <file baseinstalldir="" md5sum="17d84110fe7610ab579aa558194a6f72" name="scripts/process-grddl.php" role="script" />
+   <file baseinstalldir="" md5sum="16d637b6732088a63b17bdb066963783" name="scripts/testft.py" role="script" />
+   <file baseinstalldir="" md5sum="8849d012ded35e69cbe398dc5e820fd8" name="scripts/xml_grddl.bat" role="script" />
+   <file baseinstalldir="PEAR" md5sum="06a87321562914fa6225df0217d3b86a" name="tests/ambiguous.php" role="test" />
+   <file baseinstalldir="PEAR" md5sum="bf5b908efb2b8814c99f31e0e32f14bc" name="tests/bug-44367.php" role="test" />
+   <file baseinstalldir="PEAR" md5sum="f5bd04a51f595d29606c7c8d7737069a" name="tests/example.php" role="test" />
+   <file baseinstalldir="PEAR" md5sum="9ea62e2be8a7b32c25cc0dab098c51b8" name="tests/library.php" role="test" />
+   <file baseinstalldir="PEAR" md5sum="bbedcc42da3f18cf42969baa3d24dafe" name="tests/local.php" role="test" />
+   <file baseinstalldir="PEAR" md5sum="bdb7d5e1f6b3f370a1a3b521504955ce" name="tests/namespaces.php" role="test" />
+   <file baseinstalldir="PEAR" md5sum="2767be3cebbf54d835b532e420e55a40" name="tests/output.txt" role="test" />
+   <file baseinstalldir="PEAR" md5sum="fda633aaec7493282a8ef55c9548a59c" name="tests/data/baseURI.rdf" role="test" />
+   <file baseinstalldir="PEAR" md5sum="0aa9bd13ca588d95459bafe15cd015d0" name="tests/data/card-output.rdf" role="test" />
+   <file baseinstalldir="PEAR" md5sum="70da655151715bc29bff24996aecf4ed" name="tests/data/card5n-output.rdf" role="test" />
+   <file baseinstalldir="PEAR" md5sum="f27c8b7d167020c9fba02f05d6c8129f" name="tests/data/embedded-rdf1-output.rdf" role="test" />
+   <file baseinstalldir="PEAR" md5sum="7f81da8f0ea538e205f30b90bc2f0def" name="tests/data/embedded-rdf2-output.rdf" role="test" />
+   <file baseinstalldir="PEAR" md5sum="01f43b6bc212a8857bef62b6912a393d" name="tests/data/embedded-rdf3-output.rdf" role="test" />
+   <file baseinstalldir="PEAR" md5sum="127bd6ee2ccc233eb8c981d3ca433b18" name="tests/data/embedded-rdf4-output.rdf" role="test" />
+   <file baseinstalldir="PEAR" md5sum="127bd6ee2ccc233eb8c981d3ca433b18" name="tests/data/embedded-rdf5-output.rdf" role="test" />
+   <file baseinstalldir="PEAR" md5sum="9ae4d766e52c8db43f2364f52e5079bc" name="tests/data/embedded-rdf6-output.rdf" role="test" />
+   <file baseinstalldir="PEAR" md5sum="637112a903d9ac97591ab7b122ceb24c" name="tests/data/embedded-rdf8-output.rdf" role="test" />
+   <file baseinstalldir="PEAR" md5sum="9700312654ce483e9342b5eb7a246741" name="tests/data/embedded-rdf9-output.rdf" role="test" />
+   <file baseinstalldir="PEAR" md5sum="f4b47fec26e6b03ca8e5fd76cdc19ee8" name="tests/data/four-transforms-output.rdf" role="test" />
+   <file baseinstalldir="PEAR" md5sum="cb8bb0c8e39076d3e2ece3682d7320b4" name="tests/data/grddlonrdf-output3.rdf" role="test" />
+   <file baseinstalldir="PEAR" md5sum="338bdf43a799b2ff795bdd3cfd19785a" name="tests/data/grddlonrdf-xmlmediatype-output3.rdf" role="test" />
+   <file baseinstalldir="PEAR" md5sum="17a7c194e6c0a90add4bcd49f77fb1bc" name="tests/data/grddlProfileWithBaseElement-output.rdf" role="test" />
+   <file baseinstalldir="PEAR" md5sum="f0217854b6b96b7686f8910905385824" name="tests/data/hcard-output.rdf" role="test" />
+   <file baseinstalldir="PEAR" md5sum="a62c9fc7bd34dcc560f93852772f5709" name="tests/data/inline.rdf" role="test" />
+   <file baseinstalldir="PEAR" md5sum="9e3a25156584dcb525113d3120ca638e" name="tests/data/loop-output.rdf" role="test" />
+   <file baseinstalldir="PEAR" md5sum="2abd3b8c92001a6800ae6d0a0de1d3ad" name="tests/data/loopx-output.rdf" role="test" />
+   <file baseinstalldir="PEAR" md5sum="e663188cadabeb0b0d368e4f5565aa03" name="tests/data/loopx-output1.rdf" role="test" />
+   <file baseinstalldir="PEAR" md5sum="0f080eba05b96c3f67dd1b20b2e8e51f" name="tests/data/loopx-output2.rdf" role="test" />
+   <file baseinstalldir="PEAR" md5sum="598ddfff7dec60de492d886441b829c5" name="tests/data/loopx-output3.rdf" role="test" />
+   <file baseinstalldir="PEAR" md5sum="90312e2183759452a8ab62c2f3d34bc9" name="tests/data/multipleRepresentationsBoth-output.rdf" role="test" />
+   <file baseinstalldir="PEAR" md5sum="a92072cd62518155de8f9cdfb9719837" name="tests/data/multipleRepresentationsHtml-output.rdf" role="test" />
+   <file baseinstalldir="PEAR" md5sum="370645d9269e9518c010da18fa6875f6" name="tests/data/multipleRepresentationsSvg-output.rdf" role="test" />
+   <file baseinstalldir="PEAR" md5sum="e2de215a3ed6f765b8d7ff81e95c208e" name="tests/data/multiprofile-output.rdf" role="test" />
+   <file baseinstalldir="PEAR" md5sum="07514f734c1838d42754ad7d03b2df74" name="tests/data/noxinclude1.rdf" role="test" />
+   <file baseinstalldir="PEAR" md5sum="f9388a600ca966aed56df04017008101" name="tests/data/profile-with-spaces-in-rel-output.rdf" role="test" />
+   <file baseinstalldir="PEAR" md5sum="b5340b2f0d86e10a1d0675d660714517" name="tests/data/projects.rdf" role="test" />
+   <file baseinstalldir="PEAR" md5sum="a2283d5dc5a01c8081f2c85d23a8b392" name="tests/data/rdf_sem-output.rdf" role="test" />
+   <file baseinstalldir="PEAR" md5sum="50487501ce8d299b2c732056d132a39c" name="tests/data/spaces-in-rel-output.rdf" role="test" />
+   <file baseinstalldir="PEAR" md5sum="3def0c974542c231f56b4c725e5bc193" name="tests/data/sq1-output.rdf" role="test" />
+   <file baseinstalldir="PEAR" md5sum="3def0c974542c231f56b4c725e5bc193" name="tests/data/sq2-output.rdf" role="test" />
+   <file baseinstalldir="PEAR" md5sum="1adb9bcc11d9e123a0df0c9fee3a09f0" name="tests/data/three-transforms-output.rdf" role="test" />
+   <file baseinstalldir="PEAR" md5sum="88ab25a71bb89d85b37ad510e095f090" name="tests/data/titleauthor-output.rdf" role="test" />
+   <file baseinstalldir="PEAR" md5sum="d7b9b1556ac7a001819fc1868140d86f" name="tests/data/two-transforms-output.rdf" role="test" />
+   <file baseinstalldir="PEAR" md5sum="83fc0f17a90a9eb73e689e30df69cd06" name="tests/data/xhtmlProfileBase1-output.rdf" role="test" />
+   <file baseinstalldir="PEAR" md5sum="d6834f81e598b82d4c824634c917f680" name="tests/data/xhtmlWithBaseElement-output.rdf" role="test" />
+   <file baseinstalldir="PEAR" md5sum="a0da275fa4f1f0cfefc7a3e1c20dab33" name="tests/data/xhtmlWithGrddlEnabledProfile-output.rdf" role="test" />
+   <file baseinstalldir="PEAR" md5sum="4267f0497d4fc5823cf3722e80a04644" name="tests/data/xhtmlWithGrddlEnabledProfileAndADisabledInBodyTransform-output.rdf" role="test" />
+   <file baseinstalldir="PEAR" md5sum="db07dccf79814abc847d50f49f3b9adb" name="tests/data/xhtmlWithGrddlEnabledProfileAndInBodyTransform-output.rdf" role="test" />
+   <file baseinstalldir="PEAR" md5sum="1aabca96eab6f0152683765bda628126" name="tests/data/xhtmlWithGrddlProfile-output.rdf" role="test" />
+   <file baseinstalldir="PEAR" md5sum="9afeff61b9da61dad7863a35a8a5277a" name="tests/data/xhtmlWithGrddlTransformationInBody-output.rdf" role="test" />
+   <file baseinstalldir="PEAR" md5sum="d6834f81e598b82d4c824634c917f680" name="tests/data/xhtmlWithoutBaseElement-output.rdf" role="test" />
+   <file baseinstalldir="PEAR" md5sum="d054073831007f564407d9d36a47c660" name="tests/data/xhtmlWithTwoTransformations-output.rdf" role="test" />
+   <file baseinstalldir="PEAR" md5sum="8032688999939b595e848d9f748cf36a" name="tests/data/xinclude1.rdf" role="test" />
+   <file baseinstalldir="PEAR" md5sum="322c7c71ff002cf854bcd3a104598bdb" name="tests/data/xmlWithBase-output.rdf" role="test" />
+   <file baseinstalldir="PEAR" md5sum="48f68c072cd34378d4731e18a5e59bc7" name="tests/data/xmlWithGrddlAttribute-output.rdf" role="test" />
+   <file baseinstalldir="PEAR" md5sum="7d14574e41b2a75d828e4324860ca3d2" name="tests/data/xmlWithGrddlAttributeAndNonXMLNamespaceDocument-output.rdf" role="test" />
+   <file baseinstalldir="PEAR" md5sum="322c7c71ff002cf854bcd3a104598bdb" name="tests/data/xmlWithoutBase-output.rdf" role="test" />
+   <file baseinstalldir="" md5sum="046aba8f7ca832f04a0ca77e85bb66ab" name="XML/GRDDL.php" role="php" />
+   <file baseinstalldir="" md5sum="c08b9ce758db7d8373a1fafc2e460d7e" name="XML/GRDDL/Driver.php" role="php" />
+   <file baseinstalldir="PEAR" md5sum="aa4de0e0d49a328c3705c60f5378cee4" name="XML/GRDDL/Driver/Xsl.php" role="php" />
   </dir>
  </contents>
  <dependencies>
@@ -58,12 +129,27 @@ Refactored internal code</notes>
     <name>Net_URL</name>
     <channel>pear.php.net</channel>
    </package>
+   <package>
+    <name>Log</name>
+    <channel>pear.php.net</channel>
+   </package>
    <extension>
     <name>xsl</name>
    </extension>
   </required>
+  <optional>
+   <extension>
+    <name>tidy</name>
+   </extension>
+  </optional>
  </dependencies>
- <phprelease />
+ <phprelease>
+  <filelist>
+   <install as="process-grddl.php" name="scripts/process-grddl.php" />
+   <install as="testft.py" name="scripts/testft.py" />
+   <install as="xml_grddl.bat" name="scripts/xml_grddl.bat" />
+  </filelist>
+ </phprelease>
  <changelog>
   <release>
    <version>
@@ -93,6 +179,24 @@ Refactored internal code</notes>
 PEAR friendly coding style
 Better error handling / hackyness added to appease w3 servers
 Refactored internal code</notes>
+  </release>
+  <release>
+   <version>
+    <release>0.0.3</release>
+    <api>0.0.1</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2008-03-09</date>
+   <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
+   <notes>Implement code to deal with more tests
+Implement code to deal with RDF/XML documents being returned
+Can&apos;t quite pass xml:base related problems
+Added a HTML tidy option, which allows you to pre-clean input
+Added options for quiet errors (libxml no errors flags)
+Added options for using a Log handler</notes>
   </release>
  </changelog>
 </package>
