@@ -599,6 +599,8 @@ abstract class XML_GRDDL_Driver
             /** @todo   Better way to check if its acutally HTML */
             $config = array(
                        'indent'         => true,
+                       'wrap'           => false,
+                       'quote-nbsp'     => false,
                        'output-xhtml'   => true);
 
             $tidy = new tidy();
@@ -642,11 +644,11 @@ abstract class XML_GRDDL_Driver
         $dom2 = new DomDocument('1.0');
 
 
-        $dom1->preserveWhiteSpace = $this->options['preserveWhiteSpace'];
-        $dom1->formatOutput       = $this->options['formatOutput'];
+        $dom1->preserveWhiteSpace = !empty($this->options['preserveWhiteSpace']);
+        $dom1->formatOutput       = !empty($this->options['formatOutput']);
 
-        $dom2->preserveWhiteSpace = $this->options['preserveWhiteSpace'];
-        $dom2->formatOutput       = $this->options['formatOutput'];
+        $dom2->preserveWhiteSpace = !empty($this->options['preserveWhiteSpace']);
+        $dom2->formatOutput       = !empty($this->options['formatOutput']);
 
         $dom1->loadXML($graph_xml1, LIBXML_NSCLEAN & LIBXML_COMPACT);
         $dom2->loadXML($graph_xml2, LIBXML_NSCLEAN & LIBXML_COMPACT);
