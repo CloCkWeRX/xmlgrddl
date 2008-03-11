@@ -1,0 +1,38 @@
+#labels Phase-Implementation
+= Why doesn't XML_GRDDL work with Flickr / Upcoming / My site Work? =
+Symptoms:
+  * Other microformat parsers just work
+  * XML_GRDDL doesn't
+  * You know the site as microformatted information
+
+
+It's either a configuration setting:
+
+{{{
+$options = array(
+'tidy' => true,                         //Use HTML Tidy to get valid xml/xhtml
+'prettify' => true,                  
+'documentTransformations' => true,   
+'namespaceTransformations' => true, 
+'htmlTransformations' => true,      
+'htmlProfileTransformations' => true);  //Search for microformat profiles
+}}}
+(Recommended default configuration for real-world usage)
+
+Or the site doesn't provide a reliable //head[@profile].
+
+They need to publish something like:
+{{{
+<html>
+  <head profile="http://www.w3.org/2006/03/hcard
+                 http://dannyayers.com/microformats/hcalendar-profile
+                 http://www.w3.org/2002/12/cal/cardcaletc">
+    <!-- Snip -->
+  </head>
+  <!-- Snip -->
+</html>
+}}}
+
+... and in turn, those profiles need to have an appropriate profileTransformation.
+
+*Note* I'm thinking about ways to fix this situation, from pre-made site templates or simply pre-loading some transformations.
