@@ -3,7 +3,7 @@
 Symptoms:
   * Other microformat parsers just work
   * XML_GRDDL doesn't
-  * You know the site as microformatted information
+  * You know the site has microformatted information
 
 
 It's either a configuration setting:
