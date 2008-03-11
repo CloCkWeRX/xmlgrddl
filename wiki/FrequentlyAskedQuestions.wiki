@@ -1,4 +1,4 @@
-#labels Phase-Implementation
+#labels Phase-Implementation,Featured
 = Why doesn't XML_GRDDL work with Flickr / Upcoming / My site Work? =
 Symptoms:
   * Other microformat parsers just work
@@ -36,3 +36,8 @@ They need to publish something like:
 ... and in turn, those profiles need to have an appropriate profileTransformation.
 
 *Note* I'm thinking about ways to fix this situation, from pre-made site templates or simply pre-loading some transformations.
+
+= Does XML_GRDDL pass all GRDDL tests? =
+No. Currently, 0.0.3 will fail content negotiation tests and xml:base related tests.
+
+It's close, but not quite there.
