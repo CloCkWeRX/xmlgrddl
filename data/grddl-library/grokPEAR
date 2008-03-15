@@ -12,6 +12,7 @@
   xmlns:doap="http://usefulinc.com/ns/doap#"
   xmlns:foaf="http://xmlns.com/foaf/0.1/"
   xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
   xmlns:owl="http://www.w3.org/2002/07/owl#"
   exclude-result-prefixes="html">
 
@@ -21,38 +22,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <link rel="stylesheet" href="http://www.w3.org/StyleSheets/base"/>
-    <title>Extracting alternative application/rdf+xml descriptions</title>
+    <title>Extracting DOAP from PEAR package.xml</title>
 
   </head>
   <body>
     <h1>Extracting alternative application/rdf+xml descriptions</h1>
 
 
-<p>This is a <a href="http://www.w3.org/TR/grddl">GRDDL</a> transformation that produces a list of RDF alternative descriptions from XHTML. 
-Each link (<code>link</code> or <code>a</code>) with a <code>rel</code> attribute whose value includes <code>alternate</code> or <code>meta</code> and <code>type</code> whose value is <code>application/rdf+xml</code> is used to identify alternative resources which describe the source document.
-</p>
-
-<p>In the following example, written in XHTML, the <code>link</code>
-
-element is a link by HTML conventions:</p>
-
-<pre class="example">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"&gt;
-&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;
- &lt;head profile="http://www.w3.org/2003/g/data-view"&gt;
-  &lt;link rel="alternate"
-    href="http://danbri.org/foaf.rdf" />
-...
-&lt;p&gt;Here's a link to my other 
-&lt;a rel="alternate" type="application/rdf+xml"
-   href="http://danbri.org/words/feed/rdf"&gt;RSS 1.0 data&lt;/a&gt;
-</pre>
-
-<p>
-This transform is based on <a href="http://www.w3.org/2003/g/glean-profile">glean-profile.xsl</a>, which is copyright, 2005-2007, W3C.
-It is available for use under the terms of the
-<a href="http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231">W3C Software License</a>
-</p>
+<p>This is a <a href="http://www.w3.org/TR/grddl">GRDDL</a> transformation that produces <a href="http://usefulinc.com/doap/">DOAP</a> about PEAR packages</p>
 
   </body>
 </html>
@@ -83,6 +60,32 @@ It is available for use under the terms of the
           </doap:developer>
         </xsl:for-each>
 
+        <xsl:for-each select='package:developer'>
+          <doap:developer>
+            <foaf:Person>
+              <foaf:name><xsl:value-of select="package:name" /></foaf:name>
+              <foaf:mbox>mailto:<xsl:value-of select="package:email" /></foaf:mbox>
+            </foaf:Person>
+          </doap:developer>
+        </xsl:for-each>
+
+        <xsl:for-each select='package:contributor'>
+          <doap:helper>
+            <foaf:Person>
+              <foaf:name><xsl:value-of select="package:name" /></foaf:name>
+              <foaf:mbox>mailto:<xsl:value-of select="package:email" /></foaf:mbox>
+            </foaf:Person>
+          </doap:helper>
+        </xsl:for-each>
+
+        <xsl:for-each select='package:helper'>
+          <doap:helper>
+            <foaf:Person>
+              <foaf:name><xsl:value-of select="package:name" /></foaf:name>
+              <foaf:mbox>mailto:<xsl:value-of select="package:email" /></foaf:mbox>
+            </foaf:Person>
+          </doap:helper>
+        </xsl:for-each>
 
         <xsl:for-each select="package:changelog/package:release">
           <doap:release>
