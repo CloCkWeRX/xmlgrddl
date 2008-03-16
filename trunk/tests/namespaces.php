@@ -74,12 +74,10 @@ $tests[] = array('name' => 'hcard from a 1998 review comment on P3P',
                  'realistic' => dirname(__FILE__) . '/data/card5n-output.rdf');
 
 /** @todo   Determine just what the hell is correct behaviour */
-/*
 $tests[] = array('name' => 'A copy of the hcard profile',
                  'in' => 'http://www.w3.org/2001/sw/grddl-wg/td/hcard.html',
                  'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/hcard-output.rdf',
                  'realistic' => dirname(__FILE__) . '/data/hcard-output.rdf');
-*/
 
 /** @bug issue 8 */
 /*
