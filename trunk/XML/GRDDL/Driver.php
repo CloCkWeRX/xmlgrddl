@@ -108,13 +108,17 @@ abstract class XML_GRDDL_Driver
 
         foreach ($rdf_docs as $path) {
             $url = new Net_URL($path);
+
             $url->path .= '.rdf';
+
             $this->logRedirect($path, $url->getURL());
         }
 
         foreach ($xml_docs as $path) {
             $url = new Net_URL($path);
+
             $url->path .= '.xml';
+
             $this->logRedirect($path, $url->getURL());
         }
 
@@ -337,12 +341,14 @@ abstract class XML_GRDDL_Driver
      *
      * @return string
      */
-    protected function findBaseURIFromDOMDocument(DOMDocument $dom) {
+    protected function findBaseURIFromDOMDocument(DOMDocument $dom)
+    {
         if (!empty($dom->baseURI)) {
             return $dom->baseURI;
         }
 
         $s = simplexml_import_dom($dom);
+
         $attributes = $s->attributes('http://www.w3.org/XML/1998/namespace');
 
         return isset($attributes['base']) ? $attributes['base'] : null;
@@ -560,7 +566,8 @@ abstract class XML_GRDDL_Driver
      * Obeys options for preserveWhiteSpace & formatOutput,
      * and removes redundant namespaces
      *
-     * @param string $xml XML to format
+     * @param string $xml          XML to format
+     * @param string $original_url Original document URL
      *
      * @see XML_GRDDL::factory()
      *
@@ -698,11 +705,61 @@ abstract class XML_GRDDL_Driver
      *
      * @return string
      */
-    protected function findRedirect($url) {
+    protected function findRedirect($url)
+    {
         return isset($this->url_cache['seeAlso'][$url])? $this->url_cache['seeAlso'][$url] : null;
     }
 
-    protected function logRedirect($url, $other_url) {
+    /**
+     * Record a redirection for a url
+     *
+     * @param string $url       URL
+     * @param string $other_url Redirected URL
+     *
+     * @return string
+     */
+    protected function logRedirect($url, $other_url)
+    {
         $this->url_cache['seeAlso'][$url] = (string)$other_url;
+    }
+
+    /**
+     * Append one or more profiles to a HTML document.
+     *
+     * @param string   $xhtml    Raw XHTML to parse and manipulate
+     * @param string[] $profiles Profile urls to insert
+     *
+     * @return string
+     */
+    public function appendProfiles($xhtml, $profiles = array())
+    {
+        if (!is_array($profiles)) {
+            $profiles = array();
+        }
+
+        return $xhtml;
+        /*
+        $dom = new DOMDocument('1.0');
+
+        $dom->loadHTML($xhtml);
+
+        $nodes = $dom->documentElement->getElementsByTagName('head');
+        $head  = $nodes->item(0);
+
+        if (!$head instanceOf DOMElement) {
+            $head = $dom->createElement('head');
+            $head = $dom->documentElement->appendChild($head);
+        }
+
+        $existing_profiles = explode(' ', $head->getAttribute('profile'));
+
+
+        $actual_profiles = array_unique(array_merge($profiles, $existing_profiles));
+
+        $head->removeAttribute('profile');
+        $head->setAttribute('profile', implode(" ", $actual_profiles));
+
+        return $dom->saveXML();
+        */
     }
 }
