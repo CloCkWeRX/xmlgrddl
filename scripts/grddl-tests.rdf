@@ -207,7 +207,7 @@
         xml:base attribute</dc:title>
     <g:exercisesRule rdf:resource="http://www.w3.org/TR/grddl/#rule_GRDDL_transformation"/>
 
-    <t:inputDocument rdf:resource="http://www.w3.org/2001/sw/grddl-wg/td/base/xmlWithBase"/>
+    <t:inputDocument rdf:resource="http://www.w3.org/2001/sw/grddl-wg/td/base/xmlWithBase.xml"/>
   </g:NetworkedTest>
   <g:NetworkedTest rdf:about="http://www.w3.org/2001/sw/grddl-wg/td/grddl-tests#ns-pf-ns-pf-ns">
     <t:approval rdf:resource="http://lists.w3.org/Archives/Public/public-grddl-wg/2007Apr/att-0091/18-grddl-wg-minutes.html#item09"/>
@@ -362,7 +362,7 @@
         document without an xml:base attribute</dc:title>
     <g:exercisesRule rdf:resource="http://www.w3.org/TR/grddl/#rule_GRDDL_transformation"/>
 
-    <t:inputDocument rdf:resource="http://www.w3.org/2001/sw/grddl-wg/td/xmlWithoutBase"/>
+    <t:inputDocument rdf:resource="http://www.w3.org/2001/sw/grddl-wg/td/xmlWithoutBase.xml"/>
   </g:NetworkedTest>
   <g:NetworkedTest rdf:about="http://www.w3.org/2001/sw/grddl-wg/td/grddl-tests#langconneg3">
     <t:approval rdf:resource="http://www.w3.org/2007/04/25-grddl-wg-minutes.html#item08"/>
@@ -421,7 +421,7 @@
     <g:exercisesRule rdf:resource="http://www.w3.org/TR/grddl/#rule_GRDDL_transformation"/>
     <g:exercisesRule rdf:resource="http://www.w3.org/TR/grddl/#rule_nstx"/>
 
-    <t:inputDocument rdf:resource="http://www.w3.org/2001/sw/grddl-wg/td/loop"/>
+    <t:inputDocument rdf:resource="http://www.w3.org/2001/sw/grddl-wg/td/loop.xml"/>
   </g:NetworkedTest>
   <t:Test rdf:about="http://www.w3.org/2001/sw/grddl-wg/td/grddl-tests#xhtmlWithGrddlEnabledProfileAndADisabledInBodyTransform">
     <t:approval rdf:resource="http://www.w3.org/2007/04/25-grddl-wg-minutes.html#item08"/>
@@ -732,7 +732,7 @@
     <dc:title>An XHTML profile
       using a base element</dc:title>
     <g:exercisesRule rdf:resource="http://www.w3.org/TR/grddl/#rule_tlrel"/>
-    <t:inputDocument rdf:resource="http://www.w3.org/2001/sw/grddl-wg/td/base/grddlProfileWithBaseElement"/>
+    <t:inputDocument rdf:resource="http://www.w3.org/2001/sw/grddl-wg/td/base/grddlProfileWithBaseElement.html"/>
   </g:NetworkedTest>
   <t:Test rdf:about="http://www.w3.org/2001/sw/grddl-wg/td/grddl-tests#xinclude">
     <g:alternative>
