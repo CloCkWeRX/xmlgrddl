@@ -433,7 +433,7 @@ abstract class XML_GRDDL_Driver
     protected function discoverDocumentTransformations(SimpleXMLElement $sxe,
                                                         $original_url = null)
     {
-        $xpath = "//*[@grddl:transformation]";
+        $xpath = "/*[@grddl:transformation]";
         return $this->discoverTransformations($sxe, $original_url, $xpath,
                                                 'transformation', XML_GRDDL::NS);
     }
@@ -724,7 +724,11 @@ abstract class XML_GRDDL_Driver
 
         $rdf_xml = array();
         foreach ($stylesheets as $stylesheet) {
-            $rdf_xml[] = $this->transform($stylesheet, $data);
+            try {
+                $rdf_xml[] = $this->transform($stylesheet, $data);
+            } catch (Exception $e) {
+                $this->logger->log($e->getMessage());
+            }
         }
 
         $result = array_reduce($rdf_xml, array($this, 'merge'));
