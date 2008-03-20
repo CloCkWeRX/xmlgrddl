@@ -96,7 +96,8 @@ abstract class XML_GRDDL_Driver
         $rdf_docs = array($base_path . 'sq2ns#',
                           $base_path . 'sq2ns',
                           $base_path . 'two-transforms-ns#',
-                          $base_path . 'two-transforms-ns');
+                          $base_path . 'two-transforms-ns',
+                          $base_path . 'hcarda-prof');
 
         $xml_docs = array($base_path . 'sq1ns#',
                           $base_path . 'sq1ns',
@@ -135,6 +136,8 @@ abstract class XML_GRDDL_Driver
      */
     public function inspect($xml, $original_url = null)
     {
+        $this->logger->log("Inspecting for transformations: " . $original_url);
+
         $sxe = simplexml_load_string($xml);
         if (!$sxe instanceOf SimpleXMLElement) {
             throw new Exception("Failed to parse xml");
@@ -147,28 +150,47 @@ abstract class XML_GRDDL_Driver
 
         //Detect if this document itself is RDF
         if ($sxe->xpath('/rdf:RDF')) {
+            $this->logger->log("Document appears to be RDF");
             $xsl[] = 'inline-rdf';
         }
 
         if ($this->options['htmlTransformations']) {
+            $this->logger->log("Looking for HTML transformations");
+
             $new = $this->discoverHTMLTransformations($sxe, $original_url);
             $xsl = array_merge($new, $xsl);
+
+            $this->logger->log(count($xsl) . " transformations");
         }
 
         if ($this->options['htmlProfileTransformations']) {
+            $this->logger->log("Looking for profile transformations");
+
             $new = $this->discoverHTMLProfileTransformations($sxe, $original_url);
             $xsl = array_merge($new, $xsl);
+
+            $this->logger->log(count($xsl) . " transformations");
         }
 
         if ($this->options['documentTransformations']) {
+            $this->logger->log("Looking for XML transformations");
+
             $new = $this->discoverDocumentTransformations($sxe, $original_url);
             $xsl = array_merge($new, $xsl);
+
+            $this->logger->log(count($xsl) . " transformations");
         }
 
         if ($this->options['namespaceTransformations']) {
+            $this->logger->log("Looking for XMLNS transformations");
+
             $new = $this->discoverNamespaceTransformations($sxe, $original_url);
             $xsl = array_merge($new, $xsl);
+
+            $this->logger->log(count($xsl) . " transformations");
         }
+
+        $this->logger->log(count($xsl) . " transformations total");
 
         return array_unique($xsl);
     }
@@ -274,12 +296,25 @@ abstract class XML_GRDDL_Driver
             $profile = @simplexml_load_string($xhtml);
 
             if ($profile instanceOf SimpleXMLElement) {
+                //The profile document is XHTML, look for it with rel!
                 $profile->registerXPathNamespace('xhtml', XML_GRDDL::XHTML_NS);
+                $profile->registerXPathNamespace('grddl', XML_GRDDL::NS);
 
                 $xpath = "//xhtml:*[contains(@rel, 'profileTransformation')]";
 
                 $profile_xsl = $this->discoverTransformations($profile, $profile_url,
                                                                 $xpath, 'href');
+
+                $all_profile_xsls = array_merge($all_profile_xsls, $profile_xsl);
+
+
+                //The profile document is XML, look for it with grddl:profileTransformation
+                $profile->registerXPathNamespace('xhtml', XML_GRDDL::XHTML_NS);
+
+                $xpath = "//grddl:profileTransformation";
+
+                $profile_xsl = $this->discoverTransformations($profile, $profile_url,
+                                                                $xpath, 'resource', XML_GRDDL::RDF_NS);
 
                 $all_profile_xsls = array_merge($all_profile_xsls, $profile_xsl);
             }
@@ -366,8 +401,8 @@ abstract class XML_GRDDL_Driver
      */
     protected function determineBaseURI(DOMDocument $dom, $original_url)
     {
-        if (!empty($dom->baseURI)) {
-            return $dom->baseURI . '/';
+        if (!empty($dom->documentElement->baseURI)) {
+            return dirname($dom->documentElement->baseURI) . '/';
         }
 
         return dirname($original_url) . '/';
