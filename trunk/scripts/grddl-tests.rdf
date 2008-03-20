@@ -52,7 +52,7 @@
       different xml:lang on two different blocks of RDF</dc:title>
     <g:exercisesRule rdf:resource="http://www.w3.org/TR/grddl/#rule_GRDDL_transformation"/>
 
-    <t:inputDocument rdf:resource="http://www.w3.org/2001/sw/grddl-wg/td/inline-rdf9"/>
+    <t:inputDocument rdf:resource="http://www.w3.org/2001/sw/grddl-wg/td/inline-rdf9.xml"/>
   </g:NetworkedTest>
   <t:Test rdf:about="http://www.w3.org/2001/sw/grddl-wg/td/grddl-tests#base-param">
     <t:approval rdf:resource="http://www.w3.org/2007/04/11-grddl-wg-minutes.html#item03"/>
@@ -147,7 +147,7 @@
         document with transformation attribute on root</dc:title>
     <g:exercisesRule rdf:resource="http://www.w3.org/TR/grddl/#rule_tlrel"/>
     <g:exercisesRule rdf:resource="http://www.w3.org/TR/grddl/#rule_GRDDL_transformation"/>
-    <t:inputDocument rdf:resource="http://www.w3.org/2001/sw/grddl-wg/td/html-and-grddl-xform-attr"/>
+    <t:inputDocument rdf:resource="http://www.w3.org/2001/sw/grddl-wg/td/html-and-grddl-xform-attr.html"/>
   </g:NetworkedTest>
 
   <t:Test rdf:about="http://www.w3.org/2001/sw/grddl-wg/td/grddl-tests#grddlonrdf-xmlmediatype">
@@ -526,7 +526,7 @@
     <rdf:type rdf:resource="http://www.w3.org/2000/10/rdf-tests/rdfcore/testSchema#Test"/>
     <dc:title>Embedded RDF2</dc:title>
     <g:exercisesRule rdf:resource="http://www.w3.org/TR/grddl/#rule_GRDDL_transformation"/>
-    <t:inputDocument rdf:resource="http://www.w3.org/2001/sw/grddl-wg/td/inline-rdf2"/>
+    <t:inputDocument rdf:resource="http://www.w3.org/2001/sw/grddl-wg/td/inline-rdf2.xml"/>
 
   </g:NetworkedTest>
   <g:NetworkedTest rdf:about="http://www.w3.org/2001/sw/grddl-wg/td/grddl-tests#htmlbase1">

@@ -14,3 +14,6 @@ $options = array('documentTransformations' => true,
 $grddl = XML_GRDDL::factory('xsl', $options);
 
 print $grddl->crawl($file);
+
+
+//python testft.py -r "php process-grddl.php " --debug grddl-tests.rdf > results.rdf
