@@ -114,6 +114,8 @@ class XML_GRDDL_Driver_Xsl extends XML_GRDDL_Driver
         }
 
         try {
+            $this->logger->log("Attempting to transform with " . $stylesheet);
+
             //Cheat: set cwd() to an xslt library dir?
             $dom = new DOMDocument('1.0');
             $dom->loadXML($xml);
@@ -122,19 +124,28 @@ class XML_GRDDL_Driver_Xsl extends XML_GRDDL_Driver
             $xslt = $this->fetch($stylesheet, 'xsl');
 
             $xsl = new DOMDocument();
-            $xsl->loadXML($xslt);
+            $xsl->loadXML($xslt, LIBXML_NOCDATA | LIBXML_NOENT);
+
+            set_error_handler(array($this, 'handleTransformationErrorMessage'));
 
             $proc = new XSLTProcessor();
             $proc->importStyleSheet($xsl);
 
-            $this->logger->log("Attempting to transform with " . $stylesheet);
             $result = $proc->transformToXML($dom);
+            restore_error_handler();
+
             $this->logger->log("Transformed successfully with " . $stylesheet);
+
             return $result;
         } catch (Exception $e) {
+            restore_error_handler();
             chdir($old_cwd);
 
             throw $e;
         }
+    }
+
+    public function handleTransformationErrorMessage($errno, $errstr, $errfile, $errline, $errcontext = array()) {
+        throw new Exception($errstr);
     }
 }
