@@ -90,6 +90,7 @@ class XML_GRDDL_Driver_Xsl extends XML_GRDDL_Driver
     public function transform($stylesheet, $xml)
     {
         if (empty($stylesheet) || empty($xml)) {
+            $this->logger->log("Given empty stylesheet or xml");
             return $xml;
         }
 
@@ -108,6 +109,7 @@ class XML_GRDDL_Driver_Xsl extends XML_GRDDL_Driver
         }
 
         if (getcwd() == $old_cwd) {
+            $this->logger->log("Could not access standard transform library");
             //throw new Exception("Could not access standard transform library");
         }
 
@@ -125,7 +127,10 @@ class XML_GRDDL_Driver_Xsl extends XML_GRDDL_Driver
             $proc = new XSLTProcessor();
             $proc->importStyleSheet($xsl);
 
-            return $proc->transformToXML($dom);
+            $this->logger->log("Attempting to transform with " . $stylesheet);
+            $result = $proc->transformToXML($dom);
+            $this->logger->log("Transformed successfully with " . $stylesheet);
+            return $result;
         } catch (Exception $e) {
             chdir($old_cwd);
 
