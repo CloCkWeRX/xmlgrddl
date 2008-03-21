@@ -214,11 +214,6 @@ abstract class XML_GRDDL_Driver
     {
         $nodes = $sxe->xpath($xpath);
 
-        $dom     = new DOMDocument('1.0', 'UTF-8');
-        $dom_sxe = dom_import_simplexml($sxe);
-        $dom_sxe = $dom->importNode($dom_sxe, true);
-        $dom_sxe = $dom->appendChild($dom_sxe);
-
         $transformation_urls = array();
         foreach ($nodes as $node) {
             $attributes = $node->attributes($namespace);
@@ -227,7 +222,8 @@ abstract class XML_GRDDL_Driver
 
             foreach ($urls as $n => $url) {
                 if (!$this->isURI($url)) {
-                    $urls[$n] = $this->determineBaseURI($dom, $original_url) . $url;
+                    $this->logger->log("Not a full URI: " . $url);
+                    $urls[$n] = $this->determineBaseURI($sxe, $original_url) . $url;
                 }
             }
 
@@ -368,41 +364,28 @@ abstract class XML_GRDDL_Driver
     }
 
     /**
-     * Workaround the fact DOMDocument::baseURI does not parse correctly.
-     *
-     * @param DOMDocument $dom object to inspect
-     *
-     * @bug http://bugs.php.net/bug.php?id=44367
-     *
-     * @return string
-     */
-    protected function findBaseURIFromDOMDocument(DOMDocument $dom)
-    {
-        if (!empty($dom->baseURI)) {
-            return $dom->baseURI;
-        }
-
-        $s = simplexml_import_dom($dom);
-
-        $attributes = $s->attributes('http://www.w3.org/XML/1998/namespace');
-
-        return isset($attributes['base']) ? $attributes['base'] : null;
-    }
-
-    /**
      * Inspect a DOMDocument and kludge together a base URI.
      *
      * Otherwise, try to use the existing original document location.
      *
-     * @param DOMDocument $dom          A DOMDocument to inspect
-     * @param string      $original_url Where the DOMDocument originally lived
+     * @param SimpleXMLElement $sxe          A SimpleXMLElement to inspect
+     * @param string           $original_url Where the DOMDocument originally lived
      *
      * @return  string
      */
-    protected function determineBaseURI(DOMDocument $dom, $original_url)
+    protected function determineBaseURI(SimpleXMLElement $sxe, $original_url)
     {
-        if (!empty($dom->documentElement->baseURI)) {
-            return dirname($dom->documentElement->baseURI) . '/';
+
+        $bases = $sxe->xpath('//xhtml:head/xhtml:base[@href]');
+
+        if (!empty($bases)) {
+            list($base) = $bases;
+            return dirname($base['href']) . '/';
+        }
+
+        $attributes = $sxe->attributes(XML_GRDDL::XML_NS);
+        if (!empty($attributes['base'])) {
+            return dirname($attributes['base']) . '/';
         }
 
         return dirname($original_url) . '/';

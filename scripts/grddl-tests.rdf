@@ -536,7 +536,7 @@
     <dc:title>An html document with a
         base element</dc:title>
     <g:exercisesRule rdf:resource="http://www.w3.org/TR/grddl/#rule_tlrel"/>
-    <t:inputDocument rdf:resource="http://www.w3.org/2001/sw/grddl-wg/td/base/xhtmlWithBaseElement"/>
+    <t:inputDocument rdf:resource="http://www.w3.org/2001/sw/grddl-wg/td/base/xhtmlWithBaseElement.html"/>
 
   </g:NetworkedTest>
   <g:NetworkedTest rdf:about="http://www.w3.org/2001/sw/grddl-wg/td/grddl-tests#sq2">
