@@ -43,7 +43,9 @@
  * @link      http://code.google.com/p/xmlgrddl/
  */
 
-//http://bugs.php.net/bug.php?id=44225
+/**
+ * @bug http://bugs.php.net/bug.php?id=44225
+ */
 
 $xml = "http://www.w3.org/2001/sw/grddl-wg/td/xhtmlWithMoreThanOneGrddlTransformation.html";
 
