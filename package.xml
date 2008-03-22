@@ -145,11 +145,6 @@ Cleaned up options / api</notes>
     <name>tidy</name>
    </extension>
   </required>
-  <optional>
-   <extension>
-    <name>tidy</name>
-   </extension>
-  </optional>
  </dependencies>
  <phprelease>
   <filelist>
