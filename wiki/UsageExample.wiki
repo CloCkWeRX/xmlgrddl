@@ -783,3 +783,62 @@ The RDF/XML which extracted from http://www.w3.org/People/Connolly/ is:
   </c:Vcalendar>
 </r:RDF>
 }}}
+
+
+= Extract RDF from Flickr, LinkedIn, Last.fm & Upcoming microformats =
+Let's be realistic. The most popular places to get data from are also likely to be on the web 2.0 train, and have broken xhtml. They probably don't even have a <head profile="foo.html" />
+
+Never fear, you can easily force microformat profiles into a document.
+
+{{{
+require_once 'XML/GRDDL.php';
+
+/**
+ * Example: Fetch multiple URLs about a specific user
+ * and get useful information out.
+ */
+$urls = array();
+$urls[0] = 'http://flickr.com/people/clockwerx/';
+$urls[1] = 'http://www.linkedin.com/in/clockwerx';
+$urls[2] = 'http://www.last.fm/user/CloCkWeRX/';
+$urls[3] = 'http://clockwerx.blogspot.com/';
+
+//For each URL, pretend it has these urls in <head profile="foo" />
+//These look for hcard, hcalendar, etc.
+$profiles[$urls[0]][] = 'http://www.w3.org/2002/12/cal/cardcaletc';
+$profiles[$urls[1]][] = 'http://microformats.org/wiki/hresume-profile';
+$profiles[$urls[1]][] = 'http://www.w3.org/2002/12/cal/cardcaletc';
+$profiles[$urls[2]][] = 'http://www.w3.org/2002/12/cal/cardcaletc';
+$profiles[$urls[3]][] = 'http://www.w3.org/2002/12/cal/cardcaletc';
+
+//Set what kind of transformations we're interested in.
+
+
+$options = XML_GRDDL::getDefaultOptions();
+$options['quiet'] = true;
+
+$grddl = XML_GRDDL::factory('xsl', $options);
+$results = array();
+foreach ($urls as $n => $url) {
+    $data = $grddl->fetch($url);
+
+    $data = $grddl->prettify($data);
+
+    $modified_data = $grddl->appendProfiles($data, $profiles[$url]);
+
+    $stylesheets = $grddl->inspect($modified_data, $url);
+
+    $rdf_xml = array();
+    foreach ($stylesheets as $stylesheet) {
+        $rdf_xml[] = $grddl->transform($stylesheet, $modified_data);
+    }
+
+    $results[$url] = array_reduce($rdf_xml, array($grddl, 'merge'));
+}
+
+print "We scuttered " . count($urls) . " urls and found these results\n";
+foreach ($results as $url => $rdf_xml) {
+    print $url . "\n";
+    print $rdf_xml . "\n\n";
+}
+}}}
