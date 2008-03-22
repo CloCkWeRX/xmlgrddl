@@ -610,7 +610,6 @@ abstract class XML_GRDDL_Driver
 
         if ($dom->loadXML($xml, $options)) {
 
-            //
             if (!empty($this->options['xinclude'])) {
                 $dom->xinclude($options);
             }
@@ -759,11 +758,9 @@ abstract class XML_GRDDL_Driver
             $profiles = array();
         }
 
-        return $xhtml;
-        /*
         $dom = new DOMDocument('1.0');
 
-        $dom->loadHTML($xhtml);
+        $dom->loadXML($xhtml);
 
         $nodes = $dom->documentElement->getElementsByTagName('head');
         $head  = $nodes->item(0);
@@ -779,9 +776,8 @@ abstract class XML_GRDDL_Driver
         $actual_profiles = array_unique(array_merge($profiles, $existing_profiles));
 
         $head->removeAttribute('profile');
-        $head->setAttribute('profile', implode(" ", $actual_profiles));
+        $head->setAttribute('profile', trim(implode(" ", $actual_profiles)));
 
         return $dom->saveXML();
-        */
     }
 }
