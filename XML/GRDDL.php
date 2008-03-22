@@ -69,17 +69,16 @@ class XML_GRDDL
      * @param mixed[] $options An array of options, refer to individual drivers
      *                         document for more information.
      *
+     * @see     getDefaultOptions()
+     *
      * @return  XML_GRDDL_Driver
      */
-    public static function factory($driver = 'Xsl',
-                                   $options = array('documentTransformations' => true,
-                                                    'htmlTransformations' => true,
-                                                    'htmlProfileTransformations' => true,
-                                                    'namespaceTransformations' => true,
-                                                    'preserveWhiteSpace' => false,
-                                                    'formatOutput' => true,
-                                                    'quiet' => false))
+    public static function factory($driver = 'Xsl', $options = array())
     {
+        if (empty($options)) {
+            $options = self::getDefaultOptions();
+        }
+
         $class = 'XML_GRDDL_Driver_' . $driver;
 
         $path = dirname(__FILE__) . '/GRDDL/Driver/' . $driver . '.php';
@@ -93,5 +92,24 @@ class XML_GRDDL
         }
 
         return new $class($options);
+    }
+
+    /**
+     * Helper method to fetch default options.
+     *
+     * @see     factory()
+     *
+     * @return  mixed[] An array of options
+     */
+    public static function getDefaultOptions()
+    {
+        return array('tidy'                       => true,
+                     'prettify'                   => true,
+                     'quiet'                      => false,
+                     'formatOutput'               => true,
+                     'documentTransformations'    => true,
+                     'namespaceTransformations'   => true,
+                     'htmlTransformations'        => true,
+                     'htmlProfileTransformations' => true);
     }
 }

@@ -54,12 +54,6 @@ require_once 'XML/GRDDL.php';
 
 $url = 'http://www.w3.org/2001/sw/grddl-wg/td/card.html';
 
-//Set what kind of transformations we're interested in.
-$options = array('documentTransformations' => true,     //For dealing with XML
-                 'namespaceTransformations' => true,    //For dealing with XML namespaces
-                 'htmlTransformations' => true,         //For dealing with HTML <link> transformations
-                 'htmlProfileTransformations' => true); //For dealing with HTML Profile transformations
-
-$grddl = XML_GRDDL::factory('xsl', $options);
+$grddl = XML_GRDDL::factory('xsl');
 
 var_dump($grddl->crawl($url));

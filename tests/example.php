@@ -57,16 +57,9 @@ require_once 'Log.php';
 
 $log = &Log::singleton('console', '', 'ident');
 
-$options = array('documentTransformations' => true,
-                'htmlTransformations' => true,
-                'htmlProfileTransformations' => true,
-                'namespaceTransformations' => true,
-                'preserveWhiteSpace' => false,
-                'formatOutput' => true,
-                'tidy' => true,
-                'log' => $log,
-                'quiet' => false);
+$options = XML_GRDDL::getDefaultOptions();
 
+$options['quiet'] = false;
 
 //See http://www.w3.org/TR/grddl-tests/#grddl-library
 $tests = array();

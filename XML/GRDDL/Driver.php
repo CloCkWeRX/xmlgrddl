@@ -46,6 +46,7 @@
 require_once 'HTTP/Request.php';
 require_once 'Net/URL.php';
 require_once 'Log.php';
+require_once 'Validate.php';
 
 /**
  * An abstract driver for GRDDL
@@ -74,11 +75,16 @@ abstract class XML_GRDDL_Driver
      * @param mixed[] $options An array of driver specific options
      *
      * @see XML_GRDDL::factory()
+     * @see XML_GRDDL::getDefaultOptions()
      *
      * @return
      */
     public function __construct($options = array())
     {
+        if (empty($options)) {
+            $options = XML_GRDDL::getDefaultOptions();
+        }
+
         $this->options = $options;
         if (isset($this->options['log'])) {
             $this->logger = $this->options['log'];
@@ -123,7 +129,8 @@ abstract class XML_GRDDL_Driver
             $this->logRedirect($path, $url->getURL());
         }
 
-        $this->logRedirect($base_path . 'base/xmlWithBase.html', $base_path . 'base/xmlWithBase.xml');
+        $this->logRedirect($base_path . 'base/xmlWithBase.html',
+                           $base_path . 'base/xmlWithBase.xml');
     }
 
     /**
@@ -304,13 +311,14 @@ abstract class XML_GRDDL_Driver
                 $all_profile_xsls = array_merge($all_profile_xsls, $profile_xsl);
 
 
-                //The profile document is XML, look for it with grddl:profileTransformation
+                //The profile document is XML, look for it
+                // with grddl:profileTransformation
                 $profile->registerXPathNamespace('xhtml', XML_GRDDL::XHTML_NS);
 
                 $xpath = "//grddl:profileTransformation";
 
                 $profile_xsl = $this->discoverTransformations($profile, $profile_url,
-                                                                $xpath, 'resource', XML_GRDDL::RDF_NS);
+                                                              $xpath, 'resource', XML_GRDDL::RDF_NS);
 
                 $all_profile_xsls = array_merge($all_profile_xsls, $profile_xsl);
             }
@@ -463,8 +471,9 @@ abstract class XML_GRDDL_Driver
      */
     public function isURI($string)
     {
-        $url_pattern = '([A-Za-z][A-Za-z0-9+.-]{1,120}:[A-Za-z0-9/](([A-Za-z0-9$_.+!*,;/?:@&~=-])|%[A-Fa-f0-9]{2}){1,333}(#([a-zA-Z0-9][a-zA-Z0-9$_.+!*,;/?:@&~=%-]{0,1000}))?)';
-        return (bool)preg_match($url_pattern, $string);
+        return Validate::uri($string, array('http','https', 'ftp',
+                                            'file', 'urn', 'ssh+svn',
+                                            'mailto', 'tel', 'data'));
     }
 
     /**
@@ -760,7 +769,10 @@ abstract class XML_GRDDL_Driver
 
         $dom = new DOMDocument('1.0');
 
-        $dom->loadXML($xhtml);
+        if (!$dom->loadXML($xhtml)) {
+            throw new Exception("Could not load XML - has it been tidied?");
+        }
+
 
         $nodes = $dom->documentElement->getElementsByTagName('head');
         $head  = $nodes->item(0);
