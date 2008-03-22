@@ -16,7 +16,7 @@ libexslt Version => 0.8.13
 */
 
 $xsl = new DOMDocument();
-$xsl->load('http://www.w3.org/2001/sw/grddl-wg/td/hl7-rim-to-pomr.xslt');
+$xsl->load('http://www.w3.org/2001/sw/grddl-wg/td/hl7-rim-to-pomr.xslt', LIBXML_NOCDATA|LIBXML_NOENT);
 
 
 $xml = new DOMDocument();
