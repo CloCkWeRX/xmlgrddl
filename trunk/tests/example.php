@@ -47,6 +47,16 @@ require_once 'XML/GRDDL.php';
 require_once 'PHPUnit/Framework/Assert.php';
 require_once 'Log.php';
 
+
+/**
+ * A PHP test runner for grddl tests.
+ *
+ * You might also be interested in
+ * <code>python testft.py -r 'php process-grddl.php' --debug grddl-tests.rdf</code>
+ */
+
+$log = &Log::singleton('console', '', 'ident');
+
 $options = array('documentTransformations' => true,
                 'htmlTransformations' => true,
                 'htmlProfileTransformations' => true,
@@ -54,11 +64,8 @@ $options = array('documentTransformations' => true,
                 'preserveWhiteSpace' => false,
                 'formatOutput' => true,
                 'tidy' => true,
-                'quiet' => true && false);
-
-$log = &Log::singleton('console', '', 'ident');
-
-$options['log'] = $log;
+                'log' => $log,
+                'quiet' => false);
 
 
 //See http://www.w3.org/TR/grddl-tests/#grddl-library
@@ -79,7 +86,9 @@ require_once 'ambiguous.php';
 foreach ($tests as $test) {
 
     try {
-        $test_options = array_merge($options, isset($test['options']) ? $test['options'] : array());
+        $other_options = isset($test['options']) ? $test['options'] : array();
+        $test_options  = array_merge($options, $other_options);
+
         $grddl = XML_GRDDL::factory('xsl', $test_options);
 
         $in = $grddl->fetch($test['in']);
@@ -102,7 +111,8 @@ foreach ($tests as $test) {
         $result = array_reduce($rdf_xml, array($grddl, 'merge'));
 
         print $test['name'] . "\n";
-        PHPUnit_Framework_Assert::assertSame(trim($grddl->prettify($out)), trim($grddl->prettify($result)));
+        PHPUnit_Framework_Assert::assertSame(trim($grddl->prettify($out)),
+                                             trim($grddl->prettify($result)));
         print "\tPHP tests: Pass\n\n";
 
     } catch (PHPUnit_Framework_AssertionFailedError $e) {
@@ -120,17 +130,3 @@ foreach ($tests as $test) {
     }
 
 }
-
-/*
-
-define('PYTHON_BIN', 'g:/Python25/python.exe');
-define('SCRIPT_DIR', 'g:/work/xml_grddl/scripts');
-define('TEST_DIR', dirname(__FILE__));
-
-
-        print "\tW3C tests: ";
-
-//        $cmd = sprintf('%s %s/testft.py --debug -r %s/xml_grddl %s', PYTHON_BIN, SCRIPT_DIR, SCRIPT_DIR, $test['in']);
-//        print $cmd . "\n";
-//        print shell_exec($cmd) . "\n";
-*/
