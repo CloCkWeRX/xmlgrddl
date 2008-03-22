@@ -14,49 +14,50 @@
   <email>daniel.oconnor@gmail.com</email>
   <active>yes</active>
  </lead>
- <date>2008-03-09</date>
- <time>09:17:46</time>
+ <date>2008-03-22</date>
+ <time>06:46:23</time>
  <version>
-  <release>0.0.3</release>
-  <api>0.0.1</api>
+  <release>0.0.4</release>
+  <api>0.0.4</api>
  </version>
  <stability>
   <release>alpha</release>
   <api>alpha</api>
  </stability>
  <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
- <notes>Implement code to deal with more tests
-Implement code to deal with RDF/XML documents being returned
-Can&apos;t quite pass xml:base related problems
-Added a HTML tidy option, which allows you to pre-clean input
-Added options for quiet errors (libxml no errors flags)
-Added options for using a Log handler</notes>
+ <notes>Added command line runner
+Passing all tests but inline-rdf4 inline-rdf5, content negotiation &amp; xml:base related
+Addressed the spirit of xml;base related tests, even if the test cases still say &apos;fail&apos;
+Cleaned up options / api</notes>
  <contents>
   <dir baseinstalldir="PEAR" name="/">
    <file baseinstalldir="PEAR" md5sum="c10c403cd55b402845bc6d39efc83f4e" name="data/grddl-library/glean-profile" role="data" />
    <file baseinstalldir="PEAR" md5sum="83e9b28a22bed104cc6bf9f33c5ec122" name="data/grddl-library/grokAlternate" role="data" />
-   <file baseinstalldir="PEAR" md5sum="017afd93a4c2a95a50c1fffb9dba4082" name="data/grddl-library/grokPEAR" role="data" />
+   <file baseinstalldir="PEAR" md5sum="5e49e9c1d163822939c36688ef922b82" name="data/grddl-library/grokPEAR" role="data" />
    <file baseinstalldir="PEAR" md5sum="a0357d0df76705258b7a29ff42e5727f" name="data/grddl-library/inline-rdf" role="data" />
    <file baseinstalldir="PEAR" md5sum="5163a11c0b5e88fe2d39054547a3cf9c" name="data/grddl-library/xml-attributes" role="data" />
-   <file baseinstalldir="" md5sum="baad2c23c95f1641e0db84ef91b24b0d" name="docs/44225.php" role="doc" />
-   <file baseinstalldir="PEAR" md5sum="b828bcdc5a94ccc3352f4611b4bcc94c" name="docs/an-hcard-profile.php" role="doc" />
-   <file baseinstalldir="PEAR" md5sum="c30749552733904c276d203b5352756d" name="docs/danc-hcal.php" role="doc" />
+   <file baseinstalldir="PEAR" md5sum="5cd765056d4bb226d9827a738e94b8f6" name="docs/an-hcard-profile.php" role="doc" />
+   <file baseinstalldir="PEAR" md5sum="2cdcd705dd5c0ae920880cc18e53c8ed" name="docs/danc-hcal.php" role="doc" />
    <file baseinstalldir="PEAR" md5sum="a92f8768ed7d72a3a46b6b62f6f88873" name="docs/discover-grddl.php" role="doc" />
-   <file baseinstalldir="PEAR" md5sum="baab106a6dbd744b8984a3af67743a03" name="docs/namespace-documents1.php" role="doc" />
-   <file baseinstalldir="PEAR" md5sum="76c4cbbb5804bd9604d400e0eb923dea" name="docs/namespace-documents2.php" role="doc" />
+   <file baseinstalldir="PEAR" md5sum="691844140852fc0a18281ebc3fedf48e" name="docs/flickr-linkedin.php" role="doc" />
+   <file baseinstalldir="PEAR" md5sum="279389998abf553838c220389711fe54" name="docs/namespace-documents1.php" role="doc" />
+   <file baseinstalldir="PEAR" md5sum="1ada72da39cc8391d7e93ce7ae21b457" name="docs/namespace-documents2.php" role="doc" />
    <file baseinstalldir="PEAR" md5sum="06d9389151518592000231980761630e" name="docs/pear-package.php" role="doc" />
-   <file baseinstalldir="PEAR" md5sum="12d76ef60ae30519926cb5f3da58b243" name="docs/two-transforms.php" role="doc" />
-   <file baseinstalldir="PEAR" md5sum="6e450f906a831737851f15ea0ac6556b" name="docs/xhtmlWithGrddlEnabledProfile.php" role="doc" />
-   <file baseinstalldir="" md5sum="17d84110fe7610ab579aa558194a6f72" name="scripts/process-grddl.php" role="script" />
+   <file baseinstalldir="PEAR" md5sum="dc0e035dc42fc7c5643ce9d9ae178cdd" name="docs/two-transforms.php" role="doc" />
+   <file baseinstalldir="PEAR" md5sum="5ea1743964432f346bfde10f6b0f2935" name="docs/xhtmlWithGrddlEnabledProfile.php" role="doc" />
+   <file baseinstalldir="" md5sum="9a67031244a19a5f0d1a544eba8122b8" name="scripts/debug-grddl.php" role="script" />
+   <file baseinstalldir="" md5sum="91380b5b2c6594562015fd4edbd6f76e" name="scripts/grddl-base.rdf" role="script" />
+   <file baseinstalldir="" md5sum="1afcd0de42a3d469aa1b56862f2a1351" name="scripts/grddl-tests-normative.rdf" role="script" />
+   <file baseinstalldir="" md5sum="7656a0fbf8bb26b3759cdbc965425a5c" name="scripts/grddl-tests.rdf" role="script" />
+   <file baseinstalldir="" md5sum="c99b27b5420dbe21778a02e80cf0e859" name="scripts/process-grddl.php" role="script" />
    <file baseinstalldir="" md5sum="16d637b6732088a63b17bdb066963783" name="scripts/testft.py" role="script" />
    <file baseinstalldir="" md5sum="8849d012ded35e69cbe398dc5e820fd8" name="scripts/xml_grddl.bat" role="script" />
+   <file baseinstalldir="PEAR" md5sum="7752a8017dc3602ffad7def3de8886a0" name="tests/44225.php" role="test" />
    <file baseinstalldir="PEAR" md5sum="06a87321562914fa6225df0217d3b86a" name="tests/ambiguous.php" role="test" />
-   <file baseinstalldir="PEAR" md5sum="bf5b908efb2b8814c99f31e0e32f14bc" name="tests/bug-44367.php" role="test" />
-   <file baseinstalldir="PEAR" md5sum="f5bd04a51f595d29606c7c8d7737069a" name="tests/example.php" role="test" />
+   <file baseinstalldir="PEAR" md5sum="85b0e3601d55346189ed16987b258464" name="tests/example.php" role="test" />
    <file baseinstalldir="PEAR" md5sum="9ea62e2be8a7b32c25cc0dab098c51b8" name="tests/library.php" role="test" />
    <file baseinstalldir="PEAR" md5sum="bbedcc42da3f18cf42969baa3d24dafe" name="tests/local.php" role="test" />
-   <file baseinstalldir="PEAR" md5sum="bdb7d5e1f6b3f370a1a3b521504955ce" name="tests/namespaces.php" role="test" />
-   <file baseinstalldir="PEAR" md5sum="2767be3cebbf54d835b532e420e55a40" name="tests/output.txt" role="test" />
+   <file baseinstalldir="PEAR" md5sum="594113e948cc056353a1233e052d2843" name="tests/namespaces.php" role="test" />
    <file baseinstalldir="PEAR" md5sum="fda633aaec7493282a8ef55c9548a59c" name="tests/data/baseURI.rdf" role="test" />
    <file baseinstalldir="PEAR" md5sum="0aa9bd13ca588d95459bafe15cd015d0" name="tests/data/card-output.rdf" role="test" />
    <file baseinstalldir="PEAR" md5sum="70da655151715bc29bff24996aecf4ed" name="tests/data/card5n-output.rdf" role="test" />
@@ -72,7 +73,7 @@ Added options for using a Log handler</notes>
    <file baseinstalldir="PEAR" md5sum="cb8bb0c8e39076d3e2ece3682d7320b4" name="tests/data/grddlonrdf-output3.rdf" role="test" />
    <file baseinstalldir="PEAR" md5sum="338bdf43a799b2ff795bdd3cfd19785a" name="tests/data/grddlonrdf-xmlmediatype-output3.rdf" role="test" />
    <file baseinstalldir="PEAR" md5sum="17a7c194e6c0a90add4bcd49f77fb1bc" name="tests/data/grddlProfileWithBaseElement-output.rdf" role="test" />
-   <file baseinstalldir="PEAR" md5sum="f0217854b6b96b7686f8910905385824" name="tests/data/hcard-output.rdf" role="test" />
+   <file baseinstalldir="PEAR" md5sum="f85f030622dd2f1e6307c368f6b0af57" name="tests/data/hcard-output.rdf" role="test" />
    <file baseinstalldir="PEAR" md5sum="a62c9fc7bd34dcc560f93852772f5709" name="tests/data/inline.rdf" role="test" />
    <file baseinstalldir="PEAR" md5sum="9e3a25156584dcb525113d3120ca638e" name="tests/data/loop-output.rdf" role="test" />
    <file baseinstalldir="PEAR" md5sum="2abd3b8c92001a6800ae6d0a0de1d3ad" name="tests/data/loopx-output.rdf" role="test" />
@@ -107,9 +108,9 @@ Added options for using a Log handler</notes>
    <file baseinstalldir="PEAR" md5sum="48f68c072cd34378d4731e18a5e59bc7" name="tests/data/xmlWithGrddlAttribute-output.rdf" role="test" />
    <file baseinstalldir="PEAR" md5sum="7d14574e41b2a75d828e4324860ca3d2" name="tests/data/xmlWithGrddlAttributeAndNonXMLNamespaceDocument-output.rdf" role="test" />
    <file baseinstalldir="PEAR" md5sum="322c7c71ff002cf854bcd3a104598bdb" name="tests/data/xmlWithoutBase-output.rdf" role="test" />
-   <file baseinstalldir="" md5sum="046aba8f7ca832f04a0ca77e85bb66ab" name="XML/GRDDL.php" role="php" />
-   <file baseinstalldir="" md5sum="c08b9ce758db7d8373a1fafc2e460d7e" name="XML/GRDDL/Driver.php" role="php" />
-   <file baseinstalldir="PEAR" md5sum="aa4de0e0d49a328c3705c60f5378cee4" name="XML/GRDDL/Driver/Xsl.php" role="php" />
+   <file baseinstalldir="" md5sum="94d1f00347eed7d88e55b477fa175f88" name="XML/GRDDL.php" role="php" />
+   <file baseinstalldir="" md5sum="ba804e92e4ddaed1d4a3ccd41d9606e1" name="XML/GRDDL/Driver.php" role="php" />
+   <file baseinstalldir="PEAR" md5sum="6d47a2f87eb2324b1e380a5d578e964c" name="XML/GRDDL/Driver/Xsl.php" role="php" />
   </dir>
  </contents>
  <dependencies>
@@ -133,8 +134,15 @@ Added options for using a Log handler</notes>
     <name>Log</name>
     <channel>pear.php.net</channel>
    </package>
+   <package>
+    <name>Validate</name>
+    <channel>pear.php.net</channel>
+   </package>
    <extension>
     <name>xsl</name>
+   </extension>
+   <extension>
+    <name>tidy</name>
    </extension>
   </required>
   <optional>
@@ -148,6 +156,10 @@ Added options for using a Log handler</notes>
    <install as="process-grddl.php" name="scripts/process-grddl.php" />
    <install as="testft.py" name="scripts/testft.py" />
    <install as="xml_grddl.bat" name="scripts/xml_grddl.bat" />
+   <install as="debug-grddl.php" name="scripts/debug-grddl.php" />
+   <install as="grddl-base.rdf" name="scripts/grddl-base.rdf" />
+   <install as="grddl-tests-normative.rdf" name="scripts/grddl-tests-normative.rdf" />
+   <install as="grddl-tests.rdf" name="scripts/grddl-tests.rdf" />
   </filelist>
  </phprelease>
  <changelog>
@@ -197,6 +209,22 @@ Can&apos;t quite pass xml:base related problems
 Added a HTML tidy option, which allows you to pre-clean input
 Added options for quiet errors (libxml no errors flags)
 Added options for using a Log handler</notes>
+  </release>
+  <release>
+   <version>
+    <release>0.0.4</release>
+    <api>0.0.4</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2008-03-22</date>
+   <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
+   <notes>Added command line runner
+Passing all tests but inline-rdf4 inline-rdf5, content negotiation &amp; xml:base related
+Addressed the spirit of xml;base related tests, even if the test cases still say &apos;fail&apos;
+Cleaned up options / api</notes>
   </release>
  </changelog>
 </package>
