@@ -46,10 +46,8 @@
 require_once 'XML/GRDDL.php';
 
 /**
- * Example: Read the RDF calendar / event information
- * from Dan Connolly's w3 homepage.
- *
- * Compare the results to http://www.w3.org/2001/sw/grddl-wg/td/card-output.rdf
+ * Example: Fetch multiple URLs about a specific user
+ * and get useful information out.
  */
 $urls = array();
 $urls[0] = 'http://flickr.com/people/clockwerx/';
@@ -57,6 +55,8 @@ $urls[1] = 'http://www.linkedin.com/in/clockwerx';
 $urls[2] = 'http://www.last.fm/user/CloCkWeRX/';
 $urls[3] = 'http://clockwerx.blogspot.com/';
 
+//For each URL, pretend it has these urls in <head profile="foo" />
+//These look for hcard, hcalendar, etc.
 $profiles[$urls[0]][] = 'http://www.w3.org/2002/12/cal/cardcaletc';
 $profiles[$urls[1]][] = 'http://microformats.org/wiki/hresume-profile';
 $profiles[$urls[1]][] = 'http://www.w3.org/2002/12/cal/cardcaletc';
@@ -64,15 +64,10 @@ $profiles[$urls[2]][] = 'http://www.w3.org/2002/12/cal/cardcaletc';
 $profiles[$urls[3]][] = 'http://www.w3.org/2002/12/cal/cardcaletc';
 
 //Set what kind of transformations we're interested in.
-$options = array(
-'tidy' => true,
-'prettify' => true,
-'quiet' => false,
-'formatOutput' => true,
-'documentTransformations' => true,
-'namespaceTransformations' => true,
-'htmlTransformations' => true,
-'htmlProfileTransformations' => true);
+
+
+$options = XML_GRDDL::getDefaultOptions();
+$options['quiet'] = true;
 
 $grddl = XML_GRDDL::factory('xsl', $options);
 $results = array();
@@ -98,4 +93,3 @@ foreach ($results as $url => $rdf_xml) {
     print $url . "\n";
     print $rdf_xml . "\n\n";
 }
-die();
