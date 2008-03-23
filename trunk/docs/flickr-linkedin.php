@@ -91,5 +91,39 @@ foreach ($urls as $n => $url) {
 print "We scuttered " . count($urls) . " urls and found these results\n";
 foreach ($results as $url => $rdf_xml) {
     print $url . "\n";
-    print $rdf_xml . "\n\n";
+
+    $sxe = simplexml_load_string($rdf_xml);
+    $sxe->registerXPathNamespace('vcard', 'http://www.w3.org/2006/vcard/ns#');
+    $sxe->registerXPathNamespace('ical', 'http://www.w3.org/2002/12/cal/icaltzd#');
+
+    print "We found the following pieces of information, choose which are yours:\n";
+    $xpaths = array();
+    $xpaths["Formatted name"]   = '//vcard:fn';
+    $xpaths["First name"]       = '//vcard:givenName';
+    $xpaths["Last name"]        = '//vcard:familyName';
+    $xpaths["Email"]            = '//vcard:email';
+    $xpaths["Homepage or URl"]  = '//vcard:url';
+    $xpaths["Workplace name"]   = '//vcard:organization-name';
+    $xpaths["Photo URL"]        = '//vcard:photo';
+    $xpaths["Locality"]         = '//vcard:locality';
+    $xpaths["Position/Title"]   = '//vcard:title';
+
+    foreach ($xpaths as $name => $xpath) {
+        $results = $sxe->xpath($xpath);
+        if (empty($results)) {
+            continue;
+        }
+
+        print $name . ": ";
+        foreach ($results as $node) {
+            print trim((string)$node);
+            $attributes = $node->attributes(XML_GRDDL::RDF_NS);
+            if (!empty($attributes['resource'])) {
+                print trim((string)$attributes['resource']);
+            }
+            print "\n";
+        }
+    }
+    //print $rdf_xml . "\n\n";
+    print "\n";
 }
