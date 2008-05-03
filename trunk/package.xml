@@ -14,10 +14,10 @@
   <email>daniel.oconnor@gmail.com</email>
   <active>yes</active>
  </lead>
- <date>2008-03-22</date>
- <time>06:46:23</time>
+ <date>2008-05-03</date>
+ <time>11:25:34</time>
  <version>
-  <release>0.0.4</release>
+  <release>0.0.5</release>
   <api>0.0.4</api>
  </version>
  <stability>
@@ -25,10 +25,7 @@
   <api>alpha</api>
  </stability>
  <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
- <notes>Added command line runner
-Passing all tests but inline-rdf4 inline-rdf5, content negotiation &amp; xml:base related
-Addressed the spirit of xml;base related tests, even if the test cases still say &apos;fail&apos;
-Cleaned up options / api</notes>
+ <notes>Added one more example for php conferences, changed requirements to be 5.2.6</notes>
  <contents>
   <dir baseinstalldir="PEAR" name="/">
    <file baseinstalldir="PEAR" md5sum="c10c403cd55b402845bc6d39efc83f4e" name="data/grddl-library/glean-profile" role="data" />
@@ -39,10 +36,11 @@ Cleaned up options / api</notes>
    <file baseinstalldir="PEAR" md5sum="5cd765056d4bb226d9827a738e94b8f6" name="docs/an-hcard-profile.php" role="doc" />
    <file baseinstalldir="PEAR" md5sum="2cdcd705dd5c0ae920880cc18e53c8ed" name="docs/danc-hcal.php" role="doc" />
    <file baseinstalldir="PEAR" md5sum="a92f8768ed7d72a3a46b6b62f6f88873" name="docs/discover-grddl.php" role="doc" />
-   <file baseinstalldir="PEAR" md5sum="691844140852fc0a18281ebc3fedf48e" name="docs/flickr-linkedin.php" role="doc" />
+   <file baseinstalldir="PEAR" md5sum="09c3d6c559c82422c5f793836af5765d" name="docs/flickr-linkedin.php" role="doc" />
    <file baseinstalldir="PEAR" md5sum="279389998abf553838c220389711fe54" name="docs/namespace-documents1.php" role="doc" />
    <file baseinstalldir="PEAR" md5sum="1ada72da39cc8391d7e93ce7ae21b457" name="docs/namespace-documents2.php" role="doc" />
    <file baseinstalldir="PEAR" md5sum="06d9389151518592000231980761630e" name="docs/pear-package.php" role="doc" />
+   <file baseinstalldir="PEAR" md5sum="fb071d4ec6ece53cc8f9e913fee922e0" name="docs/php-conferences.php" role="doc" />
    <file baseinstalldir="PEAR" md5sum="dc0e035dc42fc7c5643ce9d9ae178cdd" name="docs/two-transforms.php" role="doc" />
    <file baseinstalldir="PEAR" md5sum="5ea1743964432f346bfde10f6b0f2935" name="docs/xhtmlWithGrddlEnabledProfile.php" role="doc" />
    <file baseinstalldir="" md5sum="9a67031244a19a5f0d1a544eba8122b8" name="scripts/debug-grddl.php" role="script" />
@@ -115,7 +113,7 @@ Cleaned up options / api</notes>
  <dependencies>
   <required>
    <php>
-    <min>5</min>
+    <min>5.2.6</min>
    </php>
    <pearinstaller>
     <min>1.4.0</min>
@@ -218,6 +216,19 @@ Added options for using a Log handler</notes>
 Passing all tests but inline-rdf4 inline-rdf5, content negotiation &amp; xml:base related
 Addressed the spirit of xml;base related tests, even if the test cases still say &apos;fail&apos;
 Cleaned up options / api</notes>
+  </release>
+  <release>
+   <version>
+    <release>0.0.5</release>
+    <api>0.0.4</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2008-05-03</date>
+   <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
+   <notes>Added one more example for php conferences, changed requirements to be 5.2.6</notes>
   </release>
  </changelog>
 </package>
