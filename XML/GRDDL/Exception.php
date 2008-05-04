@@ -45,6 +45,7 @@
  * @link      http://code.google.com/p/xmlgrddl/
  */
 
+require_once 'PEAR/Exception.php';
 
 /**
  * A generic exception for XML_GRDDL
@@ -56,6 +57,6 @@
  * @version  Release: @package_version@
  * @link     http://code.google.com/p/xmlgrddl/
  */
-class XML_GRDDL_Exception extends Exception
+class XML_GRDDL_Exception extends PEAR_Exception
 {
 }
