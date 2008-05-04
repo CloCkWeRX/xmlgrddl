@@ -107,7 +107,7 @@ abstract class XML_GRDDL_Driver
         }
 
         if (!extension_loaded('tidy') && !empty($options['tidy'])) {
-            throw new Exception("HTML tidy extension does not appear loaded!");
+            throw new XML_GRDDL_Exception("HTML tidy extension does not appear loaded!");
         }
 
 
@@ -161,7 +161,7 @@ abstract class XML_GRDDL_Driver
 
         $sxe = simplexml_load_string($xml);
         if (!$sxe instanceOf SimpleXMLElement) {
-            throw new Exception("Failed to parse xml");
+            throw new XML_GRDDL_Exception("Failed to parse xml");
         }
 
         $sxe->registerXPathNamespace('grddl', XML_GRDDL::NS);
@@ -306,7 +306,7 @@ abstract class XML_GRDDL_Driver
 
             try {
                 $xhtml = $this->fetch($profileUrl);
-            } catch (Exception $e) {
+            } catch (XML_GRDDL_Exception $e) {
                 //Emit log warning?
                 continue;
             }
@@ -379,7 +379,7 @@ abstract class XML_GRDDL_Driver
 
                 $transformationUrls = array_merge($xsl, $rdfXsl);
             }
-        } catch (Exception $e) {
+        } catch (XML_GRDDL_Exception $e) {
             if (empty($this->options['quiet'])) {
                 trigger_error($e->getMessage(), E_USER_NOTICE);
             }
@@ -514,7 +514,7 @@ abstract class XML_GRDDL_Driver
      * @param string $path               Path to fetch - typically URL.
      * @param string $preferredExtension Preferred default extension
      *
-     * @throws  Exception  Unable to fetch url or file
+     * @throws  XML_GRDDL_Exception  Unable to fetch url or file
      *
      * @bug Deal with error response codes to exceptions
      * @bug Deal with ambigious reponse codes (300)
@@ -530,12 +530,12 @@ abstract class XML_GRDDL_Driver
 
         /** @todo remove me */
         if (empty($path)) {
-            throw new Exception("You must provide a path");
+            throw new XML_GRDDL_Exception("You must provide a path");
         }
 
         if (isset($this->urlCache[$path])) {
             if ($this->urlCache[$path]['requests']++ > 9) {
-                throw new Exception("This resource has been request too many times, possible race condition");
+                throw new XML_GRDDL_Exception("This resource has been request too many times, possible race condition");
             }
 
             return $this->urlCache[$path]['data'];
@@ -591,7 +591,7 @@ abstract class XML_GRDDL_Driver
             }
 
 
-            throw new Exception('HTTP ' . $req->getResponseCode()
+            throw new XML_GRDDL_Exception('HTTP ' . $req->getResponseCode()
                                     . ' while retrieving ' . $path);
         }
 
@@ -603,7 +603,7 @@ abstract class XML_GRDDL_Driver
             }
         }
 
-        throw new Exception("Unable to fetch " . $path);
+        throw new XML_GRDDL_Exception("Unable to fetch " . $path);
     }
 
     /**
@@ -736,7 +736,7 @@ abstract class XML_GRDDL_Driver
         foreach ($stylesheets as $stylesheet) {
             try {
                 $rdfxml[] = $this->transform($stylesheet, $data);
-            } catch (Exception $e) {
+            } catch (XML_GRDDL_Exception $e) {
                 $this->logger->log($e->getMessage());
             }
         }
@@ -789,7 +789,7 @@ abstract class XML_GRDDL_Driver
         $dom = new DOMDocument('1.0');
 
         if (!$dom->loadXML($xhtml)) {
-            throw new Exception("Could not load XML - has it been tidied?");
+            throw new XML_GRDDL_Exception("Could not load XML - has it been tidied?");
         }
 
 

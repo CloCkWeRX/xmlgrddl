@@ -75,7 +75,7 @@ class XML_GRDDL_Driver_Xsl extends XML_GRDDL_Driver
     public function __construct($options = array())
     {
         if (!extension_loaded('xsl')) {
-            throw new Exception("Don't forget to enable the xsl extension");
+            throw new XML_GRDDL_Exception("Don't forget to enable the xsl extension");
         }
 
         parent::__construct($options);
@@ -112,7 +112,7 @@ class XML_GRDDL_Driver_Xsl extends XML_GRDDL_Driver
 
         if (getcwd() == $oldCwd) {
             $this->logger->log("Could not access standard transform library");
-            //throw new Exception("Could not access standard transform library");
+            //throw new XML_GRDDL_Exception("Could not access standard transform library");
         }
 
         try {
@@ -139,7 +139,7 @@ class XML_GRDDL_Driver_Xsl extends XML_GRDDL_Driver
             $this->logger->log("Transformed successfully with " . $stylesheet);
 
             return $result;
-        } catch (Exception $e) {
+        } catch (XML_GRDDL_Exception $e) {
             restore_error_handler();
             chdir($oldCwd);
 
@@ -156,12 +156,12 @@ class XML_GRDDL_Driver_Xsl extends XML_GRDDL_Driver
      * @param string   $errline    Error line
      * @param string[] $errcontext Error context
      *
-     * @throws  Exception
+     * @throws  XML_GRDDL_Exception
      * @return  void
      */
     public function handleTransformationErrorMessage($errno, $errstr, $errfile, $errline,
                                                      $errcontext = array())
     {
-        throw new Exception($errstr);
+        throw new XML_GRDDL_Exception($errstr);
     }
 }
