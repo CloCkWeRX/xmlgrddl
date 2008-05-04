@@ -2,6 +2,8 @@
 /**
  * XML_GRDDL
  *
+ * PHP version 5
+ *
  * Copyright (c) 2008, Daniel O'Connor <daniel.oconnor@gmail.com>.
  * All rights reserved.
  *

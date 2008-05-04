@@ -113,19 +113,19 @@ abstract class XML_GRDDL_Driver
 
         $basePath = 'http://www.w3.org/2001/sw/grddl-wg/td/';
 
-        $rdfDocs = array($base_path . 'sq2ns#',
-                          $base_path . 'sq2ns',
-                          $base_path . 'two-transforms-ns#',
-                          $base_path . 'two-transforms-ns',
-                          $base_path . 'hcarda-prof');
+        $rdfDocs = array($basePath . 'sq2ns#',
+                          $basePath . 'sq2ns',
+                          $basePath . 'two-transforms-ns#',
+                          $basePath . 'two-transforms-ns',
+                          $basePath . 'hcarda-prof');
 
-        $xmlDocs = array($base_path . 'sq1ns#',
-                          $base_path . 'sq1ns',
-                          $base_path . 'loop-ns-b',
-                          $base_path . 'loopx',
-                          $base_path . 'loopy',
-                          $base_path . 'xmlWithBase',
-                          $base_path . 'base/xmlWithBase');
+        $xmlDocs = array($basePath . 'sq1ns#',
+                          $basePath . 'sq1ns',
+                          $basePath . 'loop-ns-b',
+                          $basePath . 'loopx',
+                          $basePath . 'loopy',
+                          $basePath . 'xmlWithBase',
+                          $basePath . 'base/xmlWithBase');
 
         foreach ($rdfDocs as $path) {
             $url = new Net_URL($path);
@@ -245,6 +245,7 @@ abstract class XML_GRDDL_Driver
                 if (!$this->isURI($url)) {
                     $this->logger->log("Not a full URI: " . $url);
                     $urls[$n] = $this->determineBaseURI($sxe, $originalUrl) . $url;
+                    $this->logger->log($url . ' became ' . $urls[$n]);
                 }
             }
 
@@ -409,6 +410,10 @@ abstract class XML_GRDDL_Driver
         $attributes = $sxe->attributes(XML_GRDDL::XML_NS);
         if (!empty($attributes['base'])) {
             return dirname($attributes['base']) . '/';
+        }
+
+        if (substr($originalUrl, -1) == '/') {
+            return $originalUrl;
         }
 
         return dirname($originalUrl) . '/';
@@ -584,7 +589,6 @@ abstract class XML_GRDDL_Driver
 
                 return $this->fetch($newPath);
             }
-
 
 
             throw new Exception('HTTP ' . $req->getResponseCode()
