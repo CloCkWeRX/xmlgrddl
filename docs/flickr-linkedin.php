@@ -76,23 +76,23 @@ foreach ($urls as $n => $url) {
 
     $data = $grddl->prettify($data);
 
-    $modified_data = $grddl->appendProfiles($data, $profiles[$url]);
+    $modifiedData = $grddl->appendProfiles($data, $profiles[$url]);
 
-    $stylesheets = $grddl->inspect($modified_data, $url);
+    $stylesheets = $grddl->inspect($modifiedData, $url);
 
-    $rdf_xml = array();
+    $rdfXml = array();
     foreach ($stylesheets as $stylesheet) {
-        $rdf_xml[] = $grddl->transform($stylesheet, $modified_data);
+        $rdfXml[] = $grddl->transform($stylesheet, $modifiedData);
     }
 
-    $results[$url] = array_reduce($rdf_xml, array($grddl, 'merge'));
+    $results[$url] = array_reduce($rdfXml, array($grddl, 'merge'));
 }
 
 print "We scuttered " . count($urls) . " urls and found these results\n";
-foreach ($results as $url => $rdf_xml) {
+foreach ($results as $url => $rdfXml) {
     print $url . "\n";
 
-    $sxe = simplexml_load_string($rdf_xml);
+    $sxe = simplexml_load_string($rdfXml);
     $sxe->registerXPathNamespace('vcard', 'http://www.w3.org/2006/vcard/ns#');
     $sxe->registerXPathNamespace('ical', 'http://www.w3.org/2002/12/cal/icaltzd#');
 
@@ -124,6 +124,7 @@ foreach ($results as $url => $rdf_xml) {
             print "\n";
         }
     }
-    //print $rdf_xml . "\n\n";
+    //print $rdfXml . "\n\n";
     print "\n";
 }
+?>

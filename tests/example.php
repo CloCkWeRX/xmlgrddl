@@ -96,12 +96,12 @@ foreach ($tests as $test) {
 
         $stylesheets = $grddl->inspect($in, $test['in']);
 
-        $rdf_xml = array();
+        $rdfXml = array();
         foreach ($stylesheets as $stylesheet) {
-            $rdf_xml[] = $grddl->transform($stylesheet, $in);
+            $rdfXml[] = $grddl->transform($stylesheet, $in);
         }
 
-        $result = array_reduce($rdf_xml, array($grddl, 'merge'));
+        $result = array_reduce($rdfXml, array($grddl, 'merge'));
 
         print $test['name'] . "\n";
         PHPUnit_Framework_Assert::assertSame(trim($grddl->prettify($out)),
