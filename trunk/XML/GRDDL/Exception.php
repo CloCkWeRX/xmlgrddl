@@ -41,16 +41,13 @@
  * @author    Daniel O'Connor <daniel.oconnor@gmail.com>
  * @copyright 2008 Daniel O'Connor
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   SVN: $Id$
+ * @version   SVN: $Id: Driver.php 167 2008-05-04 03:56:12Z daniel.oconnor $
  * @link      http://code.google.com/p/xmlgrddl/
  */
 
-require_once 'GRDDL/Exception.php';
 
 /**
- * A driver for PHP 5's XSL extension.
- *
- * Requires PHP 5.2.6, XSL extension
+ * A generic exception for XML_GRDDL
  *
  * @category Semantic_Web
  * @package  XML_GRDDL
@@ -59,61 +56,6 @@ require_once 'GRDDL/Exception.php';
  * @version  Release: @package_version@
  * @link     http://code.google.com/p/xmlgrddl/
  */
-class XML_GRDDL
+class XML_GRDDL_Exception extends Exception
 {
-    const NS       = "http://www.w3.org/2003/g/data-view#";
-    const XHTML_NS = 'http://www.w3.org/1999/xhtml';
-    const RDF_NS   = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#';
-    const XML_NS   = 'http://www.w3.org/XML/1998/namespace';
-
-    /**
-     * Instantiate a new instance of a GRDDL driver.
-     *
-     * @param string  $driver  Name of driver. Default is 'xsl'.
-     * @param mixed[] $options An array of options, refer to individual drivers
-     *                         document for more information.
-     *
-     * @see     getDefaultOptions()
-     *
-     * @return  XML_GRDDL_Driver
-     */
-    public static function factory($driver = 'Xsl', $options = array())
-    {
-        if (empty($options)) {
-            $options = self::getDefaultOptions();
-        }
-
-        $class = 'XML_GRDDL_Driver_' . $driver;
-
-        $path = dirname(__FILE__) . '/GRDDL/Driver/' . $driver . '.php';
-
-        if (file_exists($path)) {
-            include_once $path;
-        }
-
-        if (!class_exists($class)) {
-            throw new Exception("Unknown driver " . $class);
-        }
-
-        return new $class($options);
-    }
-
-    /**
-     * Helper method to fetch default options.
-     *
-     * @see     factory()
-     *
-     * @return  mixed[] An array of options
-     */
-    public static function getDefaultOptions()
-    {
-        return array('tidy'                       => true,
-                     'prettify'                   => true,
-                     'quiet'                      => false,
-                     'formatOutput'               => true,
-                     'documentTransformations'    => true,
-                     'namespaceTransformations'   => true,
-                     'htmlTransformations'        => true,
-                     'htmlProfileTransformations' => true);
-    }
 }
