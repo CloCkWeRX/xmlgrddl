@@ -67,7 +67,7 @@ abstract class XML_GRDDL_Driver
     public    $options;
     protected $logger;
 
-    protected $url_cache = array();
+    protected $urlCache = array();
 
     /**
      * Make a new instance of XML_GRRDL_Driver directly
@@ -77,7 +77,7 @@ abstract class XML_GRDDL_Driver
      * @see XML_GRDDL::factory()
      * @see XML_GRDDL::getDefaultOptions()
      *
-     * @return
+     * @return void
      */
     public function __construct($options = array())
     {
@@ -97,15 +97,15 @@ abstract class XML_GRDDL_Driver
         }
 
 
-        $base_path = 'http://www.w3.org/2001/sw/grddl-wg/td/';
+        $basePath = 'http://www.w3.org/2001/sw/grddl-wg/td/';
 
-        $rdf_docs = array($base_path . 'sq2ns#',
+        $rdfDocs = array($base_path . 'sq2ns#',
                           $base_path . 'sq2ns',
                           $base_path . 'two-transforms-ns#',
                           $base_path . 'two-transforms-ns',
                           $base_path . 'hcarda-prof');
 
-        $xml_docs = array($base_path . 'sq1ns#',
+        $xmlDocs = array($base_path . 'sq1ns#',
                           $base_path . 'sq1ns',
                           $base_path . 'loop-ns-b',
                           $base_path . 'loopx',
@@ -113,7 +113,7 @@ abstract class XML_GRDDL_Driver
                           $base_path . 'xmlWithBase',
                           $base_path . 'base/xmlWithBase');
 
-        foreach ($rdf_docs as $path) {
+        foreach ($rdfDocs as $path) {
             $url = new Net_URL($path);
 
             $url->path .= '.rdf';
@@ -121,7 +121,7 @@ abstract class XML_GRDDL_Driver
             $this->logRedirect($path, $url->getURL());
         }
 
-        foreach ($xml_docs as $path) {
+        foreach ($xmlDocs as $path) {
             $url = new Net_URL($path);
 
             $url->path .= '.xml';
@@ -129,21 +129,21 @@ abstract class XML_GRDDL_Driver
             $this->logRedirect($path, $url->getURL());
         }
 
-        $this->logRedirect($base_path . 'base/xmlWithBase.html',
-                           $base_path . 'base/xmlWithBase.xml');
+        $this->logRedirect($basePath . 'base/xmlWithBase.html',
+                           $basePath . 'base/xmlWithBase.xml');
     }
 
     /**
      * Inspect raw XML for transformations, according to options
      *
-     * @param string $xml          String of XML to inspect
-     * @param string $original_url Where this document used to live
+     * @param string $xml         String of XML to inspect
+     * @param string $originalUrl Where this document used to live
      *
      * @return string[] An array of transformations (urls)
      */
-    public function inspect($xml, $original_url = null)
+    public function inspect($xml, $originalUrl = null)
     {
-        $this->logger->log("Inspecting for transformations: " . $original_url);
+        $this->logger->log("Inspecting for transformations: " . $originalUrl);
 
         $sxe = simplexml_load_string($xml);
         if (!$sxe instanceOf SimpleXMLElement) {
@@ -164,7 +164,7 @@ abstract class XML_GRDDL_Driver
         if ($this->options['htmlTransformations']) {
             $this->logger->log("Looking for HTML transformations");
 
-            $new = $this->discoverHTMLTransformations($sxe, $original_url);
+            $new = $this->discoverHTMLTransformations($sxe, $originalUrl);
             $xsl = array_merge($new, $xsl);
 
             $this->logger->log(count($xsl) . " transformations");
@@ -173,7 +173,7 @@ abstract class XML_GRDDL_Driver
         if ($this->options['htmlProfileTransformations']) {
             $this->logger->log("Looking for profile transformations");
 
-            $new = $this->discoverHTMLProfileTransformations($sxe, $original_url);
+            $new = $this->discoverHTMLProfileTransformations($sxe, $originalUrl);
             $xsl = array_merge($new, $xsl);
 
             $this->logger->log(count($xsl) . " transformations");
@@ -182,7 +182,7 @@ abstract class XML_GRDDL_Driver
         if ($this->options['documentTransformations']) {
             $this->logger->log("Looking for XML transformations");
 
-            $new = $this->discoverDocumentTransformations($sxe, $original_url);
+            $new = $this->discoverDocumentTransformations($sxe, $originalUrl);
             $xsl = array_merge($new, $xsl);
 
             $this->logger->log(count($xsl) . " transformations");
@@ -191,7 +191,7 @@ abstract class XML_GRDDL_Driver
         if ($this->options['namespaceTransformations']) {
             $this->logger->log("Looking for XMLNS transformations");
 
-            $new = $this->discoverNamespaceTransformations($sxe, $original_url);
+            $new = $this->discoverNamespaceTransformations($sxe, $originalUrl);
             $xsl = array_merge($new, $xsl);
 
             $this->logger->log(count($xsl) . " transformations");
@@ -205,59 +205,59 @@ abstract class XML_GRDDL_Driver
     /**
      * Discover transformations in the provided document by using the xpath provided.
      *
-     * @param SimpleXMLElement $sxe            Prepopulated document to inspect for
-     *                                         transformations, found by $xpath
-     * @param string           $original_url   Original url this document lived at
-     * @param string           $xpath          XPath expression to evaluate
-     * @param string           $attribute_name The node attribute to read
-     * @param string           $namespace      The namespace of the attribute,
-     *                                         if applicable
+     * @param SimpleXMLElement $sxe           Prepopulated document to inspect for
+     *                                        transformations, found by $xpath
+     * @param string           $originalUrl   Original url this document lived at
+     * @param string           $xpath         XPath expression to evaluate
+     * @param string           $attributeName The node attribute to read
+     * @param string           $namespace     The namespace of the attribute,
+     *                                        if applicable
      *
      * @return  string[]    A list of transformations, as urls
      */
-    protected function discoverTransformations(SimpleXMLElement $sxe, $original_url,
-                                                $xpath, $attribute_name,
+    protected function discoverTransformations(SimpleXMLElement $sxe, $originalUrl,
+                                                $xpath, $attributeName,
                                                 $namespace = null)
     {
         $nodes = $sxe->xpath($xpath);
 
-        $transformation_urls = array();
+        $transformationUrls = array();
         foreach ($nodes as $node) {
             $attributes = $node->attributes($namespace);
-            $value      = (string)$attributes[$attribute_name];
+            $value      = (string)$attributes[$attributeName];
             $urls       = explode(" ", $value);
 
             foreach ($urls as $n => $url) {
                 if (!$this->isURI($url)) {
                     $this->logger->log("Not a full URI: " . $url);
-                    $urls[$n] = $this->determineBaseURI($sxe, $original_url) . $url;
+                    $urls[$n] = $this->determineBaseURI($sxe, $originalUrl) . $url;
                 }
             }
 
-            $transformation_urls = array_merge($transformation_urls, $urls);
+            $transformationUrls = array_merge($transformationUrls, $urls);
         }
 
-        return $transformation_urls;
+        return $transformationUrls;
     }
 
     /**
      * Look for transformations hidden in A, LINK tag.
      *
-     * @param SimpleXMLElement $sxe          Prepopulated document to inspect for
-     *                                       transformations, found by $xpath
-     * @param string           $original_url Original url this document lived at
+     * @param SimpleXMLElement $sxe         Prepopulated document to inspect for
+     *                                      transformations, found by $xpath
+     * @param string           $originalUrl Original url this document lived at
      *
      * @return  string[]    An array of XSL transformation urls.
      */
     protected function discoverHTMLTransformations(SimpleXMLElement $sxe,
-                                                    $original_url = null)
+                                                    $originalUrl = null)
     {
 
         $sxe->registerXPathNamespace('xhtml', XML_GRDDL::XHTML_NS);
 
         $xpath = "//xhtml:*[contains(@rel, 'transformation')]";
 
-        $xsl = $this->discoverTransformations($sxe, $original_url, $xpath, 'href');
+        $xsl = $this->discoverTransformations($sxe, $originalUrl, $xpath, 'href');
 
         return $xsl;
     }
@@ -265,9 +265,9 @@ abstract class XML_GRDDL_Driver
     /**
      * Look for profileTransformations (via PROFILE tags).
      *
-     * @param SimpleXMLElement $sxe          Prepopulated document to inspect
-     *                                       for transformations, found by $xpath
-     * @param string           $original_url Original url this document lived at
+     * @param SimpleXMLElement $sxe         Prepopulated document to inspect
+     *                                      for transformations, found by $xpath
+     * @param string           $originalUrl Original url this document lived at
      *
      * @todo    Determine if I need to make //xhtml:head[@profile] softer for HTML 4
      * @todo    Determine if I need to make //xhtml:head[@profile] behave like
@@ -276,21 +276,21 @@ abstract class XML_GRDDL_Driver
      * @return  string[]    A list of transformations, as urls
      */
     protected function discoverHTMLProfileTransformations(SimpleXMLElement $sxe,
-                                                          $original_url = null)
+                                                          $originalUrl = null)
     {
 
         $sxe->registerXPathNamespace('xhtml', XML_GRDDL::XHTML_NS);
 
         $xpath    = "//xhtml:head[@profile]";
-        $profiles = $this->discoverTransformations($sxe, $original_url, $xpath,
+        $profiles = $this->discoverTransformations($sxe, $originalUrl, $xpath,
                                                     'profile');
 
         //Todo: extract to knownHTMLProfileTransformations()?
-        $all_profile_xsls = array();
-        foreach ($profiles as $profile_url) {
+        $allProfileXsls = array();
+        foreach ($profiles as $profileUrl) {
 
             try {
-                $xhtml = $this->fetch($profile_url);
+                $xhtml = $this->fetch($profileUrl);
             } catch (Exception $e) {
                 //Emit log warning?
                 continue;
@@ -305,10 +305,10 @@ abstract class XML_GRDDL_Driver
 
                 $xpath = "//xhtml:*[contains(@rel, 'profileTransformation')]";
 
-                $profile_xsl = $this->discoverTransformations($profile, $profile_url,
+                $profileXsl = $this->discoverTransformations($profile, $profileUrl,
                                                                 $xpath, 'href');
 
-                $all_profile_xsls = array_merge($all_profile_xsls, $profile_xsl);
+                $allProfileXsls = array_merge($allProfileXsls, $profileXsl);
 
 
                 //The profile document is XML, look for it
@@ -317,32 +317,33 @@ abstract class XML_GRDDL_Driver
 
                 $xpath = "//grddl:profileTransformation";
 
-                $profile_xsl = $this->discoverTransformations($profile, $profile_url,
-                                                              $xpath, 'resource', XML_GRDDL::RDF_NS);
+                $profileXsl = $this->discoverTransformations($profile, $profileUrl,
+                                                              $xpath, 'resource',
+                                                              XML_GRDDL::RDF_NS);
 
-                $all_profile_xsls = array_merge($all_profile_xsls, $profile_xsl);
+                $allProfileXsls = array_merge($allProfileXsls, $profileXsl);
             }
 
         }
 
-        return $all_profile_xsls;
+        return $allProfileXsls;
     }
 
     /**
      * Fetch a URL, which should be a namespace document of some description.
      * Look for namespaceTransformations
      *
-     * @param string $ns_url Namespace URL
+     * @param string $nsUrl Namespace URL
      *
      * @todo    Check a cache of some description
      * @todo    Logging
-     * @return  string[]    An array of transformation urls described in $ns_url
+     * @return  string[]    An array of transformation urls described in $nsUrl
      */
-    protected function knownNamespaceTransformations($ns_url)
+    protected function knownNamespaceTransformations($nsUrl)
     {
-        $transformation_urls = array();
+        $transformationUrls = array();
         try {
-            $xml       = $this->fetch($ns_url);
+            $xml       = $this->fetch($nsUrl);
             $namespace = @simplexml_load_string($xml);
 
             if ($namespace instanceOf SimpleXMLElement) {
@@ -351,24 +352,24 @@ abstract class XML_GRDDL_Driver
                 $xpath     = "//*[@grddl:namespaceTransformation]";
                 $attribute = 'namespaceTransformation';
 
-                $xsl = $this->discoverTransformations($namespace, $ns_url,
+                $xsl = $this->discoverTransformations($namespace, $nsUrl,
                                                        $xpath, $attribute,
                                                        XML_GRDDL::NS);
 
-                //Todo: make this stricter to select rdf:Description about:($ns_url)?
-                $xpath   = "//grddl:namespaceTransformation";
-                $rdf_xsl = $this->discoverTransformations($namespace, $ns_url,
+                //Todo: make this stricter to select rdf:Description about:($nsUrl)?
+                $xpath  = "//grddl:namespaceTransformation";
+                $rdfXsl = $this->discoverTransformations($namespace, $nsUrl,
                                                            $xpath, 'resource',
                                                            XML_GRDDL::RDF_NS);
 
-                $transformation_urls = array_merge($xsl, $rdf_xsl);
+                $transformationUrls = array_merge($xsl, $rdfXsl);
             }
         } catch (Exception $e) {
             if (empty($this->options['quiet'])) {
                 trigger_error($e->getMessage(), E_USER_NOTICE);
             }
         }
-        return $transformation_urls;
+        return $transformationUrls;
     }
 
     /**
@@ -376,12 +377,12 @@ abstract class XML_GRDDL_Driver
      *
      * Otherwise, try to use the existing original document location.
      *
-     * @param SimpleXMLElement $sxe          A SimpleXMLElement to inspect
-     * @param string           $original_url Where the DOMDocument originally lived
+     * @param SimpleXMLElement $sxe         A SimpleXMLElement to inspect
+     * @param string           $originalUrl Where the DOMDocument originally lived
      *
      * @return  string
      */
-    protected function determineBaseURI(SimpleXMLElement $sxe, $original_url)
+    protected function determineBaseURI(SimpleXMLElement $sxe, $originalUrl)
     {
 
         $bases = $sxe->xpath('//xhtml:head/xhtml:base[@href]');
@@ -396,7 +397,7 @@ abstract class XML_GRDDL_Driver
             return dirname($attributes['base']) . '/';
         }
 
-        return dirname($original_url) . '/';
+        return dirname($originalUrl) . '/';
     }
 
     /**
@@ -415,17 +416,17 @@ abstract class XML_GRDDL_Driver
      * Space-separated tokens are the maximal non-empty subsequences not
      * containing the whitespace characters #x9, #xA, #xD or #x20.
      *
-     * @param SimpleXMLElement $sxe          Prepopulated document to inspect
-     *                                       for transformations.
-     * @param string           $original_url The original url this document lived at.
+     * @param SimpleXMLElement $sxe         Prepopulated document to inspect
+     *                                      for transformations.
+     * @param string           $originalUrl The original url this document lived at.
      *
      * @return  string[]    A list of transformations, as urls
      */
     protected function discoverDocumentTransformations(SimpleXMLElement $sxe,
-                                                        $original_url = null)
+                                                        $originalUrl = null)
     {
         $xpath = "/*[@grddl:transformation]";
-        return $this->discoverTransformations($sxe, $original_url, $xpath,
+        return $this->discoverTransformations($sxe, $originalUrl, $xpath,
                                                 'transformation', XML_GRDDL::NS);
     }
 
@@ -450,16 +451,16 @@ abstract class XML_GRDDL_Driver
         //List all namespace urls
         $namespaces = $sxe->getNamespaces(true);
 
-        $transformation_urls = array();
+        $transformationUrls = array();
 
 
-        foreach ($namespaces as $ns_url) {
-            //Retrieve or check a local cache for $ns_url
-            $urls                = $this->knownNamespaceTransformations($ns_url);
-            $transformation_urls = array_merge($transformation_urls, $urls);
+        foreach ($namespaces as $nsUrl) {
+            //Retrieve or check a local cache for $nsUrl
+            $urls               = $this->knownNamespaceTransformations($nsUrl);
+            $transformationUrls = array_merge($transformationUrls, $urls);
         }
 
-        return $transformation_urls;
+        return $transformationUrls;
     }
 
     /**
@@ -491,8 +492,8 @@ abstract class XML_GRDDL_Driver
     /**
      * Fetch a URL, specifically asking for XML or RDF where available.
      *
-     * @param string $path                Path to fetch - typically URL.
-     * @param string $preferred_extension Preferred default extension
+     * @param string $path               Path to fetch - typically URL.
+     * @param string $preferredExtension Preferred default extension
      *
      * @throws  Exception  Unable to fetch url or file
      *
@@ -500,11 +501,11 @@ abstract class XML_GRDDL_Driver
      * @bug Deal with ambigious reponse codes (300)
      * @bug Deal with race conditions & url redirection
      *
-     * @todo Remove ugly preferred_extension hackery.
+     * @todo Remove ugly preferredExtension hackery.
      *
      * @return  string  Contents of $path
      */
-    public function fetch($path, $preferred_extension = 'html')
+    public function fetch($path, $preferredExtension = 'html')
     {
         $this->logger->log("Fetching " . $path);
 
@@ -513,12 +514,12 @@ abstract class XML_GRDDL_Driver
             throw new Exception("You must provide a path");
         }
 
-        if (isset($this->url_cache[$path])) {
-            if ($this->url_cache[$path]['requests']++ > 9) {
+        if (isset($this->urlCache[$path])) {
+            if ($this->urlCache[$path]['requests']++ > 9) {
                 throw new Exception("This resource has been request too many times, possible race condition");
             }
 
-            return $this->url_cache[$path]['data'];
+            return $this->urlCache[$path]['data'];
         }
 
         if ($this->isURI($path)) {
@@ -529,9 +530,9 @@ abstract class XML_GRDDL_Driver
 
             //HTTP 200 OK
             if ($req->getResponseCode() == 200) {
-                $this->url_cache[$path] = array();
-                $this->url_cache[$path]['requests'] = 1;
-                return $this->url_cache[$path]['data'] = $this->prettify($req->getResponseBody());
+                $this->urlCache[$path] = array();
+                $this->urlCache[$path]['requests'] = 1;
+                return $this->urlCache[$path]['data'] = $this->prettify($req->getResponseBody());
             }
 
 
@@ -542,9 +543,9 @@ abstract class XML_GRDDL_Driver
             if ($req->getResponseCode() == 301) {
                 //For now, return response body, otherwise,
                 // consider following redirect?
-                $this->url_cache[$path] = array();
-                $this->url_cache[$path]['requests'] = 1;
-                return $this->url_cache[$path]['data'] = $this->prettify($req->getResponseBody());
+                $this->urlCache[$path] = array();
+                $this->urlCache[$path]['requests'] = 1;
+                return $this->urlCache[$path]['data'] = $this->prettify($req->getResponseBody());
             }
 
             $redirections = array(302, 303, 307);
@@ -562,12 +563,12 @@ abstract class XML_GRDDL_Driver
             if ($req->getResponseCode() == 300) {
                 //further ewww
 
-                $new_path = $this->findRedirect($path);
-                if (empty($new_path)) {
-                    $new_path = $path . '.' . $preferred_extension;
+                $newPath = $this->findRedirect($path);
+                if (empty($newPath)) {
+                    $newPath = $path . '.' . $preferredExtension;
                 }
 
-                return $this->fetch($new_path);
+                return $this->fetch($newPath);
             }
 
 
@@ -593,14 +594,14 @@ abstract class XML_GRDDL_Driver
      * Obeys options for preserveWhiteSpace & formatOutput,
      * and removes redundant namespaces
      *
-     * @param string $xml          XML to format
-     * @param string $original_url Original document URL
+     * @param string $xml         XML to format
+     * @param string $originalUrl Original document URL
      *
      * @see XML_GRDDL::factory()
      *
      * @return string Formatted XML
      */
-    public function prettify($xml, $original_url = null)
+    public function prettify($xml, $originalUrl = null)
     {
         if (empty($xml)) {
             return $xml;
@@ -657,8 +658,8 @@ abstract class XML_GRDDL_Driver
      *
      *  ?IR grddl:result ?H.
      *
-     * @param string $graph_xml1 An RDF/XML graph
-     * @param string $graph_xml2 A second RDF/XML graph, to be merged into the first.
+     * @param string $graphXml1 An RDF/XML graph
+     * @param string $graphXml2 A second RDF/XML graph, to be merged into the first.
      *
      * @bug This method does not check for duplicate nodeIDs
      *
@@ -667,10 +668,10 @@ abstract class XML_GRDDL_Driver
      *
      * @return  string  Merged graph containing triples from both original graphs
      */
-    public function merge($graph_xml1, $graph_xml2)
+    public function merge($graphXml1, $graphXml2)
     {
-        if (empty($graph_xml1)) {
-            return $graph_xml2;
+        if (empty($graphXml1)) {
+            return $graphXml2;
         }
 
         $dom1 = new DomDocument('1.0');
@@ -683,8 +684,8 @@ abstract class XML_GRDDL_Driver
         $dom2->preserveWhiteSpace = !empty($this->options['preserveWhiteSpace']);
         $dom2->formatOutput       = !empty($this->options['formatOutput']);
 
-        $dom1->loadXML($graph_xml1, LIBXML_NSCLEAN & LIBXML_COMPACT);
-        $dom2->loadXML($graph_xml2, LIBXML_NSCLEAN & LIBXML_COMPACT);
+        $dom1->loadXML($graphXml1, LIBXML_NSCLEAN & LIBXML_COMPACT);
+        $dom2->loadXML($graphXml2, LIBXML_NSCLEAN & LIBXML_COMPACT);
 
         // pull all child elements of second XML
         $xpath      = new DomXPath($dom2);
@@ -713,16 +714,16 @@ abstract class XML_GRDDL_Driver
         $data        = $this->fetch($url);
         $stylesheets = $this->inspect($data, $url);
 
-        $rdf_xml = array();
+        $rdfxml = array();
         foreach ($stylesheets as $stylesheet) {
             try {
-                $rdf_xml[] = $this->transform($stylesheet, $data);
+                $rdfxml[] = $this->transform($stylesheet, $data);
             } catch (Exception $e) {
                 $this->logger->log($e->getMessage());
             }
         }
 
-        $result = array_reduce($rdf_xml, array($this, 'merge'));
+        $result = array_reduce($rdfxml, array($this, 'merge'));
 
         return $result;
     }
@@ -737,20 +738,20 @@ abstract class XML_GRDDL_Driver
      */
     protected function findRedirect($url)
     {
-        return isset($this->url_cache['seeAlso'][$url])? $this->url_cache['seeAlso'][$url] : null;
+        return isset($this->urlCache['seeAlso'][$url])? $this->urlCache['seeAlso'][$url] : null;
     }
 
     /**
      * Record a redirection for a url
      *
-     * @param string $url       URL
-     * @param string $other_url Redirected URL
+     * @param string $url      URL
+     * @param string $otherUrl Redirected URL
      *
      * @return string
      */
-    protected function logRedirect($url, $other_url)
+    protected function logRedirect($url, $otherUrl)
     {
-        $this->url_cache['seeAlso'][$url] = (string)$other_url;
+        $this->urlCache['seeAlso'][$url] = (string)$otherUrl;
     }
 
     /**
@@ -782,14 +783,15 @@ abstract class XML_GRDDL_Driver
             $head = $dom->documentElement->appendChild($head);
         }
 
-        $existing_profiles = explode(' ', $head->getAttribute('profile'));
+        $existingProfiles = explode(' ', $head->getAttribute('profile'));
 
 
-        $actual_profiles = array_unique(array_merge($profiles, $existing_profiles));
+        $actualProfiles = array_unique(array_merge($profiles, $existingProfiles));
 
         $head->removeAttribute('profile');
-        $head->setAttribute('profile', trim(implode(" ", $actual_profiles)));
+        $head->setAttribute('profile', trim(implode(" ", $actualProfiles)));
 
         return $dom->saveXML();
     }
 }
+?>

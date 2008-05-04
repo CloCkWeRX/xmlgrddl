@@ -70,3 +70,4 @@ $result = array_reduce($rdf_xml, array($grddl, 'merge'));
 var_dump($result);
 
 
+?>

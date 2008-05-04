@@ -123,3 +123,4 @@ foreach ($tests as $test) {
     }
 
 }
+?>

@@ -109,3 +109,4 @@ $tests[] = array('name' => 'Document linking to its transformer through a GRDDL-
                  'in'  => 'http://www.w3.org/2001/sw/grddl-wg/td/xhtmlWithGrddlEnabledProfile.html',
                  'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/xhtmlWithGrddlEnabledProfile-output.rdf',
                  'realistic' => dirname(__FILE__) . '/data/xhtmlWithGrddlEnabledProfile-output.rdf');
+?>

@@ -68,7 +68,7 @@ class XML_GRDDL_Driver_Xsl extends XML_GRDDL_Driver
      *
      * @see XML_GRDDL::factory()
      *
-     * @return
+     * @return  void
      */
     public function __construct($options = array())
     {
@@ -94,7 +94,7 @@ class XML_GRDDL_Driver_Xsl extends XML_GRDDL_Driver
             return $xml;
         }
 
-        $old_cwd = getcwd();
+        $oldCwd = getcwd();
 
         $paths = array();
 
@@ -108,7 +108,7 @@ class XML_GRDDL_Driver_Xsl extends XML_GRDDL_Driver
             }
         }
 
-        if (getcwd() == $old_cwd) {
+        if (getcwd() == $oldCwd) {
             $this->logger->log("Could not access standard transform library");
             //throw new Exception("Could not access standard transform library");
         }
@@ -139,13 +139,28 @@ class XML_GRDDL_Driver_Xsl extends XML_GRDDL_Driver
             return $result;
         } catch (Exception $e) {
             restore_error_handler();
-            chdir($old_cwd);
+            chdir($oldCwd);
 
             throw $e;
         }
     }
 
-    public function handleTransformationErrorMessage($errno, $errstr, $errfile, $errline, $errcontext = array()) {
+    /**
+     * Handle generated error messages
+     *
+     * @param string   $errno      Error number
+     * @param string   $errstr     Error message
+     * @param string   $errfile    Error file
+     * @param string   $errline    Error line
+     * @param string[] $errcontext Error context
+     *
+     * @throws  Exception
+     * @return  void
+     */
+    public function handleTransformationErrorMessage($errno, $errstr, $errfile, $errline,
+                                                     $errcontext = array())
+    {
         throw new Exception($errstr);
     }
 }
+?>

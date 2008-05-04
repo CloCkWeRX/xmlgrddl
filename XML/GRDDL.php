@@ -113,3 +113,4 @@ class XML_GRDDL
                      'htmlProfileTransformations' => true);
     }
 }
+?>
