@@ -66,3 +66,4 @@ $data = $grddl->fetch($url);
 var_dump($grddl->transform($stylesheet, $data));
 
 //var_dump($grddl->crawl($url));
+?>

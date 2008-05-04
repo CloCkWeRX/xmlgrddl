@@ -21,3 +21,4 @@ print $grddl->crawl($file);
 
 
 //python testft.py -r "php process-grddl.php " --debug grddl-tests.rdf > results.rdf
+?>
