@@ -66,9 +66,21 @@ require_once 'Validate.php';
 abstract class XML_GRDDL_Driver
 {
 
+    /**
+     * A set of options for the driver
+     *
+     * @see XML_GRDDL::getDefaultOptions()
+     */
     public    $options;
+
+    /**
+     * A logging class - an instance of PEAR::Log
+     */
     protected $logger;
 
+    /**
+     * A set of urls which have already been fetched
+     */
     protected $urlCache = array();
 
     /**
