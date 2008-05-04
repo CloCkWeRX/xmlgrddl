@@ -61,12 +61,12 @@ $stylesheets = $grddl->inspect($data, $url);
 
 var_dump($data);
 var_dump($stylesheets);
-$rdf_xml = array();
+$rdfXml = array();
 foreach ($stylesheets as $stylesheet) {
-    $rdf_xml[] = $grddl->transform($stylesheet, $data);
+    $rdfXml[] = $grddl->transform($stylesheet, $data);
 }
 
-$result = array_reduce($rdf_xml, array($grddl, 'merge'));
+$result = array_reduce($rdfXml, array($grddl, 'merge'));
 
 var_dump($result);
 ?>

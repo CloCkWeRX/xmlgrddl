@@ -66,12 +66,12 @@ $modified_data = $grddl->appendProfiles($data, $profiles);
 
 $stylesheets = $grddl->inspect($modified_data, $url);
 
-$rdf_xml = array();
+$rdfXml = array();
 foreach ($stylesheets as $stylesheet) {
-	$rdf_xml[] = $grddl->transform($stylesheet, $modified_data);
+	$rdfXml[] = $grddl->transform($stylesheet, $modified_data);
 }
 
-$result = array_reduce($rdf_xml, array($grddl, 'merge'));
+$result = array_reduce($rdfXml, array($grddl, 'merge'));
 
 $sxe = simplexml_load_string($result);
 $sxe->registerXPathNamespace('vcard', 'http://www.w3.org/2006/vcard/ns#');

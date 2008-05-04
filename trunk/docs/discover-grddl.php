@@ -66,18 +66,18 @@ var_dump($stylesheets). "\n\n";
 
 
 //Use those transformations
-$rdf_xml = array();
+$rdfXml = array();
 foreach ($stylesheets as $n => $stylesheet) {
-    $rdf_xml[$n] = $grddl->transform($stylesheet, $xml);
+    $rdfXml[$n] = $grddl->transform($stylesheet, $xml);
 }
 
 foreach ($stylesheets as $n => $stylesheet) {
     print "Transformation " . $stylesheet . " produced:\n";
-    print $rdf_xml[$n] . "\n\n";
+    print $rdfXml[$n] . "\n\n";
 }
 
 
 //I want to merge one or more RDF/XML documents
-$result = array_reduce($rdf_xml, array($grddl, 'merge'));
+$result = array_reduce($rdfXml, array($grddl, 'merge'));
 print "The RDF/XML which extracted from " . $url . " is:\n";
 print $result;
