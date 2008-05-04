@@ -83,4 +83,3 @@ print "Events:\n";
 foreach ($nodes as $node) {
 	print $node->summary . ", (" . $node->dtstart . ")\n";
 }
-?>

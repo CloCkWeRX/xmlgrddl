@@ -107,4 +107,3 @@ $tests[] = array('name' => 'XHTML with an XHTML profile using a base element',
                  'in' => 'http://www.w3.org/2001/sw/grddl-wg/td/xhtmlProfileBase1.html',
                  'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/xhtmlProfileBase1-output.rdf',
                  'realistic' => dirname(__FILE__) . '/data/xhtmlProfileBase1-output.rdf');
- ?>

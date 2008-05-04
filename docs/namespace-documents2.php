@@ -70,4 +70,3 @@ $result = array_reduce($rdfXml, array($grddl, 'merge'));
 var_dump($result);
 //var_dump($grddl->crawl($url));
 
-?>

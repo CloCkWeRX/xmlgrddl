@@ -127,4 +127,3 @@ foreach ($results as $url => $rdfXml) {
     //print $rdfXml . "\n\n";
     print "\n";
 }
-?>

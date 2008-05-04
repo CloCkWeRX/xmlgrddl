@@ -165,4 +165,3 @@ class XML_GRDDL_Driver_Xsl extends XML_GRDDL_Driver
         throw new Exception($errstr);
     }
 }
-?>

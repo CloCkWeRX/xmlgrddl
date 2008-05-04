@@ -808,4 +808,3 @@ abstract class XML_GRDDL_Driver
         return $dom->saveXML();
     }
 }
-?>
