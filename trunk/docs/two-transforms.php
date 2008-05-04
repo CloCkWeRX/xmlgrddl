@@ -69,4 +69,3 @@ foreach ($stylesheets as $stylesheet) {
 $result = array_reduce($rdfXml, array($grddl, 'merge'));
 
 var_dump($result);
-?>

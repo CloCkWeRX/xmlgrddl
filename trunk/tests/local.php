@@ -108,4 +108,3 @@ $tests[] = array('name' => 'XML document linking to its transformer through the 
                  'in' => 'http://www.w3.org/2001/sw/grddl-wg/td/xmlWithGrddlAttributeAndNonXMLNamespaceDocument.xml',
                  'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/xmlWithGrddlAttributeAndNonXMLNamespaceDocument-output.rdf',
                  'realistic' => dirname(__FILE__) . '/data/xmlWithGrddlAttributeAndNonXMLNamespaceDocument-output.rdf');
-?>

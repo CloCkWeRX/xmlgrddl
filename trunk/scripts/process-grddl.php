@@ -62,4 +62,3 @@ $grddl = XML_GRDDL::factory('xsl', $options);
 
 print $grddl->crawl($file);
 
-?>

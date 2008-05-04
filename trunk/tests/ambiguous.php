@@ -241,4 +241,3 @@ $tests[] = array('name' => 'A similar redirected xml document without an xml:bas
                  'in' => 'http://www.w3.org/2001/sw/grddl-wg/td/xmlWithoutBase.xml',
                  'out' => 'http://www.w3.org/2001/sw/grddl-wg/td/xmlWithoutBase-output.rdf',
                  'realistic' => dirname(__FILE__) . '/data/xmlWithoutBase-output.rdf');
-?>
