@@ -85,15 +85,13 @@ class XML_GRDDL
 
         $class = 'XML_GRDDL_Driver_' . $driver;
 
-        $path = dirname(__FILE__) . '/GRDDL/Driver/' . $driver . '.php';
+        $path = 'XML/GRDDL/Driver/' . $driver . '.php';
 
-        if (file_exists($path)) {
-            include_once $path;
+        if (!@fclose(@fopen($path, 'r', true))) {
+            throw new XML_GRDDL_Exception("Unknown driver " . $class);
         }
 
-        if (!class_exists($class)) {
-            throw new Exception("Unknown driver " . $class);
-        }
+        include_once $path;
 
         return new $class($options);
     }
