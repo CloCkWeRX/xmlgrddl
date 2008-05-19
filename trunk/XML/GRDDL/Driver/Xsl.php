@@ -128,6 +128,8 @@ class XML_GRDDL_Driver_Xsl extends XML_GRDDL_Driver
             $xsl = new DOMDocument();
             $xsl->loadXML($xslt, LIBXML_NOCDATA | LIBXML_NOENT);
 
+            $this->checkStylesheetOutputType($xsl);
+
             set_error_handler(array($this, 'handleTransformationErrorMessage'));
 
             $proc = new XSLTProcessor();
@@ -145,6 +147,44 @@ class XML_GRDDL_Driver_Xsl extends XML_GRDDL_Driver
 
             throw $e;
         }
+    }
+
+    /**
+     * A driver specific method to check if a given stylesheet will output
+     * an understandable format.
+     *
+     * This driver only understands application/rdf+xml
+     *
+     * @param DOMDocument $stylesheet A given stylesheet to inspect
+     *
+     * @see http://code.google.com/p/xmlgrddl/issues/detail?id=24#makechanges
+     */
+    protected function checkStylesheetOutputType(DOMDocument $stylesheet)
+    {
+        $this->logger->log("Checking stylesheet for odd output types");
+
+        $sxe = simplexml_import_dom($stylesheet);
+
+
+        $sxe->registerXPathNamespace('xsl', 'http://www.w3.org/1999/XSL/Transform');
+
+        $nodes = $sxe->xpath('//xsl:output[@media-type]');
+
+        if (empty($nodes)) {
+            $this->logger->log("No xsl:output media-type found / not a stylesheet, assuming application/rdf+xml");
+            return true;
+        }
+
+        list($output) = $nodes;
+
+
+
+        $this->logger->log("This transformation produces " . $output['media-type']);
+        if ($output['media-type'] != 'application/rdf+xml') {
+            throw new XML_GRDDL_Exception("Cannot use this transform, I don't understand " . $output['media-type']);
+        }
+
+        return true;
     }
 
     /**
