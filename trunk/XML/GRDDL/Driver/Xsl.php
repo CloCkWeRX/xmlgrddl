@@ -75,7 +75,8 @@ class XML_GRDDL_Driver_Xsl extends XML_GRDDL_Driver
     public function __construct($options = array())
     {
         if (!extension_loaded('xsl')) {
-            throw new XML_GRDDL_Exception("Don't forget to enable the xsl extension");
+            throw new XML_GRDDL_Exception("Don't forget to enable the xsl
+                                            extension");
         }
 
         parent::__construct($options);
@@ -86,6 +87,11 @@ class XML_GRDDL_Driver_Xsl extends XML_GRDDL_Driver
      *
      * @param string $stylesheet URL or file location of an XSLT transformation
      * @param string $xml        String of XML
+     *
+     * @bug fails http://www.w3.org/TR/grddl-tests/#grddlProfileBase1 because
+     *      when we DOMDocument::loadXML(), it's from a string, and worse, that string
+     *      is HTML. We can't work out the DOMDocument->documentElement->baseURI
+     *      correctly.
      *
      * @return  string  Transformed document contents.
      */
@@ -112,13 +118,11 @@ class XML_GRDDL_Driver_Xsl extends XML_GRDDL_Driver
 
         if (getcwd() == $oldCwd) {
             $this->logger->log("Could not access standard transform library");
-            //throw new XML_GRDDL_Exception("Could not access standard transform library");
         }
 
         try {
             $this->logger->log("Attempting to transform with " . $stylesheet);
 
-            //Cheat: set cwd() to an xslt library dir?
             $dom = new DOMDocument('1.0');
             $dom->loadXML($xml);
 
@@ -158,6 +162,10 @@ class XML_GRDDL_Driver_Xsl extends XML_GRDDL_Driver
      * @param DOMDocument $stylesheet A given stylesheet to inspect
      *
      * @see http://code.google.com/p/xmlgrddl/issues/detail?id=24#makechanges
+     *
+     * @throws XML_GRDDL_Exception
+     *
+     * @return bool
      */
     protected function checkStylesheetOutputType(DOMDocument $stylesheet)
     {
@@ -171,17 +179,18 @@ class XML_GRDDL_Driver_Xsl extends XML_GRDDL_Driver
         $nodes = $sxe->xpath('//xsl:output[@media-type]');
 
         if (empty($nodes)) {
-            $this->logger->log("No xsl:output media-type found / not a stylesheet, assuming application/rdf+xml");
+            $this->logger->log("No xsl:output media-type found / not a stylesheet,"
+                                . " assuming application/rdf+xml");
             return true;
         }
 
         list($output) = $nodes;
 
-
-
         $this->logger->log("This transformation produces " . $output['media-type']);
+
         if ($output['media-type'] != 'application/rdf+xml') {
-            throw new XML_GRDDL_Exception("Cannot use this transform, I don't understand " . $output['media-type']);
+            throw new XML_GRDDL_Exception("Cannot use this transform, I don't "
+                                            . "understand " . $output['media-type']);
         }
 
         return true;
@@ -199,8 +208,8 @@ class XML_GRDDL_Driver_Xsl extends XML_GRDDL_Driver
      * @throws  XML_GRDDL_Exception
      * @return  void
      */
-    public function handleTransformationErrorMessage($errno, $errstr, $errfile, $errline,
-                                                     $errcontext = array())
+    public function handleTransformationErrorMessage($errno, $errstr, $errfile,
+                                                     $errline, $errcontext = array())
     {
         throw new XML_GRDDL_Exception($errstr);
     }
