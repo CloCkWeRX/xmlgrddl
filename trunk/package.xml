@@ -15,7 +15,7 @@
   <active>yes</active>
  </lead>
  <date>2008-05-19</date>
- <time>14:58:43</time>
+ <time>15:28:41</time>
  <version>
   <release>0.1.1</release>
   <api>0.1.0</api>
@@ -27,7 +27,7 @@
  <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
  <notes>Fixed replacement tasks</notes>
  <contents>
-  <dir baseinstalldir="" name="/">
+  <dir baseinstalldir="/" name="/">
    <file baseinstalldir="" name="data/grddl-library/glean-profile" role="data" />
    <file baseinstalldir="" name="data/grddl-library/grokAlternate" role="data" />
    <file baseinstalldir="" name="data/grddl-library/grokPEAR" role="data" />
@@ -50,9 +50,9 @@
    <file baseinstalldir="" name="docs/php-conferences.php" role="doc" />
    <file baseinstalldir="" name="docs/two-transforms.php" role="doc" />
    <file baseinstalldir="" name="docs/xhtmlWithGrddlEnabledProfile.php" role="doc" />
-   <file baseinstalldir="" name="scripts/debug-grddl.php" role="doc" />
-   <file baseinstalldir="" name="scripts/process-grddl.php" role="doc" />
-   <file baseinstalldir="" name="scripts/testft.py" role="doc" />
+   <file baseinstalldir="" name="docs/scripts/debug-grddl.php" role="doc" />
+   <file baseinstalldir="" name="docs/scripts/process-grddl.php" role="doc" />
+   <file baseinstalldir="" name="docs/scripts/testft.py" role="doc" />
    <file baseinstalldir="" name="tests/44225.php" role="test" />
    <file baseinstalldir="" name="tests/ambiguous.php" role="test" />
    <file baseinstalldir="" name="tests/example.php" role="test" />
@@ -153,11 +153,7 @@
   </required>
  </dependencies>
  <phprelease>
-  <filelist>
-   <install as="process-grddl.php" name="scripts/process-grddl.php" />
-   <install as="testft.py" name="scripts/testft.py" />
-   <install as="debug-grddl.php" name="scripts/debug-grddl.php" />
-  </filelist>
+  <filelist />
  </phprelease>
  <changelog>
   <release>
