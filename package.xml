@@ -15,9 +15,9 @@
   <active>yes</active>
  </lead>
  <date>2008-05-19</date>
- <time>14:31:43</time>
+ <time>14:43:34</time>
  <version>
-  <release>0.1.0</release>
+  <release>0.1.1</release>
   <api>0.1.0</api>
  </version>
  <stability>
@@ -25,7 +25,7 @@
   <api>alpha</api>
  </stability>
  <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
- <notes>Initial package release for PEAR</notes>
+ <notes>Fixed replacement tasks</notes>
  <contents>
   <dir baseinstalldir="PEAR" name="/">
    <file baseinstalldir="PEAR" md5sum="c10c403cd55b402845bc6d39efc83f4e" name="data/grddl-library/glean-profile" role="data" />
@@ -112,7 +112,10 @@
    <file baseinstalldir="" md5sum="72b4b5d54f73bc8d4f7b457a838afbee" name="XML/GRDDL.php" role="php" />
    <file baseinstalldir="" md5sum="65fa8f56b42598b4bde4008694bda26b" name="XML/GRDDL/Driver.php" role="php" />
    <file baseinstalldir="PEAR" md5sum="0c69a110b2110ce99b08e737c443acc9" name="XML/GRDDL/Exception.php" role="php" />
-   <file baseinstalldir="" md5sum="47e6dc7a08a0b5480acc673e64582ec1" name="XML/GRDDL/Driver/Xsl.php" role="php" />
+   <file baseinstalldir="" md5sum="47e6dc7a08a0b5480acc673e64582ec1" name="XML/GRDDL/Driver/Xsl.php" role="php">
+    <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
+    <tasks:replace from="@package_name@" to="name" type="package-info" />
+   </file>
    <file baseinstalldir="PEAR" md5sum="05842a5991936385e09bd6fdd845b9dd" name="README.txt" role="data" />
   </dir>
  </contents>
@@ -248,6 +251,19 @@ Cleaned up options / api</notes>
    <date>2008-05-19</date>
    <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
    <notes>Initial package release for PEAR</notes>
+  </release>
+  <release>
+   <version>
+    <release>0.1.1</release>
+    <api>0.1.0</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2008-05-19</date>
+   <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
+   <notes>Fixed replacement tasks</notes>
   </release>
  </changelog>
 </package>
