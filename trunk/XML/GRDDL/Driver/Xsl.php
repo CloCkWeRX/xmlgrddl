@@ -97,8 +97,13 @@ class XML_GRDDL_Driver_Xsl extends XML_GRDDL_Driver
      */
     public function transform($stylesheet, $xml)
     {
-        if (empty($stylesheet) || empty($xml)) {
-            $this->logger->log("Given empty stylesheet or xml");
+        if (empty($stylesheet)) {
+            $this->logger->log("Given empty stylesheet, can't transform");
+            return $xml;
+        }
+
+        if (empty($xml)) {
+            $this->logger->log("Given empty xml, can't transform");
             return $xml;
         }
 
