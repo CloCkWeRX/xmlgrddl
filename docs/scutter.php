@@ -193,5 +193,9 @@ if (!empty($_GET['action'])) {
         <div id="results">
             <?php print $html; ?>
         </div>
+        <ul class="navigation">
+            <li><a href="?">Home</a></li>
+            <li><a href="?action=Demo">Demo</a></li>
+        </ul>
     </body>
 </html>
