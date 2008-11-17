@@ -79,6 +79,11 @@ abstract class XML_GRDDL_Driver
     protected $logger;
 
     /**
+     * A http request class - generally an instance of HTTP_Request
+     */
+    protected $http_client;
+
+    /**
      * A set of urls which have already been fetched
      */
     protected $urlCache = array();
@@ -105,6 +110,15 @@ abstract class XML_GRDDL_Driver
         } else {
             $this->logger = Log::singleton('null');
         }
+
+        if (isset($this->options['http_client'])) {
+            $this->http_client = $this->options['http_client'];
+        } else {
+            $this->http_client = new HTTP_Request();
+            $this->http_client->setMethod(HTTP_REQUEST_METHOD_GET);
+            $this->http_client->addHeader("Accept", 'text/xml, application/xml, application/rdf+xml; q=0.9, */*; text/html q=0.1');
+        }
+
 
         if (!extension_loaded('tidy') && !empty($options['tidy'])) {
             throw new XML_GRDDL_Exception("HTML tidy extension does not appear loaded!");
@@ -549,16 +563,17 @@ abstract class XML_GRDDL_Driver
         }
 
         if ($this->isURI($path)) {
-            $req = &new HTTP_Request($path);
-            $req->setMethod(HTTP_REQUEST_METHOD_GET);
-            $req->addHeader("Accept", 'text/xml, application/xml, application/rdf+xml; q=0.9, */*; text/html q=0.1');
-            $req->sendRequest();
+            $this->http_client->setURL($path);
+            $this->http_client->sendRequest();
 
             //HTTP 200 OK
-            if ($req->getResponseCode() == 200) {
-                $this->urlCache[$path] = array();
-                $this->urlCache[$path]['requests'] = 1;
-                return $this->urlCache[$path]['data'] = $this->prettify($req->getResponseBody());
+            if ($this->http_client->getResponseCode() == 200) {
+                $body = $this->http_client->getResponseBody();
+
+                $this->urlCache[$path] = array('requests' => 1, 
+                                               'data' => $this->prettify($body);
+
+                return $this->urlCache[$path]['data'];
             }
 
 
@@ -566,19 +581,22 @@ abstract class XML_GRDDL_Driver
             //  but Split Out for easy debugging
             // @todo    Does HTTP_Client fix this?
             //HTTP 301 - UH...
-            if ($req->getResponseCode() == 301) {
+            if ($this->http_client->getResponseCode() == 301) {
                 //For now, return response body, otherwise,
                 // consider following redirect?
-                $this->urlCache[$path] = array();
-                $this->urlCache[$path]['requests'] = 1;
-                return $this->urlCache[$path]['data'] = $this->prettify($req->getResponseBody());
+                $body = $this->http_client->getResponseBody();
+
+                $this->urlCache[$path] = array('requests' => 1, 
+                                               'data' => $this->prettify($body);
+
+                return $this->urlCache[$path]['data'];
             }
 
             $redirections = array(302, 303, 307);
-            if (in_array($req->getResponseCode(), $redirections)) {
+            if (in_array($this->http_client->getResponseCode(), $redirections)) {
                 //Obey the Location:
                 // @todo ... but consider race conditions
-                $headers = $req->getResponseHeader();
+                $headers = $this->http_client->getResponseHeader();
                 $this->logger->log("The webserver says " . $path . " actually lives at " . $headers['location']);
                 return $this->fetch($headers['location']);
             }
@@ -586,7 +604,7 @@ abstract class XML_GRDDL_Driver
 
             //w3c.org website hacky workarounds
             //ewwwww
-            if ($req->getResponseCode() == 300) {
+            if ($this->http_client->getResponseCode() == 300) {
                 //further ewww
 
                 $newPath = $this->findRedirect($path);
@@ -598,7 +616,7 @@ abstract class XML_GRDDL_Driver
             }
 
 
-            throw new XML_GRDDL_Exception('HTTP ' . $req->getResponseCode()
+            throw new XML_GRDDL_Exception('HTTP ' . $this->http_client->getResponseCode()
                                     . ' while retrieving ' . $path);
         }
 
